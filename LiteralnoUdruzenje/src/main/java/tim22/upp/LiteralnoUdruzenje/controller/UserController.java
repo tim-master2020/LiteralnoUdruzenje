@@ -32,6 +32,7 @@ public class UserController {
     TaskService taskService;
 
     @Autowired
+    FormService formService;
 
     @GetMapping(path = "/regtask", produces = "application/json")
     public @ResponseBody FormFieldsDTO getFormFieldsReaderRegistration() {

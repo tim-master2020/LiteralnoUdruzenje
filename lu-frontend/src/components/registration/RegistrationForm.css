@@ -1,0 +1,19 @@
+.registrationCard{
+    width: 40%;
+    height: auto;
+    margin-left: 30%;
+    margin-top: 2%;
+}
+
+.singleInputField{
+    text-align: left;
+}
+
+.checkBoxField{
+    width:10%;
+    margin-right:30%;
+}
+
+.submitButton{
+    width: 35%;
+}

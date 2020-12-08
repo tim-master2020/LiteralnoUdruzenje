@@ -17,7 +17,7 @@ const Appbar = ({history}) => {
           marginRight: theme.spacing(2),
         },
         title: {
-          flexGrow: 1,
+          flexGrow: 0,
           color:'gray',
           cursor:'pointer',
         },
@@ -28,6 +28,17 @@ const Appbar = ({history}) => {
         divider:{
             backgroundColor:'gray'
         },
+        appbarButton:{
+            flexGrow:1,
+            color:'gray',
+            borderStyle: 'solid',
+            borderColor:'gray',
+            borderWidth:'0.5px',
+            marginTop:'3px',
+            borderRadius:'5px',
+            padding:'3px',
+            marginLeft:'7px'
+        }
       }));
 
     const classes = useStyles();
@@ -36,15 +47,20 @@ const Appbar = ({history}) => {
            <AppBar elevation={0} position="static">
             <Toolbar  className={classes.toolbar}> 
                 <Typography variant="h6" className={classes.title} onClick={() => { history.push(`/`);}}>
-                    <img alt="logo" src={image} style={{borderRadius:'5px',height:'40px',width:'40px',marginRight:'1%',cursor:'pointer'}} ></img>
-                eBook
+                    <img alt="logo" src={image} className="logo" ></img>
+                    eBook
                 </Typography>
-                <div className="appbarButton" 
-                     onClick={() => {history.push(`/login`);}}
-                >Login</div>
-                <div className="appbarButton" 
-                    onClick={() => { history.push(`/registration`);}}
-                >Register</div>
+                <div className="loginRegButtons">
+                    
+                    <div className= {classes.appbarButton}
+                        onClick={() => {history.push(`/login`);}}
+                    >Login</div>
+                    
+                    <div className={classes.appbarButton}
+                        onClick={() => { history.push(`/registration`);}}
+                    >Register</div>
+                   
+                </div>
             </Toolbar>
             <Divider className={classes.divider}/>
             </AppBar>

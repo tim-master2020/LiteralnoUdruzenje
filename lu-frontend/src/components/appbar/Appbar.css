@@ -3,3 +3,16 @@
     color: gray;
     cursor: pointer;
 }
+
+.logo{
+    border-radius:'5px';
+    height:40px;
+    width:40px;
+    margin-right: 1%;
+    cursor:pointer;
+}
+
+.loginRegButtons{
+    margin-left:87%;
+    display:flex;
+}

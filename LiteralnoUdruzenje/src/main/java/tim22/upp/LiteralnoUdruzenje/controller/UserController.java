@@ -64,10 +64,17 @@ public class UserController {
         HashMap<String, Object> map = this.mapListToDto(readerDTO);
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
         String processInstanceId = task.getProcessInstanceId();
-        
-        //runtimeService.setVariable(processInstanceId, "registration", readerDTO);
+
+        runtimeService.setVariable(processInstanceId, "registration", readerDTO);
         formService.submitTaskForm(taskId, map);
-        return new ResponseEntity<>(HttpStatus.OK);
+
+        Task nextTask = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
+        if(nextTask !=  null && formService.getTaskFormData(nextTask.getId()) != null){
+            List<FormField> properties = formService.getTaskFormData(nextTask.getId()).getFormFields();
+            return new ResponseEntity<>(new FormFieldsDTO(nextTask.getId(), processInstanceId, properties),HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
     }
 
     private HashMap<String, Object> mapListToDto(List<FormSubmissionDTO> list)

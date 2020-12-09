@@ -2,27 +2,40 @@ package tim22.upp.LiteralnoUdruzenje.model;
 
 import org.camunda.bpm.engine.identity.User;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.io.Serializable;
 
-public class Reader implements User{
+@Entity
+public class Reader implements User,Serializable{
 
+    @Column
     private String city;
 
+    @Column
     private String country;
 
+    @Column
     private boolean betaReader;
 
+    @Column
     private String firstname;
 
+    @Column
     private String lastname;
 
+    @Column
     private String password;
 
+    @Column
     private String username;
 
+    @Column
     private String email;
 
 
+    @Id
     @Override
     public String getId() {
         return this.username;

@@ -7,6 +7,7 @@ import './RegistrationForm.css';
 const RegistrationForm = () => {
     
     const [formFields, setformFields] = React.useState([]);
+    const [genreFields, setGenreFields] = React.useState([]);
     const [taskId, setTaskId] = React.useState('');
     React.useEffect(() => {
         axios.get(`${defaultUrl}/api/users/reg-task-user`,).then(
@@ -33,10 +34,15 @@ const RegistrationForm = () => {
         var temp = formFields;
         temp.forEach(field => {
             if(e.target.name === field.id){
+                if(field.id === "betaReader"){
+                    field.value.value = (field.value.value === true)? false : true;
+                }else{
                 field.value.value = e.target.value;
+                }
             }
         });
         setformFields(temp);
+        console.log(temp);
      };
 
      function SendRegisterRequest(e){
@@ -49,20 +55,26 @@ const RegistrationForm = () => {
         });
         console.log(returnValue);
         axios.post(`${defaultUrl}/api/users/submit-reg-data/${taskId}`,returnValue).then(
-            (resp) => { alert('registerd');},
+            (resp) => { 
+                    if(resp.data !== null){
+                        setGenreFields(resp.data.formFields);
+                    }
+            },
             (resp) => { alert("not registered"); }
         );
     }
 
+    console.log('genre fields:',genreFields);
+
     function renderFormFields(formFields){  
         if(formFields !== undefined && formFields.length > 0){           
             return formFields.map(field =>
-                (field.id === 'betaReader') ?
+                (field.type.name === "boolean") ?
                 
                 (   <div className="checkBoxField">
                     {field.label}
                     <br/>
-                    <input type="checkbox"  id={field.id} name={field.id}/>
+                    <input type="checkbox"  id={field.id} name={field.id} onChange={handleChange} defaultValue="false"/>
                     </div>
                 )
                 :           
@@ -82,6 +94,11 @@ const RegistrationForm = () => {
             <Form onSubmit={(e) => {SendRegisterRequest(e)}}>
                 {renderFormFields(formFields)}
             <Button className="submitButton" type="submit" variant="outline-dark">Submit</Button>
+            {genreFields !== null &&
+            <div>
+                {renderFormFields(genreFields)}
+            </div>
+            }
             </Form>
             </Card.Body>
         </Card>

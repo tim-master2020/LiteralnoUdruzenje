@@ -2,9 +2,7 @@ package tim22.upp.LiteralnoUdruzenje.model;
 
 import org.camunda.bpm.engine.identity.User;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity

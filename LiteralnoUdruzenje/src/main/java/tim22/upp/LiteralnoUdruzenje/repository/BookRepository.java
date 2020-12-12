@@ -8,8 +8,8 @@ import tim22.upp.LiteralnoUdruzenje.model.Writer;
 import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
-    Book findBookByGenre(Genre genre);
-    Book findBookByWriter(Writer writer);
+    List<Book> findBooksByGenre(Genre genre);
+    List<Book> findBooskByWriter(Writer writer);
     List<Book> findAll();
     Book findBookByName(String name);
 }

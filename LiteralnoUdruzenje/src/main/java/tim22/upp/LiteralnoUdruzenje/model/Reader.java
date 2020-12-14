@@ -4,6 +4,8 @@ import org.camunda.bpm.engine.identity.User;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.security.Timestamp;
+import java.util.Date;
 
 @Entity
 public class Reader implements User,Serializable{
@@ -32,6 +34,8 @@ public class Reader implements User,Serializable{
     @Column
     private String email;
 
+    @Column(name = "last_password_reset_date")
+    private Timestamp lastPasswordResetDate;
 
     @Id
     @Override
@@ -106,5 +110,13 @@ public class Reader implements User,Serializable{
 
     public void setBetaReader(boolean betaReader) {
         this.betaReader = betaReader;
+    }
+
+    public void setLastPasswordResetDate(Timestamp lastPasswordResetDate) {
+        this.lastPasswordResetDate = lastPasswordResetDate;
+    }
+
+    public Timestamp getLastPasswordResetDate() {
+        return this.lastPasswordResetDate;
     }
 }

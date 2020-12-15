@@ -34,7 +34,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserServiceImpl jwtUserService;
 
-    // Neautorizovani pristup zastcenim resursima
     @Autowired
     private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
@@ -44,14 +43,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    // Implementacija PasswordEncoder-a koriscenjem BCrypt hashing funkcije.
-    // BCrypt po defalt-u radi 10 rundi hesiranja prosledjene vrednosti.
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // Definisemo nacin autentifikacije
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 /*
@@ -84,8 +80,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     // Definisemo prava pristupa odredjenim URL-ovima
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-
+        
         http
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)	//ovo je iz demo-a (komunikacija izmedju klijenta i servera je stateless)
                 .and()
@@ -95,8 +90,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 .antMatchers("/").permitAll()
                 .antMatchers("/auth/login").permitAll()
-                .antMatchers("/auth/register").permitAll()
-                .antMatchers("/api/users/getrole/**").permitAll()
+                .antMatchers("/api/users/register").permitAll()
+                .antMatchers("/auth/get-user/**").permitAll()
+                .antMatchers("/auth/get-user/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .cors().and()
@@ -111,7 +107,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         // TokenAuthenticationFilter ce ignorisati sve ispod navedene putanje
         web.ignoring().antMatchers("/");
         web.ignoring().antMatchers(HttpMethod.POST,"/auth/login");
-        //i tako dalje na tu temu...
+        web.ignoring().antMatchers(HttpMethod.GET,"confirm-account/**");
     }
 
 }

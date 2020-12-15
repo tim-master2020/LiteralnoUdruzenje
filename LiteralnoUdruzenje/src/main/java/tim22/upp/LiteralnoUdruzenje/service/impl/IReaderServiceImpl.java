@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tim22.upp.LiteralnoUdruzenje.model.Reader;
 import tim22.upp.LiteralnoUdruzenje.repository.ReaderRepository;
-import tim22.upp.LiteralnoUdruzenje.service.ReaderService;
+import tim22.upp.LiteralnoUdruzenje.service.IReaderService;
 
 @Service
-public class ReaderServiceImpl implements ReaderService {
+public class IReaderServiceImpl implements IReaderService {
 
     @Autowired
     private ReaderRepository readerRepository;
@@ -28,6 +28,11 @@ public class ReaderServiceImpl implements ReaderService {
     @Override
     public Reader findByUsername(String username) {
         return readerRepository.findByUsername(username);
+    }
+
+    @Override
+    public Reader findByEmail(String email) {
+        return readerRepository.findByEmail(email);
     }
 
 }

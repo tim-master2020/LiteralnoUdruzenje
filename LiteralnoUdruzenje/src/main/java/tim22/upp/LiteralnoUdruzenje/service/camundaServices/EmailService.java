@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tim22.upp.LiteralnoUdruzenje.model.Reader;
 import tim22.upp.LiteralnoUdruzenje.service.IEmailService;
-import tim22.upp.LiteralnoUdruzenje.service.ReaderService;
+import tim22.upp.LiteralnoUdruzenje.service.IReaderService;
 
 import java.util.UUID;
 
@@ -21,7 +21,7 @@ public class EmailService implements JavaDelegate {
     private RuntimeService runtimeService;
 
     @Autowired
-    private ReaderService readerService;
+    private IReaderService IReaderService;
 
     //verifed
 

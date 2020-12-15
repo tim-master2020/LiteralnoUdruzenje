@@ -1,5 +1,19 @@
-spring.datasource.url: jdbc:h2:file:./camunda-h2-database
+#spring.datasource.url: jdbc:h2:file:./camunda-h2-database
+spring.datasource.url: jdbc:h2:mem:testdb
+spring.datasource.driverClassName: org.h2.Driver
+spring.datasource.username: sa
+spring.datasource.password:
+spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
 server.port: 8081
 camunda.bpm.admin-user:
   id: demo
   password: demo
+spring.datasource.data : classpath:data.sql
+spring.h2.console.enabled : true
+spring.h2.console.path : /h2-console
+
+spring.mail.host : smtp.gmail.com
+spring.mail.username : ebook.app.upp@gmail.com
+spring.mail.password : upp12345
+spring.mail.port : 587
+spring.mail.properties.mail.smtp.starttls.enable : true

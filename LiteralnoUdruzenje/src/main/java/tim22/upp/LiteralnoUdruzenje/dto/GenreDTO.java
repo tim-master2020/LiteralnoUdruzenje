@@ -3,11 +3,11 @@ package tim22.upp.LiteralnoUdruzenje.dto;
 public class GenreDTO {
 
     private String name;
-    private String id;
+    private Long id;
 
     public GenreDTO() {}
 
-    public GenreDTO(String name, String id) {
+    public GenreDTO(String name, Long id) {
         this.name = name;
         this.id = id;
     }
@@ -20,11 +20,11 @@ public class GenreDTO {
         this.name = name;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }

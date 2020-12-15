@@ -14,5 +14,5 @@ public interface IBookService {
     List<BookDTO> convertFromModelToDto(List<Book> books);
     Book findBookByName(String name);
     List<Book> findAllByGenre(Genre genre);
-    List<Book> findAllByWriter(Writer writer);
+    //List<Book> findAllByWriter(Writer writer);
 }

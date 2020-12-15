@@ -36,8 +36,8 @@ public class BookController {
         return new ResponseEntity(bookService.findAllByGenre(modelMapper.map(genreDTO, Genre.class)), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/by-writer")
+    /*@RequestMapping(method = RequestMethod.GET, value = "/by-writer")
     public ResponseEntity<List<BookDTO>> getAllByGenre(WriterDTO writerDTO) {
         return new ResponseEntity(bookService.findAllByWriter(modelMapper.map(writerDTO, Writer.class)), HttpStatus.OK);
-    }
+    }*/
 }

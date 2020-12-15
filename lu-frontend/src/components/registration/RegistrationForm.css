@@ -17,3 +17,66 @@
 .submitButton{
     width: 35%;
 }
+
+.contentDiv{
+    display: flex;
+}
+
+.betaReaderCard{
+    margin-left: 10%;
+    width: 20%;
+    height: 15%;
+    margin-top: 2%;
+}
+
+.multiSelect{
+    width:95%;
+    margin-top: 2%;
+}
+
+.selectDiv{
+    text-align: left;
+    margin-left: 3%;
+    margin-top: 2%;
+    margin-bottom: 4%;
+}
+
+.moveregistrationCard{
+    margin-left: 10%;
+
+}
+
+.betaReaderSelect{
+    width: 90%;
+    margin-top: 2%;
+}
+
+.betaReaderSelectDiv{
+    margin-left: 5%;
+    margin-top: 2%;
+    margin-bottom: 4%;
+}
+
+.betaReaderCardTitle{
+    padding: 10px;
+}
+
+.avatarDiv{
+    display: flex;
+    margin-left: 12%;
+}
+
+.readOnlyFields{
+    display: none;    
+}
+
+.genres{
+    color: rgb(104, 147, 197)
+}
+
+.genresCard{
+    display: flex;
+}
+.finishButton{
+
+}

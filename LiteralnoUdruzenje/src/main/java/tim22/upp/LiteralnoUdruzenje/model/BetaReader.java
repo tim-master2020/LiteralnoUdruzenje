@@ -1,4 +1,4 @@
-package tim22.upp.LiteralnoUdruzenje.model;
+/*package tim22.upp.LiteralnoUdruzenje.model;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -32,4 +32,4 @@ public class BetaReader extends Reader {
     public void setGenres(Set<Genre> genres) {
         this.genres = genres;
     }
-}
+}*/

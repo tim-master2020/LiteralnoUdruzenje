@@ -4,16 +4,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.glassfish.jersey.Beta;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Genre {
+public class Genre implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
 
+    @Column
     private String name;
 
     @JsonIgnore
@@ -21,17 +24,32 @@ public class Genre {
     private Set<Book> books = new HashSet<Book>();
 
     @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
-    @JoinTable(name = "genre_writers", joinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"))
+    @JoinTable(name = "genre_writers", joinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id"))
     private Set<Writer> authors = new HashSet<Writer>();
 
-    @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
+    /*@ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
     @JoinTable(name = "genre_betareader", joinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "betareader_id", referencedColumnName = "id"))
-    private Set<BetaReader> betaReaders = new HashSet<BetaReader>();
+    private Set<BetaReader> betaReaders = new HashSet<BetaReader>();*/
+
+    @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
+    @JoinTable(name = "reader_genres", joinColumns = @JoinColumn(name = "reader_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"))
+    private Set<Reader> readers = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
+    @JoinTable(name = "betaReader_genres", joinColumns = @JoinColumn(name = "reader_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"))
+    private Set<Reader> betaReaders = new HashSet<>();
 
     public Genre() {
     }
 
     public Genre(long id, String name)
+    {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Genre(String name)
     {
         this.id = id;
         this.name = name;
@@ -69,11 +87,27 @@ public class Genre {
         this.authors = authors;
     }
 
-    public Set<BetaReader> getBetaReaders() {
+    /*public Set<BetaReader> getBetaReaders() {
         return betaReaders;
     }
 
     public void setBetaReaders(Set<BetaReader> betaReaders) {
+        this.betaReaders = betaReaders;
+    }*/
+
+    public Set<Reader> getReaders() {
+        return readers;
+    }
+
+    public void setReaders(Set<Reader> readers) {
+        this.readers = readers;
+    }
+
+    public Set<Reader> getBetaReaders() {
+        return betaReaders;
+    }
+
+    public void setBetaReaders(Set<Reader> betaReaders) {
         this.betaReaders = betaReaders;
     }
 }

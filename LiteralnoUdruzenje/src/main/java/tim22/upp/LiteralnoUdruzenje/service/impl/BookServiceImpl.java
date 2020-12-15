@@ -41,7 +41,7 @@ public class BookServiceImpl implements IBookService {
         return bookRepository.findBooksByGenre(genre);
     }
 
-    public List<Book> findAllByWriter(Writer writer) {
+    /*public List<Book> findAllByWriter(Writer writer) {
         return bookRepository.findBooskByWriter(writer);
-    }
+    }*/
 }

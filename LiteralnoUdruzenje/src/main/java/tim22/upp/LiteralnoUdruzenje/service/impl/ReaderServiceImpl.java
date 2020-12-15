@@ -13,7 +13,21 @@ public class ReaderServiceImpl implements ReaderService {
     private ReaderRepository readerRepository;
 
     @Override
-    public void saveReader(Reader reader) {
-        readerRepository.save(reader);
+    public Reader saveReader(Reader reader) {
+        if (readerRepository.findByUsername(reader.getUsername()) == null) {
+            return  readerRepository.save(reader);
+        }
+        return null;
     }
+
+    @Override
+    public Reader getOne(Long id) {
+       return readerRepository.getOne(id);
+    }
+
+    @Override
+    public Reader findByUsername(String username) {
+        return readerRepository.findByUsername(username);
+    }
+
 }

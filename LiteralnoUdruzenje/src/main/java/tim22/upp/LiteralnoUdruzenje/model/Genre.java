@@ -21,11 +21,9 @@ public class Genre {
     private Set<Book> books = new HashSet<Book>();
 
     @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
-    @JoinTable(name = "genre_writers", joinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"))
     private Set<Writer> authors = new HashSet<Writer>();
 
     @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
-    @JoinTable(name = "genre_betareader", joinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "betareader_id", referencedColumnName = "id"))
     private Set<BetaReader> betaReaders = new HashSet<BetaReader>();
 
     public Genre() {

@@ -19,7 +19,6 @@ public class Book {
     private String name;
 
     @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
-    @JoinTable(name = "book_writers", joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id"))
     private Set<Writer> authors = new HashSet<Writer>();
 
     @JsonIgnore

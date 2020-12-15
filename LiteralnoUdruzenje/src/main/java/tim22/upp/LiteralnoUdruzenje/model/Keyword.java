@@ -15,7 +15,6 @@ public class Keyword {
     private String name;
 
     @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
-    @JoinTable(name = "keyword_books", joinColumns = @JoinColumn(name = "keyword_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"))
     private Set<Book> books = new HashSet<Book>();
 
     public Keyword() {}

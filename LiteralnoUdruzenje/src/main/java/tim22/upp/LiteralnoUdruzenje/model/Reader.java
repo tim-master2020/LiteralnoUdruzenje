@@ -171,5 +171,5 @@ public class Reader implements User,Serializable{
     public Timestamp getLastPasswordResetDate() {
             return this.lastPasswordResetDate;
         }
-        
+
 }

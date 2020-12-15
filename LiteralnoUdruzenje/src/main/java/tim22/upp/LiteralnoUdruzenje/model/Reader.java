@@ -162,13 +162,14 @@ public class Reader implements User,Serializable{
 
     public void setActiveAccount(boolean activeAccount) {
         isActiveAccount = activeAccount;
+    }
 
     public void setLastPasswordResetDate(Timestamp lastPasswordResetDate) {
         this.lastPasswordResetDate = lastPasswordResetDate;
     }
 
     public Timestamp getLastPasswordResetDate() {
-        return this.lastPasswordResetDate;
-
-    }
+            return this.lastPasswordResetDate;
+        }
+        
 }

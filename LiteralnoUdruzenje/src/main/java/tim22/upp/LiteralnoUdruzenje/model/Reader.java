@@ -2,13 +2,18 @@ package tim22.upp.LiteralnoUdruzenje.model;
 
 import org.camunda.bpm.engine.identity.User;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Reader implements User,Serializable{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column
     private String city;
@@ -34,16 +39,23 @@ public class Reader implements User,Serializable{
     @Column
     private String email;
 
+    @Column
+    private boolean isActiveAccount = false;
 
-    @Id
+    @ManyToMany(mappedBy = "readers")
+    private Set<Genre> genres = new HashSet<>();
+
+    @ManyToMany(mappedBy = "betaReaders")
+    private Set<Genre> betaGenres = new HashSet<>();
+
     @Override
     public String getId() {
-        return this.username;
+        return String.valueOf(id);
     }
 
     @Override
     public void setId(String s) {
-        this.username = s;
+        this.id = Long.parseLong(s);
     }
 
     @Override
@@ -108,5 +120,41 @@ public class Reader implements User,Serializable{
 
     public void setBetaReader(boolean betaReader) {
         this.betaReader = betaReader;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Set<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(Set<Genre> genres) {
+        this.genres = genres;
+    }
+
+    public Set<Genre> getBetaGenres() {
+        return betaGenres;
+    }
+
+    public void setBetaGenres(Set<Genre> betaGenres) {
+        this.betaGenres = betaGenres;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public boolean isActiveAccount() {
+        return isActiveAccount;
+    }
+
+    public void setActiveAccount(boolean activeAccount) {
+        isActiveAccount = activeAccount;
     }
 }

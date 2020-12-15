@@ -5,5 +5,7 @@ import tim22.upp.LiteralnoUdruzenje.model.Reader;
 
 public interface ReaderService {
 
-    public void saveReader(Reader reader);
+    public Reader saveReader(Reader reader);
+    public Reader getOne(Long id);
+    public Reader findByUsername(String username);
 }

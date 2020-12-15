@@ -2,10 +2,10 @@ package tim22.upp.LiteralnoUdruzenje.dto;
 
 import java.io.Serializable;
 
-public class FormSubmissionDTO implements Serializable {
+public class FormSubmissionDTO {
 
     String fieldId;
-    String fieldValue;
+    Object fieldValue;
 
 
     public FormSubmissionDTO() {
@@ -13,7 +13,7 @@ public class FormSubmissionDTO implements Serializable {
         // TODO Auto-generated constructor stub
     }
 
-    public FormSubmissionDTO(String fieldId, String fieldValue) {
+    public FormSubmissionDTO(String fieldId, Object fieldValue) {
         super();
         this.fieldId = fieldId;
         this.fieldValue = fieldValue;
@@ -27,11 +27,11 @@ public class FormSubmissionDTO implements Serializable {
         this.fieldId = fieldId;
     }
 
-    public String getFieldValue() {
+    public Object getFieldValue() {
         return fieldValue;
     }
 
-    public void setFieldValue(String fieldValue) {
+    public void setFieldValue(Object fieldValue) {
         this.fieldValue = fieldValue;
     }
 

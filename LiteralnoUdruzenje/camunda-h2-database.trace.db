@@ -682,3 +682,6 @@ Caused by: java.nio.channels.OverlappingFileLockException
 	at java.nio.channels.FileChannel.tryLock(FileChannel.java:1155)
 	at org.h2.mvstore.FileStore.open(FileStore.java:163)
 	... 29 more
+2020-12-13 19:11:48 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "GENRES" not found; SQL statement:
+insert into genres(id,name) values (-1,'Comedy') [42102-200]

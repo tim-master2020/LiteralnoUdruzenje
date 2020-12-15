@@ -157,7 +157,7 @@ const RegistrationForm = ({history}) => {
                     element.classList.add("moveregistrationCard");
                     form.classList.add("readOnlyFields");                   
                 }else{
-                    history.push(`/`);
+                    history.push(`/login`);
                 }
             },
             (resp) => { alert("not registered"); }

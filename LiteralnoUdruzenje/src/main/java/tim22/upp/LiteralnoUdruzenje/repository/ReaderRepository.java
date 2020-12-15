@@ -8,4 +8,5 @@ public interface ReaderRepository extends JpaRepository<Reader, Long> {
 
     Reader save(Reader reader);
     Reader findByUsername(String username);
+    Reader findByEmail(String email);
 }

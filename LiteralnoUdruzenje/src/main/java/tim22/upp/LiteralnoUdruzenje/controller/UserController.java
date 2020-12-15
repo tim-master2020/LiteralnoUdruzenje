@@ -4,9 +4,7 @@ import org.camunda.bpm.engine.*;
 import org.camunda.bpm.engine.form.FormField;
 import org.camunda.bpm.engine.form.TaskFormData;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
-import org.camunda.bpm.engine.task.DelegationState;
 import org.camunda.bpm.engine.task.Task;
-import org.camunda.bpm.engine.task.TaskQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,9 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import tim22.upp.LiteralnoUdruzenje.dto.FormFieldsDTO;
 import tim22.upp.LiteralnoUdruzenje.dto.FormSubmissionDTO;
-import tim22.upp.LiteralnoUdruzenje.dto.ReaderDTO;
 import tim22.upp.LiteralnoUdruzenje.model.Reader;
-import tim22.upp.LiteralnoUdruzenje.service.ReaderService;
+import tim22.upp.LiteralnoUdruzenje.service.IReaderService;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -44,7 +41,7 @@ public class UserController {
     FormService formService;
 
     @Autowired
-    ReaderService readerService;
+    IReaderService IReaderService;
 
     @GetMapping(path = "/reg-task-user", produces = "application/json")
     public @ResponseBody FormFieldsDTO getFormFieldsReaderRegistration() {
@@ -100,7 +97,7 @@ public class UserController {
     @RequestMapping(method= RequestMethod.GET, value="/confirm-account/{procesInstanceId}/{username}")
     public ResponseEntity confirmUserAccount(@PathVariable("username") String username,@PathVariable("procesInstanceId") String procesInstanceId) throws URISyntaxException {
 
-        Reader reader = readerService.findByUsername(username);
+        Reader reader = IReaderService.findByUsername(username);
         if(!reader.isActiveAccount()) {
             runtimeService.setVariable(procesInstanceId, "verifed", true);
             reader.setActiveAccount(true);

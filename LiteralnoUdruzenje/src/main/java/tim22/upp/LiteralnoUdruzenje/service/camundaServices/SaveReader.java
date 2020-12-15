@@ -6,14 +6,12 @@ import org.camunda.bpm.engine.IdentityService;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
-import org.camunda.bpm.engine.identity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tim22.upp.LiteralnoUdruzenje.dto.FormSubmissionDTO;
 import tim22.upp.LiteralnoUdruzenje.model.Genre;
 import tim22.upp.LiteralnoUdruzenje.model.Reader;
 import tim22.upp.LiteralnoUdruzenje.service.IGenreService;
-import tim22.upp.LiteralnoUdruzenje.service.ReaderService;
+import tim22.upp.LiteralnoUdruzenje.service.IReaderService;
 
 @Service
 public class SaveReader implements JavaDelegate{
@@ -22,7 +20,7 @@ public class SaveReader implements JavaDelegate{
     private IdentityService identityService;
 
     @Autowired
-    private  ReaderService readerService;
+    private IReaderService IReaderService;
 
     @Autowired
     private IGenreService genreService;
@@ -59,7 +57,7 @@ public class SaveReader implements JavaDelegate{
             }
             reader.setBetaGenres(betas);
         }
-        Reader isSaved = readerService.saveReader(reader);
+        Reader isSaved = IReaderService.saveReader(reader);
         if(reader != null) {
             runtimeService.setVariable(execution.getProcessInstanceId(), "registeredReader",isSaved);
         }

@@ -26,8 +26,6 @@ import javax.ws.rs.HttpMethod;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-
-
     @Autowired
     TokenUtils tokenUtils;
 

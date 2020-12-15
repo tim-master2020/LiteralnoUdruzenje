@@ -7,6 +7,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+import java.security.Timestamp;
+import java.util.Date;
+
 
 @Entity
 public class Reader implements User,Serializable{
@@ -47,6 +50,9 @@ public class Reader implements User,Serializable{
 
     @ManyToMany(mappedBy = "betaReaders")
     private Set<Genre> betaGenres = new HashSet<>();
+
+    @Column(name = "last_password_reset_date")
+    private Timestamp lastPasswordResetDate;
 
     @Override
     public String getId() {
@@ -156,5 +162,13 @@ public class Reader implements User,Serializable{
 
     public void setActiveAccount(boolean activeAccount) {
         isActiveAccount = activeAccount;
+
+    public void setLastPasswordResetDate(Timestamp lastPasswordResetDate) {
+        this.lastPasswordResetDate = lastPasswordResetDate;
+    }
+
+    public Timestamp getLastPasswordResetDate() {
+        return this.lastPasswordResetDate;
+
     }
 }

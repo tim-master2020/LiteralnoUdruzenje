@@ -39,6 +39,7 @@
           <camunda:formField id="email" label="Email" type="string">
             <camunda:validation>
               <camunda:constraint name="required" />
+              <camunda:constraint name="validator" config="tim22.upp.LiteralnoUdruzenje.validators.EmailValidator" />
             </camunda:validation>
           </camunda:formField>
           <camunda:formField id="username" label="Username" type="string">

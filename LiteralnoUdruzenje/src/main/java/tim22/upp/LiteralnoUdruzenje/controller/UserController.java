@@ -9,6 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import tim22.upp.LiteralnoUdruzenje.dto.FormFieldsDTO;
@@ -16,7 +21,11 @@ import tim22.upp.LiteralnoUdruzenje.dto.FormSubmissionDTO;
 import tim22.upp.LiteralnoUdruzenje.dto.ReaderDTO;
 import tim22.upp.LiteralnoUdruzenje.dto.ValidationErrorDTO;
 import tim22.upp.LiteralnoUdruzenje.model.Reader;
+import tim22.upp.LiteralnoUdruzenje.model.UserTokenState;
+import tim22.upp.LiteralnoUdruzenje.security.TokenUtils;
+import tim22.upp.LiteralnoUdruzenje.security.auth.JwtAuthenticationRequest;
 import tim22.upp.LiteralnoUdruzenje.service.IReaderService;
+import tim22.upp.LiteralnoUdruzenje.service.impl.CustomUserDetailsService;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -45,6 +54,15 @@ public class UserController {
     @Autowired
     IReaderService IReaderService;
 
+    @Autowired
+    private CustomUserDetailsService userDetailsService;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    TokenUtils tokenUtils;
+
     @GetMapping(path = "/reg-task-user", produces = "application/json")
     public @ResponseBody FormFieldsDTO getFormFieldsReaderRegistration() {
         ProcessInstance pi = runtimeService.startProcessInstanceByKey("ReaderRegistration");
@@ -54,14 +72,25 @@ public class UserController {
         return new FormFieldsDTO(task.getId(), pi.getId(), properties);
     }
 
-    @GetMapping(path = "/logintask", produces = "application/json")
-    public @ResponseBody FormFieldsDTO getFormFieldsLoginForm() {
+    @PostMapping(value = "/login")
+    public ResponseEntity<?> login(@RequestBody JwtAuthenticationRequest authenticationRequest) {
 
-        ProcessInstance pi = runtimeService.startProcessInstanceByKey("LoginProcess");
-        Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).list().get(0);
-        TaskFormData taskFormData = formService.getTaskFormData(task.getId());
-        List<FormField> properties = taskFormData.getFormFields();
-        return new FormFieldsDTO(task.getId(), pi.getId(), properties);
+        final Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
+                        authenticationRequest.getPassword()));
+        if(authentication == null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        UserDetails details = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+
+        //username = email in this case
+        String jwt = tokenUtils.generateToken(details.getUsername());
+        int expiresIn = tokenUtils.getExpiredIn();
+
+        return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
     }
 
     @PostMapping(path = "/submit-general-data/{taskId}", produces = "application/json")

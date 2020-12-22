@@ -52,7 +52,7 @@ public class AuthenticationController {
     public ResponseEntity<?> login(@RequestBody JwtAuthenticationRequest authenticationRequest) {
 
         final Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(),
+                .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
                         authenticationRequest.getPassword()));
         if(authentication == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -60,10 +60,10 @@ public class AuthenticationController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        UserDetails details = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
-        String email = authenticationRequest.getEmail();
+        UserDetails details = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+        String username = authenticationRequest.getUsername();
 
-        if (!userService.findByEmail(email).isActiveAccount()) {
+        if (!userService.findByUsername(username).isActiveAccount()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 

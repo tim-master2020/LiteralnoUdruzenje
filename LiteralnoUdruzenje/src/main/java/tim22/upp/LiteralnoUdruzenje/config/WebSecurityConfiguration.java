@@ -87,10 +87,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
 
                 .antMatchers("/").permitAll()
-                .antMatchers("/auth/login").permitAll()
+                .antMatchers("/api/users/login").permitAll()
                 .antMatchers("/api/users/register").permitAll()
-                .antMatchers("/auth/get-user/**").permitAll()
-                .antMatchers("/auth/get-user/**").permitAll()
+                .antMatchers("/api/users/get-user/**").permitAll()
+                .antMatchers("/api/users/get-user/**").permitAll()
+                .antMatchers("/api/users/reg-task-user/**").permitAll()
+                .antMatchers("/api/users/submit-general-data/**").permitAll()
+                .antMatchers("/api/users/submit-beta-user/**").permitAll()
+                .antMatchers("/api/users/confirm-account/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .cors().and()
@@ -104,8 +108,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) {
         // TokenAuthenticationFilter ce ignorisati sve ispod navedene putanje
         web.ignoring().antMatchers("/");
-        web.ignoring().antMatchers(HttpMethod.POST,"/auth/login");
-        web.ignoring().antMatchers(HttpMethod.GET,"confirm-account/**");
+        web.ignoring().antMatchers(HttpMethod.POST,"/api/users/login");
+        web.ignoring().antMatchers(HttpMethod.GET,"/api/users/confirm-account/**");
+        web.ignoring().antMatchers(HttpMethod.POST,"/api/users/submit-general-data/**");
+        web.ignoring().antMatchers(HttpMethod.POST,"api/users/submit-beta-user/**");
     }
 
 }

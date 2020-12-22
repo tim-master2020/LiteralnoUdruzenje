@@ -7,9 +7,12 @@ import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import tim22.upp.LiteralnoUdruzenje.model.Authority;
 import tim22.upp.LiteralnoUdruzenje.model.Genre;
 import tim22.upp.LiteralnoUdruzenje.model.Reader;
+import tim22.upp.LiteralnoUdruzenje.service.IAuthorityService;
 import tim22.upp.LiteralnoUdruzenje.service.IGenreService;
 import tim22.upp.LiteralnoUdruzenje.service.IReaderService;
 
@@ -28,6 +31,12 @@ public class SaveReader implements JavaDelegate{
     @Autowired
     private RuntimeService runtimeService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private IAuthorityService authorityService;
+
     @Override
     public void execute(DelegateExecution execution) throws Exception {
 
@@ -36,7 +45,7 @@ public class SaveReader implements JavaDelegate{
 
         Reader reader = new Reader();
         reader.setUsername(registration.get("username").toString());
-        reader.setPassword(registration.get("password").toString());
+        reader.setPassword(passwordEncoder.encode(registration.get("password").toString()));
         reader.setEmail(registration.get("email").toString());
         reader.setFirstName(registration.get("firstname").toString());
         reader.setLastName(registration.get("lastname").toString());
@@ -44,6 +53,13 @@ public class SaveReader implements JavaDelegate{
         reader.setCity(registration.get("city").toString());
         reader.setBetaReader(Boolean.parseBoolean(registration.get("betaReader").toString()));
         ArrayList<LinkedHashMap<String,String>> genres = (ArrayList<LinkedHashMap<String, String>>) registration.get("Genres");
+
+        Authority authoritie = authorityService.findByName("READER");
+        List<Authority> authorities = new ArrayList<>();
+        authorities.add(authoritie);
+        reader.setAuthorities(authorities);
+
+
         Set<Genre> readerGenres =  new HashSet<>();
         for (LinkedHashMap<String,String> oneOption : genres){
             readerGenres.add(genreService.findByName(oneOption.get("value")));

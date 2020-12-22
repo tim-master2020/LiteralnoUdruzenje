@@ -1,15 +1,22 @@
 package tim22.upp.LiteralnoUdruzenje.model;
 
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import java.security.Timestamp;
+import java.util.List;
+
+import static javax.persistence.InheritanceType.JOINED;
 
 @Entity
-public class User implements org.camunda.bpm.engine.identity.User {
+@Inheritance(strategy=JOINED)
+@javax.persistence.Table(name = "users")
+public class User implements org.camunda.bpm.engine.identity.User, UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @Column
     private String firstname;
@@ -38,9 +45,16 @@ public class User implements org.camunda.bpm.engine.identity.User {
     @Column(name = "last_password_reset_date")
     private Timestamp lastPasswordResetDate;
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_authority",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
+    private List<Authority> authorities;
+
     @Column
     @Enumerated(EnumType.STRING)
     private Role role;
+
 
     @Override
     public String getId() {
@@ -112,6 +126,26 @@ public class User implements org.camunda.bpm.engine.identity.User {
         return username;
     }
 
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -139,4 +173,14 @@ public class User implements org.camunda.bpm.engine.identity.User {
     public void setActiveAccount(boolean activeAccount) {
         isActiveAccount = activeAccount;
     }
+
+    public List<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<Authority> authorities) {
+        this.authorities = authorities;
+    }
+
+
 }

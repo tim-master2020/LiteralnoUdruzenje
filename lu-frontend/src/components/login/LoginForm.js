@@ -6,21 +6,18 @@ import { withRouter } from 'react-router-dom';
 
 const LoginForm = ({ history }) => {
 
-    const [state, setState] = React.useState({
-        username: "",
-        password: "",
-        kola: ""
-    })
+    const [username, setUsername] = React.useState('');
+    const [password,setPasword] = React.useState('');
 
     function handleChange(evt) {
         const value = evt.target.value;
-        setState({
+        /*etState({
             ...state,
             [evt.target.name]: value
-        });
+        });*/
     }
 
-    function SendRegisterRequest(e) {
+    const sendLoginRequest = (e) => {
 
         e.preventDefault();
         const fields = [];
@@ -44,7 +41,7 @@ const LoginForm = ({ history }) => {
                             className="form-control form-control-sm"
                             id="username"
                             name="username"
-                            onChange={this.handleChange}
+                            onChange={(e) => {setUsername(e.target.value)}}
                             placeholder="Enter username"
                             required
                         />
@@ -54,7 +51,7 @@ const LoginForm = ({ history }) => {
                             className="form-control form-control-sm"
                             id="password"
                             name="password"
-                            onChange={this.handleChange}
+                            onChange={(e) => {setPasword(e.target.value)}}
                             placeholder="Enter password"
                             required
                         />

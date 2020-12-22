@@ -4,6 +4,7 @@ import Appbar from './components/appbar/Appbar';
 import HomePage from './containers/HomePage/HomePage';
 import LoginPage from './containers/LoginReg/LoginPage';
 import RegistrationPage from './containers/LoginReg/RegistrationPage';
+import BetaReader from './components/registration/BetaReader.js'
 
 const Routes = () => {
 
@@ -24,6 +25,12 @@ const Routes = () => {
                 <div>
                     <Appbar/>
                     <RegistrationPage/>
+                </div>
+                } />
+             <Route exact path='/betaReader' render={props =>
+                <div>
+                    <Appbar/>
+                    <BetaReader/>
                 </div>
                 } />
         </Switch>

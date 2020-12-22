@@ -37,7 +37,8 @@ const Appbar = ({history}) => {
             marginTop:'3px',
             borderRadius:'5px',
             padding:'3px',
-            marginLeft:'7px'
+            marginLeft:'7px',
+            cursor: 'pointer'
         }
       }));
 

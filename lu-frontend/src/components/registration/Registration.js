@@ -42,7 +42,7 @@ const RegistrationForm = ({history}) => {
                 
             }
             field.value.value = (field.id === "betaReader" && field.value.value === null) ? false : field.value.value;
-            if(field.id === 'multiEnum_genres'){
+            if(field.type.name.includes('multiEnum_genres')){
                 field.value.value = selected;
             }
             returnValue.push({ fieldId: field.id, fieldValue: field.value.value })
@@ -52,6 +52,7 @@ const RegistrationForm = ({history}) => {
         if(dataIsValid){
             console.log('taskid',taskId);
             console.log(returnValue);
+           
             axios.post(`${defaultUrl}/api/users/submit-general-data/${taskId}`, returnValue).then(
             (resp) => {
                 console.log(resp);
@@ -72,7 +73,11 @@ const RegistrationForm = ({history}) => {
                     alert('We have sent you email with conformation link.')
                 }
             },
-            (resp) => { alert("not registered"); }
+            (resp) => { 
+                //alert(resp);
+                alert("Validation failed,try again"); 
+                
+            }
         );
     }
     }

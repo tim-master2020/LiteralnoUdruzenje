@@ -45,7 +45,7 @@ public class SaveReader implements JavaDelegate{
         reader.setCountry(registration.get("country").toString());
         reader.setCity(registration.get("city").toString());
         reader.setBetaReader(Boolean.parseBoolean(registration.get("betaReader").toString()));
-        ArrayList<LinkedHashMap<String,String>> genres = (ArrayList<LinkedHashMap<String, String>>) registration.get("multiEnum_genres");
+        ArrayList<LinkedHashMap<String,String>> genres = (ArrayList<LinkedHashMap<String, String>>) registration.get("Genres");
         Set<Genre> readerGenres =  new HashSet<>();
         for (LinkedHashMap<String,String> oneOption : genres){
             readerGenres.add(genreService.findByName(oneOption.get("value")));

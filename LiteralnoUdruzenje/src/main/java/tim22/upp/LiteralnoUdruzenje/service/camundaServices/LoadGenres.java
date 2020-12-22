@@ -24,7 +24,7 @@ public class LoadGenres implements TaskListener {
             List<GenreDTO> genres = genreService.findAllGenres();
 
             for (FormField field : taskFormFields.getFormFields()) {
-                if (field.getId().equals("multiEnum_genres")) {
+                if (field.getId().equals("Genres")) {
                     MultiEnumType multipleEnumFormType = (MultiEnumType) field.getType();
 
                     for (GenreDTO genre : genres) {

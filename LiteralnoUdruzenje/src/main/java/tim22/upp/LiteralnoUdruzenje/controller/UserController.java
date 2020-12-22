@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import tim22.upp.LiteralnoUdruzenje.dto.FormFieldsDTO;
 import tim22.upp.LiteralnoUdruzenje.dto.FormSubmissionDTO;
 import tim22.upp.LiteralnoUdruzenje.dto.ReaderDTO;
+import tim22.upp.LiteralnoUdruzenje.dto.ValidationErrorDTO;
 import tim22.upp.LiteralnoUdruzenje.model.Reader;
 import tim22.upp.LiteralnoUdruzenje.service.ReaderService;
 
@@ -73,7 +74,12 @@ public class UserController {
         String processInstanceId = task.getProcessInstanceId();
 
         runtimeService.setVariable(processInstanceId, "registration", map);
-        formService.submitTaskForm(taskId, map);
+        try {
+            formService.submitTaskForm(taskId, map);
+        }catch (Exception e){
+            ResponseEntity responseEntity = new ResponseEntity<>("Validation failed,try again.",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
         Task nextTask = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
         if(nextTask !=  null && formService.getTaskFormData(nextTask.getId()) != null){

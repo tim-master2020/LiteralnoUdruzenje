@@ -3,7 +3,7 @@ package tim22.upp.LiteralnoUdruzenje.model;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.security.Timestamp;
+import java.sql.Timestamp;
 import java.util.List;
 
 import static javax.persistence.InheritanceType.JOINED;

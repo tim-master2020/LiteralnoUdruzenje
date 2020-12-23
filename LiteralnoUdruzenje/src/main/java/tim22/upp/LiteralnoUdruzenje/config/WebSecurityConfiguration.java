@@ -95,11 +95,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/users/submit-general-data/**").permitAll()
                 .antMatchers("/api/users/submit-beta-user/**").permitAll()
                 .antMatchers("/api/users/confirm-account/**").permitAll()
+                .antMatchers("/api/users/user").permitAll()
+                .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .cors().and()
-                .addFilterBefore(new TokenAuthenticationFilter(tokenUtils, jwtUserService), BasicAuthenticationFilter.class);
-
+                .addFilterBefore(new TokenAuthenticationFilter(tokenUtils, jwtUserService), BasicAuthenticationFilter.class)
+                .headers().frameOptions().disable();
         http.csrf().disable();
     }
 
@@ -112,6 +114,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers(HttpMethod.GET,"/api/users/confirm-account/**");
         web.ignoring().antMatchers(HttpMethod.POST,"/api/users/submit-general-data/**");
         web.ignoring().antMatchers(HttpMethod.POST,"api/users/submit-beta-user/**");
+        web.ignoring().antMatchers(HttpMethod.GET,"api/users/user");
     }
 
 }

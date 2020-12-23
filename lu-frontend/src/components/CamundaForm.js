@@ -52,6 +52,28 @@ const CamundaForm = ({ formFields,
                         </div>
                     );
                 }
+                if (field.type.name.includes('password')) {
+                    return (
+                        <Form.Group key={field.id} as={Col} className="singleInputField">
+                            <Form.Label>{field.label}</Form.Label>
+                            <Form.Control type="password" id={field.id} name={field.id} onChange={handleChange} />
+                            {isValid.hasOwnProperty(`${field.id}`) &&
+                                showValidationErrors(field)
+                            }
+                         </Form.Group>
+                    );
+                }
+                if (field.type.name.includes('email')) {
+                    return (
+                        <Form.Group key={field.id} as={Col} className="singleInputField">
+                            <Form.Label>{field.label}</Form.Label>
+                            <Form.Control type="email" id={field.id} name={field.id} onChange={handleChange} />
+                            {isValid.hasOwnProperty(`${field.id}`) &&
+                                showValidationErrors(field)
+                            }
+                         </Form.Group>
+                    );
+                }
                 else {
                     return (
                         <Form.Group key={field.id} as={Col} className="singleInputField">

@@ -5,6 +5,7 @@ import org.camunda.bpm.engine.form.FormField;
 import org.camunda.bpm.engine.form.TaskFormData;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,8 @@ import tim22.upp.LiteralnoUdruzenje.dto.FormSubmissionDTO;
 import tim22.upp.LiteralnoUdruzenje.dto.ReaderDTO;
 import tim22.upp.LiteralnoUdruzenje.dto.ValidationErrorDTO;
 import tim22.upp.LiteralnoUdruzenje.model.Reader;
+import tim22.upp.LiteralnoUdruzenje.model.Role;
+import tim22.upp.LiteralnoUdruzenje.model.User;
 import tim22.upp.LiteralnoUdruzenje.model.UserTokenState;
 import tim22.upp.LiteralnoUdruzenje.security.TokenUtils;
 import tim22.upp.LiteralnoUdruzenje.security.auth.JwtAuthenticationRequest;
@@ -63,6 +66,12 @@ public class UserController {
     @Autowired
     TokenUtils tokenUtils;
 
+    @Autowired
+    private IReaderService readerService;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
     @GetMapping(path = "/reg-task-user", produces = "application/json")
     public @ResponseBody FormFieldsDTO getFormFieldsReaderRegistration() {
         ProcessInstance pi = runtimeService.startProcessInstanceByKey("ReaderRegistration");
@@ -93,7 +102,7 @@ public class UserController {
         return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
     }
 
-    @PostMapping(path = "/submit-general-data/{taskId}", produces = "application/json")
+    @PostMapping(path = "/submit-general-data/{taskId}/role", produces = "application/json")
     public ResponseEntity<?> submitRegistrationData(@RequestBody List<FormSubmissionDTO> readerDTO,@PathVariable String taskId) {
 
         HashMap<String, Object> map = this.mapListToDto(readerDTO);
@@ -143,6 +152,21 @@ public class UserController {
             return new ResponseEntity<>(headers, HttpStatus.SEE_OTHER);
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/user")
+    public ResponseEntity<?> getCurrentUser() {
+        Authentication a = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) a.getPrincipal();
+
+        if(user.getRole() == Role.READER) {
+            ReaderDTO readerDTO = modelMapper.map(readerService.findByUsername(user.getUsername()), ReaderDTO.class);
+            return new ResponseEntity<>(readerDTO, HttpStatus.OK);
+
+        }else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
     }
 
     private HashMap<String, Object> mapListToDto(List<FormSubmissionDTO> list)

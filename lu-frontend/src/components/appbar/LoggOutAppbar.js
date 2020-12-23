@@ -7,10 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { Divider, Button } from "@material-ui/core";
 import './Appbar.css';
-import LoggedInAppbar from "./LoggedInAppbar";
-import LoggedOutAppbar from "./LoggOutAppbar";
 
-const Appbar = ({loggedInUser,setLoggedIn}) => {
+const LoggedOutAppbar = ({history,loggedInUser}) => {
     const useStyles = makeStyles((theme) => ({
         root: {
           flexGrow: 1,
@@ -47,14 +45,27 @@ const Appbar = ({loggedInUser,setLoggedIn}) => {
     const classes = useStyles();
 
     return (
-           <div>
-                { loggedInUser !== undefined &&
-                <LoggedInAppbar loggedInUser = {loggedInUser} setLoggedIn={setLoggedIn}/>
-                }
-                 { loggedInUser === undefined &&
-                <LoggedOutAppbar/>
-                }
-            </div>
+           <AppBar elevation={0} position="static">
+            <Toolbar  className={classes.toolbar}>
+                <Typography variant="h6" className={classes.title} onClick={() => { history.push(`/`);}}>
+                    <img alt="logo" src={image} className="logo" ></img>
+                    eBook
+                </Typography>
+                <div className="loginRegButtons">
+                    
+                    <div className= {classes.appbarButton}
+                        onClick={() => {history.push(`/login`);}}
+                    >Login</div>
+                    
+                    <div className={classes.appbarButton}
+                        onClick={() => { history.push(`/registration`);}}
+                    >Register</div>
+                   
+                </div>
+                
+            </Toolbar>
+            <Divider className={classes.divider}/>
+            </AppBar>
     );
 }
-export default (Appbar);
+export default withRouter(LoggedOutAppbar);

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import tim22.upp.LiteralnoUdruzenje.model.Authority;
 import tim22.upp.LiteralnoUdruzenje.model.Genre;
 import tim22.upp.LiteralnoUdruzenje.model.Reader;
+import tim22.upp.LiteralnoUdruzenje.model.Role;
 import tim22.upp.LiteralnoUdruzenje.service.IAuthorityService;
 import tim22.upp.LiteralnoUdruzenje.service.IGenreService;
 import tim22.upp.LiteralnoUdruzenje.service.IReaderService;
@@ -40,7 +41,7 @@ public class SaveReader implements JavaDelegate{
     @Override
     public void execute(DelegateExecution execution) throws Exception {
 
-        HashMap<String, Object> registration = (HashMap<String, Object>) execution.getVariable("registration");
+        HashMap<String, Object> registration = (HashMap<String, Object>) execution.getVariable("registrationReader");
         ArrayList<LinkedHashMap<String,String>> betaGenres = ( ArrayList<LinkedHashMap<String,String>>) execution.getVariable("betaGenres");
 
         Reader reader = new Reader();
@@ -52,6 +53,7 @@ public class SaveReader implements JavaDelegate{
         reader.setCountry(registration.get("country").toString());
         reader.setCity(registration.get("city").toString());
         reader.setBetaReader(Boolean.parseBoolean(registration.get("betaReader").toString()));
+        reader.setRole(Role.READER);
         ArrayList<LinkedHashMap<String,String>> genres = (ArrayList<LinkedHashMap<String, String>>) registration.get("Genres");
 
         Authority authoritie = authorityService.findByName("READER");

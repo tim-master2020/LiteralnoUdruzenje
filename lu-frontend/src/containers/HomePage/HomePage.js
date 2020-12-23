@@ -6,10 +6,10 @@ import photo1 from '../../icons/photo1.svg';
 import photo2 from '../../icons/photo2.svg';
 import photo3 from '../../icons/photo3.svg';
 
-const HomePage = () => {
+const HomePage = ({loggedInUser,setLoggedIn}) => {
     return (
         <div>
-            <Appbar />
+            {/* <Appbar loggedInUser={loggedInUser} setLoggedIn={setLoggedIn}/> */}
             <Carousel style={{heigth:'30%',width:'40%',marginLeft:'30%',marginTop:'2%'}}>
                 <Carousel.Item>
                     <img className="d-block w-100"src={photo1} style={{height:'inherit'}}/>

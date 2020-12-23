@@ -3,8 +3,10 @@ import { defaultUrl } from '../../backendConfig.js';
 import axios from 'axios';
 import { Form, Button, FormGroup, FormControl, ControlLabel, Col, Card } from "react-bootstrap";
 import { withRouter } from 'react-router-dom';
+import getUser from '../../functions/UserFunctions.js';
+import '../../containers/LoginReg/LoginPage.css';
 
-const LoginForm = ({ history }) => {
+const LoginForm = ({ history , setLoggedIn}) => {
 
     const [username, setUsername] = React.useState('');
     const [password,setPasword] = React.useState('');
@@ -22,46 +24,58 @@ const LoginForm = ({ history }) => {
         e.preventDefault();
         const fields = [];
 
-        fields.push({username: username, password: password});
+        const user = {username: username, password: password};
 
-        axios.post(`${defaultUrl}/auth/login`,fields).then(
-            (resp) => this.onSuccessHandler(resp),
-            (resp) => this.onErrorHandler(resp)
+        axios.post(`${defaultUrl}/api/users/login`,user).then(
+            (resp) => {               
+                alert('success');
+                localStorage.setItem('token', resp.data.accessToken);
+                history.push({pathname: '/'});
+                debugger;
+                getUser(setLoggedIn);
+        },
+            (resp) => {alert('wrong')}
         );
     }
 
-    return (
-        <div>
-            <Card style={{ width: '18rem' }}>
+    return (     
+            <Card className="loginFormCard">
                 <Card.Body>
-                    <Card.Title>Enter your creditentials</Card.Title>
-                    <Form onSubmit={(e) => { sendLoginRequest(e) }}>
-                        <label htmlFor="username">Username</label>
-                        <input type="text"
-                            className="form-control form-control-sm"
-                            id="username"
-                            name="username"
+                    <Card.Title className="loginFormTitle">Enter your creditentials</Card.Title>
+                    <Form onSubmit={(e) => { sendLoginRequest(e) }} className="loginForm">
+
+                        <Form.Group  as={Col} className="loginFormInputField">
+                            <Form.Label>Username</Form.Label>
+                            <Form.Control 
+                            id="username" 
+                            name="username" 
                             onChange={(e) => {setUsername(e.target.value)}}
+                            required
                             placeholder="Enter username"
-                            required
-                        />
-                        <br />
-                        <label htmlFor="password">Password</label>
-                        <input type="password"
-                            className="form-control form-control-sm"
-                            id="password"
-                            name="password"
+                             />
+                        </Form.Group>
+
+                        <Form.Group  as={Col} className="loginFormInputField">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control 
+                            id="password" 
+                            name="password" 
                             onChange={(e) => {setPasword(e.target.value)}}
-                            placeholder="Enter password"
                             required
-                        />
-                        <Button variant="primary" type="submit">
+                            placeholder="Enter password"
+                             />
+                        </Form.Group>
+                        
+                        <Form.Group  as={Col} className="loginFormInputField">
+                            <Button variant="primary" type="submit" className="loginButton">
                             Login
                         </Button>
+                        </Form.Group>
+                            
                     </Form>
                 </Card.Body>
             </Card>
-        </div>
+       
     );
 }
-export default LoginForm;
+export default withRouter(LoginForm);

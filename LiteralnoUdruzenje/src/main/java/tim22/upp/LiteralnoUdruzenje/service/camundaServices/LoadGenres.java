@@ -7,8 +7,7 @@ import org.camunda.bpm.engine.form.TaskFormData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tim22.upp.LiteralnoUdruzenje.dto.GenreDTO;
-import tim22.upp.LiteralnoUdruzenje.model.Genre;
-import tim22.upp.LiteralnoUdruzenje.model.MultiEnumType;
+import tim22.upp.LiteralnoUdruzenje.model.camundaCustomTypes.MultiEnumType;
 import tim22.upp.LiteralnoUdruzenje.service.IGenreService;
 
 import java.util.List;

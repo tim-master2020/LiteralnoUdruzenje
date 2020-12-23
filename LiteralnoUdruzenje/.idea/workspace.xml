@@ -2,36 +2,33 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8b41c566-e1ec-4b1c-9879-7d332aa2318e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/repository/AuthorityRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/IAuthorityService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/impl/AuthorityServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/model/camundaCustomTypes/CustomType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/config/WebSecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/config/WebSecurityConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/AuthenticationController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/model/MultiEnumType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/model/camundaCustomTypes/MultiEnumType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/security/auth/JwtAuthenticationRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/security/auth/JwtAuthenticationRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/IUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/security/TokenUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/security/TokenUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/CustomTypeProcessEnginePlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/CustomTypeProcessEnginePlugin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/LoadGenres.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/LoadGenres.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/SaveReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/SaveReader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/impl/CustomUserDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/impl/CustomUserDetailsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/RegistracijaProces.bpmn" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/RegistracijaProces.bpmn" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/data.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/RegistracijaProces.bpmn" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/RegistracijaProces.bpmn" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/data.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/config/WebSecurityConfiguration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/config/WebSecurityConfiguration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/controller/AuthenticationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/controller/AuthenticationController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/model/MultiEnumType.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/model/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/repository/UserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/repository/UserRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/security/auth/JwtAuthenticationRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/security/auth/JwtAuthenticationRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/IUserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/IUserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/security/TokenUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/security/TokenUtils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/camundaServices/CustomTypeProcessEnginePlugin.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/camundaServices/CustomTypeProcessEnginePlugin.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/camundaServices/LoadGenres.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/camundaServices/LoadGenres.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/camundaServices/SaveReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/camundaServices/SaveReader.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/impl/CustomUserDetailsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/impl/CustomUserDetailsService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/impl/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/impl/UserServiceImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lu-frontend/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lu-frontend/src/Routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/src/Routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lu-frontend/src/components/CamundaForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/src/components/CamundaForm.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lu-frontend/src/components/login/LoginForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/src/components/login/LoginForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lu-frontend/src/containers/LoginReg/RegistrationPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/src/containers/LoginReg/RegistrationPage.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,8 +39,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -125,63 +122,63 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="223" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1607432995024" />
-    <state x="574" y="131" key="#com.intellij.ide.util.MemberChooser" timestamp="1608674294133">
+    <state x="574" y="131" key="#com.intellij.ide.util.MemberChooser" timestamp="1608710379568">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="574" y="131" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1607793450418" />
-    <state x="574" y="131" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1608674294133" />
+    <state x="574" y="131" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1608710379568" />
     <state x="620" y="304" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1608669816004">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="620" y="304" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1536.824@0.0.1536.824" timestamp="1608669816004" />
-    <state width="1493" height="252" key="GridCell.Tab.0.bottom" timestamp="1608675631181">
+    <state width="1493" height="174" key="GridCell.Tab.0.bottom" timestamp="1608715994718">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="252" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1608675631181" />
-    <state width="1493" height="252" key="GridCell.Tab.0.center" timestamp="1608675631181">
+    <state width="1493" height="174" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1608715994718" />
+    <state width="1493" height="174" key="GridCell.Tab.0.center" timestamp="1608715994718">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="252" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1608675631181" />
-    <state width="1493" height="252" key="GridCell.Tab.0.left" timestamp="1608675631180">
+    <state width="1493" height="174" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1608715994718" />
+    <state width="1493" height="174" key="GridCell.Tab.0.left" timestamp="1608715994718">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="252" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1608675631180" />
-    <state width="1493" height="252" key="GridCell.Tab.0.right" timestamp="1608675631181">
+    <state width="1493" height="174" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1608715994718" />
+    <state width="1493" height="174" key="GridCell.Tab.0.right" timestamp="1608715994718">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="252" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1608675631181" />
-    <state width="1493" height="252" key="GridCell.Tab.1.bottom" timestamp="1608675631181">
+    <state width="1493" height="174" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1608715994718" />
+    <state width="1493" height="174" key="GridCell.Tab.1.bottom" timestamp="1608715994718">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="252" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1608675631181" />
-    <state width="1493" height="252" key="GridCell.Tab.1.center" timestamp="1608675631181">
+    <state width="1493" height="174" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1608715994718" />
+    <state width="1493" height="174" key="GridCell.Tab.1.center" timestamp="1608715994718">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="252" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1608675631181" />
-    <state width="1493" height="252" key="GridCell.Tab.1.left" timestamp="1608675631181">
+    <state width="1493" height="174" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1608715994718" />
+    <state width="1493" height="174" key="GridCell.Tab.1.left" timestamp="1608715994718">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="252" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1608675631181" />
-    <state width="1493" height="252" key="GridCell.Tab.1.right" timestamp="1608675631181">
+    <state width="1493" height="174" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1608715994718" />
+    <state width="1493" height="174" key="GridCell.Tab.1.right" timestamp="1608715994718">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="252" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1608675631181" />
-    <state width="1493" height="252" key="GridCell.Tab.2.bottom" timestamp="1608675631181">
+    <state width="1493" height="174" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1608715994718" />
+    <state width="1493" height="252" key="GridCell.Tab.2.bottom" timestamp="1608712691341">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="252" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1608675631181" />
-    <state width="1493" height="252" key="GridCell.Tab.2.center" timestamp="1608675631181">
+    <state width="1493" height="252" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1608712691341" />
+    <state width="1493" height="252" key="GridCell.Tab.2.center" timestamp="1608712691341">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="252" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1608675631181" />
-    <state width="1493" height="252" key="GridCell.Tab.2.left" timestamp="1608675631181">
+    <state width="1493" height="252" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1608712691341" />
+    <state width="1493" height="252" key="GridCell.Tab.2.left" timestamp="1608712691341">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="252" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1608675631181" />
-    <state width="1493" height="252" key="GridCell.Tab.2.right" timestamp="1608675631181">
+    <state width="1493" height="252" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1608712691341" />
+    <state width="1493" height="252" key="GridCell.Tab.2.right" timestamp="1608712691341">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="252" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1608675631181" />
+    <state width="1493" height="252" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1608712691341" />
     <state x="279" y="0" key="SettingsEditor" timestamp="1608669807698">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -202,6 +199,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="473" y="53" width="590" height="717" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1608675194928" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1608712367566">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1608712367566" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -223,12 +224,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/SaveReader.java</url>
-          <line>75</line>
+          <line>77</line>
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/SaveReader.java</url>
-          <line>77</line>
+          <line>79</line>
           <option name="timeStamp" value="30" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -243,38 +244,33 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/UserController.java</url>
-          <line>138</line>
+          <line>147</line>
           <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/UserController.java</url>
-          <line>109</line>
+          <line>118</line>
           <option name="timeStamp" value="34" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/UserController.java</url>
-          <line>106</line>
+          <line>115</line>
           <option name="timeStamp" value="35" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/UserController.java</url>
-          <line>112</line>
+          <line>121</line>
           <option name="timeStamp" value="36" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/UserController.java</url>
-          <line>108</line>
+          <line>117</line>
           <option name="timeStamp" value="37" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/UserController.java</url>
-          <line>77</line>
+          <line>86</line>
           <option name="timeStamp" value="40" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/SaveReader.java</url>
-          <line>56</line>
-          <option name="timeStamp" value="42" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

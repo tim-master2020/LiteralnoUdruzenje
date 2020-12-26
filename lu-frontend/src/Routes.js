@@ -5,6 +5,7 @@ import HomePage from './containers/HomePage/HomePage';
 import LoginPage from './containers/LoginReg/LoginPage';
 import RegistrationPage from './containers/LoginReg/RegistrationPage';
 import BetaReader from './components/registration/BetaReader.js'
+import WriterRegistration from './components/registration/WriterRegistration.js'
 
 const Routes = ({loggedInUser,setLoggedIn}) => {
 
@@ -18,6 +19,9 @@ const Routes = ({loggedInUser,setLoggedIn}) => {
                 } />
             <Route exact path='/registration' render={props =>
                     <RegistrationPage/>
+                } />
+            <Route exact path='/registration/writer' render={props =>
+                    <WriterRegistration/>
                 } />
              <Route exact path='/betaReader' render={props =>
                     <BetaReader/>

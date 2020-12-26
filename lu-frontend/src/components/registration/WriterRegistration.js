@@ -8,7 +8,7 @@ import CamundaForm from '../CamundaForm.js';
 import {validate} from '../../functions/FormFunctions';
 import BetaReader from './BetaReader';
 
-const RegistrationForm = ({history}) => {
+const WriterRegistration = ({history}) => {
 
     const [formFields, setformFields] = React.useState([]);
     const [validationMessage, setValidationMessage] = React.useState({});
@@ -18,7 +18,7 @@ const RegistrationForm = ({history}) => {
     const [shouldSubmit,setShouldSubmit] = React.useState(true);
 
     React.useEffect(() => {
-        var type = 'ReaderRegistration';
+        var type = 'WriterRegistration';
         axios.get(`${defaultUrl}/api/users/reg-task/${type}`,).then(
             (resp) => {
                 setformFields(resp.data.formFields);
@@ -105,5 +105,5 @@ const RegistrationForm = ({history}) => {
         </div>
     );
 }
-export default withRouter(RegistrationForm);
+export default withRouter(WriterRegistration);
 

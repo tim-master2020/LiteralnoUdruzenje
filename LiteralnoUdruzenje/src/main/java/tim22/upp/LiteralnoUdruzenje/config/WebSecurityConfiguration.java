@@ -91,7 +91,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/users/register").permitAll()
                 .antMatchers("/api/users/get-user/**").permitAll()
                 .antMatchers("/api/users/get-user/**").permitAll()
-                .antMatchers("/api/users/reg-task-user/**").permitAll()
+                .antMatchers("/api/users/reg-task/**").permitAll()
                 .antMatchers("/api/users/submit-general-data/**").permitAll()
                 .antMatchers("/api/users/submit-beta-user/**").permitAll()
                 .antMatchers("/api/users/confirm-account/**").permitAll()

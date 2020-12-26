@@ -1,11 +1,12 @@
 package tim22.upp.LiteralnoUdruzenje.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Writer {
+public class Writer extends User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

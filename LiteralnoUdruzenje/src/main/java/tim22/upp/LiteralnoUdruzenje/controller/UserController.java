@@ -72,9 +72,9 @@ public class UserController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @GetMapping(path = "/reg-task-user", produces = "application/json")
-    public @ResponseBody FormFieldsDTO getFormFieldsReaderRegistration() {
-        ProcessInstance pi = runtimeService.startProcessInstanceByKey("ReaderRegistration");
+    @GetMapping(path = "/reg-task/{type}", produces = "application/json")
+    public @ResponseBody FormFieldsDTO getFormFieldsReaderRegistration(@PathVariable String type) {
+        ProcessInstance pi = runtimeService.startProcessInstanceByKey(type);
         Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).list().get(0);
         TaskFormData taskFormData = formService.getTaskFormData(task.getId());
         List<FormField> properties = taskFormData.getFormFields();
@@ -102,8 +102,8 @@ public class UserController {
         return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
     }
 
-    @PostMapping(path = "/submit-general-data/{taskId}/role", produces = "application/json")
-    public ResponseEntity<?> submitRegistrationData(@RequestBody List<FormSubmissionDTO> readerDTO,@PathVariable String taskId) {
+    @PostMapping(path = "/submit-general-data/{taskId}/{role}", produces = "application/json")
+    public ResponseEntity<?> submitRegistrationData(@RequestBody List<FormSubmissionDTO> readerDTO,@PathVariable String taskId, @PathVariable String role) {
 
         HashMap<String, Object> map = this.mapListToDto(readerDTO);
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
@@ -115,6 +115,10 @@ public class UserController {
         }catch (Exception e){
             ResponseEntity responseEntity = new ResponseEntity<>("Validation failed,try again.",HttpStatus.BAD_REQUEST);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if (role == "writer"){
+            return new ResponseEntity<>(HttpStatus.OK);
         }
 
         Task nextTask = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();

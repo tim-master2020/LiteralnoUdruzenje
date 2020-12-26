@@ -11,7 +11,7 @@ import './Appbar.css';
 const LoggedOutAppbar = ({history,loggedInUser}) => {
     const useStyles = makeStyles((theme) => ({
         root: {
-          flexGrow: 1,
+          flexGrow: 0,
         },
         menuButton: {
           marginRight: theme.spacing(2),
@@ -39,7 +39,22 @@ const LoggedOutAppbar = ({history,loggedInUser}) => {
             padding:'3px',
             marginLeft:'7px',
             cursor: 'pointer'
-        }
+        },
+        appbarButtonRegWriter: {
+            flexGrow:1,
+            color:'gray',
+            borderStyle: 'solid',
+            borderColor:'gray',
+            borderWidth:'0.5px',
+            marginTop:'3px',
+            borderRadius:'5px',
+            padding:'3px',
+            display: 'inline-block',
+            width: 'fit-content',
+            marginLeft:'7px',
+            marginRight: '10px',
+            cursor: 'pointer',
+        },
       }));
 
     const classes = useStyles();
@@ -60,6 +75,9 @@ const LoggedOutAppbar = ({history,loggedInUser}) => {
                     <div className={classes.appbarButton}
                         onClick={() => { history.push(`/registration`);}}
                     >Register</div>
+                    <div className={classes.appbarButtonRegWriter}
+                        onClick={() => { history.push(`/registration/writer`);}}
+                    >Register as Writer</div>
                    
                 </div>
                 

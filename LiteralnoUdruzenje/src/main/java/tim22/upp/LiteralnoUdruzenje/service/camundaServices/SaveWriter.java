@@ -1,0 +1,65 @@
+package tim22.upp.LiteralnoUdruzenje.service.camundaServices;
+
+import org.camunda.bpm.engine.RuntimeService;
+import org.camunda.bpm.engine.delegate.DelegateExecution;
+import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import tim22.upp.LiteralnoUdruzenje.model.*;
+import tim22.upp.LiteralnoUdruzenje.service.IAuthorityService;
+import tim22.upp.LiteralnoUdruzenje.service.IGenreService;
+import tim22.upp.LiteralnoUdruzenje.service.IReaderService;
+import tim22.upp.LiteralnoUdruzenje.service.IWriterService;
+
+import java.util.*;
+
+public class SaveWriter implements JavaDelegate {
+
+    @Autowired
+    private IWriterService writerService;
+
+    @Autowired
+    private IGenreService genreService;
+
+    @Autowired
+    private RuntimeService runtimeService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private IAuthorityService authorityService;
+
+    @Override
+    public void execute(DelegateExecution delegateExecution) throws Exception {
+        HashMap<String, Object> registration = (HashMap<String, Object>) delegateExecution.getVariable("registrationWriter");
+
+        Writer writer = new Writer();
+        writer.setUsername(registration.get("username").toString());
+        writer.setPassword(passwordEncoder.encode(registration.get("password").toString()));
+        writer.setEmail(registration.get("email").toString());
+        writer.setFirstName(registration.get("firstname").toString());
+        writer.setLastName(registration.get("lastname").toString());
+        writer.setCountry(registration.get("country").toString());
+        writer.setCity(registration.get("city").toString());
+        writer.setRole(Role.WRITER);
+        ArrayList<LinkedHashMap<String,String>> genres = (ArrayList<LinkedHashMap<String, String>>) registration.get("Genres");
+
+        Authority authoritie = authorityService.findByName("WRITER");
+        List<Authority> authorities = new ArrayList<>();
+        authorities.add(authoritie);
+        writer.setAuthorities(authorities);
+
+
+        Set<Genre> writerGenres =  new HashSet<>();
+        for (LinkedHashMap<String,String> oneOption : genres){
+            writerGenres.add(genreService.findByName(oneOption.get("value")));
+        }
+        writer.setGenres(writerGenres);
+
+        Writer isSaved = writerService.saveWriter(writer);
+        if(writer != null) {
+            runtimeService.setVariable(delegateExecution.getProcessInstanceId(), "registeredReader", isSaved);
+        }
+    }
+}

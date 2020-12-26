@@ -5,6 +5,7 @@ import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import tim22.upp.LiteralnoUdruzenje.model.*;
 import tim22.upp.LiteralnoUdruzenje.service.IAuthorityService;
 import tim22.upp.LiteralnoUdruzenje.service.IGenreService;
@@ -13,6 +14,7 @@ import tim22.upp.LiteralnoUdruzenje.service.IWriterService;
 
 import java.util.*;
 
+@Service
 public class SaveWriter implements JavaDelegate {
 
     @Autowired
@@ -32,7 +34,7 @@ public class SaveWriter implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
-        HashMap<String, Object> registration = (HashMap<String, Object>) delegateExecution.getVariable("registrationWriter");
+        HashMap<String, Object> registration = (HashMap<String, Object>) delegateExecution.getVariable("registration");
 
         Writer writer = new Writer();
         writer.setUsername(registration.get("username").toString());
@@ -50,16 +52,16 @@ public class SaveWriter implements JavaDelegate {
         authorities.add(authoritie);
         writer.setAuthorities(authorities);
 
-
         Set<Genre> writerGenres =  new HashSet<>();
         for (LinkedHashMap<String,String> oneOption : genres){
             writerGenres.add(genreService.findByName(oneOption.get("value")));
         }
+
         writer.setGenres(writerGenres);
 
         Writer isSaved = writerService.saveWriter(writer);
-        if(writer != null) {
-            runtimeService.setVariable(delegateExecution.getProcessInstanceId(), "registeredReader", isSaved);
+        if(isSaved != null) {
+            runtimeService.setVariable(delegateExecution.getProcessInstanceId(), "registeredWriter", isSaved);
         }
     }
 }

@@ -14,10 +14,7 @@ public class WriterServiceImpl implements IWriterService {
 
     @Override
     public Writer saveWriter(Writer writer) {
-        if (writerRepository.findByUsername(writer.getUsername()) == null) {
-            return  writerRepository.save(writer);
-        }
-        return null;
+        return writerRepository.findByUsername(writer.getUsername()) == null ? writerRepository.save(writer) : null;
     }
 
     @Override

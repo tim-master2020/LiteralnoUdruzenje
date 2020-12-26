@@ -4,7 +4,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static javax.persistence.InheritanceType.JOINED;
 
@@ -55,6 +57,8 @@ public class User implements org.camunda.bpm.engine.identity.User, UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @ManyToMany(mappedBy = "users")
+    private Set<Genre> genres = new HashSet<>();
 
     @Override
     public String getId() {
@@ -182,5 +186,31 @@ public class User implements org.camunda.bpm.engine.identity.User, UserDetails {
         this.authorities = authorities;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public Set<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(Set<Genre> genres) {
+        this.genres = genres;
+    }
 }

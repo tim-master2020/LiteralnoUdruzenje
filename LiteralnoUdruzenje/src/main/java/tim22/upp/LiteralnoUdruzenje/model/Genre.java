@@ -25,16 +25,12 @@ public class Genre implements Serializable {
 
     @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
 
-    @JoinTable(name = "genre_writers", joinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id"))
-    private Set<Writer> authors = new HashSet<Writer>();
+    @JoinTable(name = "genre_users", joinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    private Set<User> users = new HashSet<>();
 
     /*@ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
     @JoinTable(name = "genre_betareader", joinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "betareader_id", referencedColumnName = "id"))
     private Set<BetaReader> betaReaders = new HashSet<BetaReader>();*/
-
-    @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
-    @JoinTable(name = "reader_genres", joinColumns = @JoinColumn(name = "reader_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"))
-    private Set<Reader> readers = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
     @JoinTable(name = "betaReader_genres", joinColumns = @JoinColumn(name = "reader_id", referencedColumnName = "id"),
@@ -81,12 +77,12 @@ public class Genre implements Serializable {
         this.books = books;
     }
 
-    public Set<Writer> getAuthors() {
-        return authors;
+    public Set<User> getUser() {
+        return users;
     }
 
-    public void setAuthors(Set<Writer> authors) {
-        this.authors = authors;
+    public void setUser(Set<User> user) {
+        this.users = user;
     }
 
     /*public Set<BetaReader> getBetaReaders() {
@@ -96,14 +92,6 @@ public class Genre implements Serializable {
     public void setBetaReaders(Set<BetaReader> betaReaders) {
         this.betaReaders = betaReaders;
     }*/
-
-    public Set<Reader> getReaders() {
-        return readers;
-    }
-
-    public void setReaders(Set<Reader> readers) {
-        this.readers = readers;
-    }
 
     public Set<Reader> getBetaReaders() {
         return betaReaders;

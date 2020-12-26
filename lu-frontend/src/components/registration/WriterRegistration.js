@@ -53,8 +53,8 @@ const WriterRegistration = ({history}) => {
         if(dataIsValid){
             console.log('taskid',taskId);
             console.log(returnValue);
-           
-            axios.post(`${defaultUrl}/api/users/submit-general-data/${taskId}`, returnValue).then(
+            var role = "writer";
+            axios.post(`${defaultUrl}/api/users/submit-general-data/${taskId}/${role}`, returnValue).then(
             (resp) => {
                 console.log(resp);
                 if (resp.data !== "") {

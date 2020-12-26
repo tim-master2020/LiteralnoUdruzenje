@@ -41,7 +41,7 @@ public class SaveReader implements JavaDelegate{
     @Override
     public void execute(DelegateExecution execution) throws Exception {
 
-        HashMap<String, Object> registration = (HashMap<String, Object>) execution.getVariable("registrationReader");
+        HashMap<String, Object> registration = (HashMap<String, Object>) execution.getVariable("registration");
         ArrayList<LinkedHashMap<String,String>> betaGenres = ( ArrayList<LinkedHashMap<String,String>>) execution.getVariable("betaGenres");
 
         Reader reader = new Reader();

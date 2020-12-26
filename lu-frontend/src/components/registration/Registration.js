@@ -54,7 +54,7 @@ const RegistrationForm = ({history}) => {
             console.log('taskid',taskId);
             console.log(returnValue);
            
-            axios.post(`${defaultUrl}/api/users/submit-general-data/${taskId}`, returnValue).then(
+            axios.post(`${defaultUrl}/api/users/submit-general-data/${taskId}/${"reader"}`, returnValue).then(
             (resp) => {
                 console.log(resp);
                 if (resp.data !== "") {

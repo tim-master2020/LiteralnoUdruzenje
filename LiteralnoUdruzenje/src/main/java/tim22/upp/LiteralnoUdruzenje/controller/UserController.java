@@ -28,6 +28,7 @@ import tim22.upp.LiteralnoUdruzenje.model.UserTokenState;
 import tim22.upp.LiteralnoUdruzenje.security.TokenUtils;
 import tim22.upp.LiteralnoUdruzenje.security.auth.JwtAuthenticationRequest;
 import tim22.upp.LiteralnoUdruzenje.service.IReaderService;
+import tim22.upp.LiteralnoUdruzenje.service.IUserService;
 import tim22.upp.LiteralnoUdruzenje.service.impl.CustomUserDetailsService;
 
 import java.net.URI;
@@ -35,7 +36,8 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 
-@Controller
+@CrossOrigin("http://localhost:3000")
+@RestController
 @RequestMapping("/api/users")
 public class UserController {
 
@@ -71,6 +73,9 @@ public class UserController {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private IUserService userService;
 
     @GetMapping(path = "/reg-task/{type}", produces = "application/json")
     public @ResponseBody FormFieldsDTO getFormFieldsReaderRegistration(@PathVariable String type) {
@@ -146,10 +151,10 @@ public class UserController {
     @RequestMapping(method= RequestMethod.GET, value="/confirm-account/{procesInstanceId}/{username}")
     public ResponseEntity confirmUserAccount(@PathVariable("username") String username,@PathVariable("procesInstanceId") String procesInstanceId) throws URISyntaxException {
 
-        Reader reader = IReaderService.findByUsername(username);
-        if(!reader.isActiveAccount()) {
+        User user = userService.findByUsername(username);
+        if(!user.isActiveAccount()) {
             runtimeService.setVariable(procesInstanceId, "verifed", true);
-            reader.setActiveAccount(true);
+            user.setActiveAccount(true);
             URI newUri = new URI("http://localhost:3000/login");
             HttpHeaders headers = new HttpHeaders();
             headers.setLocation(newUri);

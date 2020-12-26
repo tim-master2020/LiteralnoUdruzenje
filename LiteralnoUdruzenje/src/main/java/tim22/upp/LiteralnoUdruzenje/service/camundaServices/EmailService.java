@@ -20,9 +20,6 @@ public class EmailService implements JavaDelegate {
     @Autowired
     private RuntimeService runtimeService;
 
-    @Autowired
-    private IReaderService IReaderService;
-
     //verifed
 
     @Override

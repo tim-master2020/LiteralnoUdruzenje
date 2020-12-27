@@ -6,6 +6,7 @@ import org.camunda.bpm.engine.IdentityService;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.camunda.bpm.engine.identity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -78,6 +79,9 @@ public class SaveReader implements JavaDelegate{
         Reader readerSaved = IReaderService.saveReader(reader);
         if(readerSaved != null) {
             runtimeService.setVariable(execution.getProcessInstanceId(), "registeredUser", readerSaved);
+            tim22.upp.LiteralnoUdruzenje.model.User user1 =  (tim22.upp.LiteralnoUdruzenje.model.User)reader;
+            User camundaUser = (User)user1;
+            identityService.saveUser(camundaUser);
         }
     }
 }

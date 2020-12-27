@@ -79,8 +79,12 @@ public class SaveReader implements JavaDelegate{
         Reader readerSaved = IReaderService.saveReader(reader);
         if(readerSaved != null) {
             runtimeService.setVariable(execution.getProcessInstanceId(), "registeredUser", readerSaved);
-            tim22.upp.LiteralnoUdruzenje.model.User user1 =  (tim22.upp.LiteralnoUdruzenje.model.User)reader;
-            User camundaUser = (User)user1;
+            User camundaUser = identityService.newUser(reader.getUsername());
+            camundaUser.setLastName(reader.getLastName());
+            camundaUser.setFirstName(reader.getFirstName());
+            camundaUser.setEmail(reader.getEmail());
+            camundaUser.setPassword(reader.getPassword());
+            camundaUser.setId((reader.getId()));
             identityService.saveUser(camundaUser);
         }
     }

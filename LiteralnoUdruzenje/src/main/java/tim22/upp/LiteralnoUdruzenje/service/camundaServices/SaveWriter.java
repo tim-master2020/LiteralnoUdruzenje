@@ -72,10 +72,14 @@ public class SaveWriter implements JavaDelegate {
         if(writerSaved != null) {
             delegateExecution.setVariable("isWriterSaved",true);
             runtimeService.setVariable(delegateExecution.getProcessInstanceId(), "registeredUser", writerSaved);
-            tim22.upp.LiteralnoUdruzenje.model.User user1 = writerSaved;
-            org.camunda.bpm.engine.identity.User camundaUser = modelMapper.map(user1, User.class);
+            User camundaUser = identityService.newUser(writerSaved.getUsername());
+            camundaUser.setLastName(writerSaved.getLastName());
+            camundaUser.setFirstName(writerSaved.getFirstName());
+            camundaUser.setEmail(writerSaved.getEmail());
+            camundaUser.setPassword(writerSaved.getPassword());
+            camundaUser.setId((writerSaved.getId()));
             identityService.saveUser(camundaUser);
-            delegateExecution.setVariable("writer",user1);
+            delegateExecution.setVariable("writer",writerSaved.getUsername());
         }
     }
 }

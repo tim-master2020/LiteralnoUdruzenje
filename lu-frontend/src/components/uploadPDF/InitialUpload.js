@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 import CamundaForm from '../CamundaForm.js';
 import {validate} from '../../functions/FormFunctions';
 
-const InitialUpload = ({history, setLoggedIn, type}) => {
+const InitialUpload = ({history, setLoggedIn, type, processId}) => {
 
     const [formFields, setformFields] = React.useState([]);
     const [validationMessage, setValidationMessage] = React.useState({});
@@ -15,10 +15,9 @@ const InitialUpload = ({history, setLoggedIn, type}) => {
     const [isValid, setIsValid] = React.useState({});
     const [taskId, setTaskId] = React.useState('');
     const [shouldSubmit,setShouldSubmit] = React.useState(true);
-    console.log(type);
 
     React.useEffect(() => {
-        axios.get(`${defaultUrl}/api/writers/upload-pdf-task`,).then(
+        axios.get(`${defaultUrl}/api/writers/upload-pdf-task/${processId}`,).then(
             (resp) => {
                 setformFields(resp.data.formFields);
                 setTaskId(resp.data.taskId);
@@ -28,7 +27,7 @@ const InitialUpload = ({history, setLoggedIn, type}) => {
     }, [type]);
 
 
-    function SendRegisterRequest(e) {
+    function SavePdfs(e) {
 
         e.preventDefault();   
         const returnValue = [];
@@ -40,12 +39,6 @@ const InitialUpload = ({history, setLoggedIn, type}) => {
                 setValidationMessage(`Input value for field ${field.id} should be`)
                 dataIsValid = false; 
             }
-
-            field.value.value = (field.id === "betaReader" && field.value.value === null) ? false : field.value.value;
-            
-            if(field.type.name.includes('multiEnum_genres')){
-                field.value.value = selected;
-            }
             returnValue.push({ fieldId: field.id, fieldValue: field.value.value })
         });
         
@@ -54,29 +47,12 @@ const InitialUpload = ({history, setLoggedIn, type}) => {
             console.log('taskid',taskId);
             console.log(returnValue);
            
-            var role = (type === "WriterRegistration") ? "writer" : "reader";
-            axios.post(`${defaultUrl}/api/users/submit-general-data/${taskId}/${role}`, returnValue).then(
+            axios.post(`${defaultUrl}/api/books/save-pdfs/${taskId}`, returnValue).then(
             (resp) => {
-                console.log(resp);
-                if (resp.data !== "") {
-                    /*setformFields(resp.data.formFields);
-                    setTaskId(resp.data.taskId);
-                    setSelected([]);*/
-
-                    history.push({
-                        pathname: '/betaReader',
-                        state: {
-                          formFields: resp.data.formFields,
-                          taskId: resp.data.taskId
-                        }
-                      });
-                                       
-                }else{
-                    alert('We have sent you email with conformation link.')
-                }
+                alert('Your documents are uploaded successfully.')
             },
             (resp) => { 
-                alert("Validation failed,try again"); 
+                alert("Uploading failed, try again."); 
             }
         );
     }
@@ -90,7 +66,7 @@ const InitialUpload = ({history, setLoggedIn, type}) => {
                 <Card.Body>               
                     <CamundaForm
                     formFields={formFields}
-                    onSubmit={(e) => { SendRegisterRequest(e) }} 
+                    onSubmit={(e) => { SavePdfs(e) }} 
                     shouldSubmit={shouldSubmit} 
                     setShouldSubmit={setShouldSubmit}
                     setValidationMessage={setValidationMessage}

@@ -145,13 +145,13 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(method= RequestMethod.GET, value="/confirm-account/{procesInstanceId}/{username}")
-    public ResponseEntity confirmUserAccount(@PathVariable("username") String username,@PathVariable("procesInstanceId") String procesInstanceId) throws URISyntaxException {
+    @RequestMapping(method= RequestMethod.GET, value="/confirm-account/{processInstanceId}/{username}")
+    public ResponseEntity confirmUserAccount(@PathVariable("username") String username,@PathVariable("processInstanceId") String processInstanceId) throws URISyntaxException {
 
         User user = userService.findByUsername(username);
 
         if(!user.isActiveAccount()) {
-            runtimeService.setVariable(procesInstanceId, "verifed", true);
+            runtimeService.setVariable(processInstanceId, "verifed", true);
             URI newUri = new URI("");
 
             if(user.getRole().equals(Role.READER)){
@@ -160,7 +160,8 @@ public class UserController {
             } else if (user.getRole().equals((Role.WRITER))) {
                 Writer writer = (Writer) user;
                 writer.setVerified(true);
-                newUri = new URI("http://localhost:3000/upload");
+                String path = "http://localhost:3000/upload/".concat(processInstanceId);
+                newUri = new URI(path);
             } else {
                 return new ResponseEntity(HttpStatus.BAD_REQUEST);
             }

@@ -97,6 +97,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/users/confirm-account/**").permitAll()
                 .antMatchers("/api/users/user").permitAll()
                 .antMatchers("/api/writers/**").permitAll()
+                .antMatchers("/api/books/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated()
                 .and()

@@ -263,10 +263,10 @@
       <bpmn:incoming>Flow_0gj7jsj</bpmn:incoming>
       <bpmn:outgoing>Flow_1kfgd0y</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:userTask id="UploadPDFForm" name="UploadPDFForm">
+    <bpmn:userTask id="UploadPDFForm" name="UploadPDFForm" camunda:assignee="${writer}">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="uploadPDFs" label="Upload PDF" type="string">
+          <camunda:formField id="uploadPDFs" label="Upload PDF" type="string_input_file">
             <camunda:validation>
               <camunda:constraint name="required" />
             </camunda:validation>
@@ -349,18 +349,6 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_13z0dv0_di" bpmnElement="RegisterWriterForm">
         <dc:Bounds x="1620" y="170" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0toem5p_di" bpmnElement="UploadPDFForm">
-        <dc:Bounds x="2040" y="360" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_124uzwu_di" bpmnElement="Activity_0550sgo">
-        <dc:Bounds x="2040" y="170" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_15ioj7u_di" bpmnElement="Event_13looj1">
-        <dc:Bounds x="2072" y="292" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0i9ghph_di" bpmnElement="Activity_1y9jorm">
-        <dc:Bounds x="2040" y="470" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_123k06n_di" bpmnElement="Activity_123k06n" isExpanded="true">
         <dc:Bounds x="160" y="590" width="2880" height="840" />
@@ -571,6 +559,9 @@
       <bpmndi:BPMNShape id="Event_07l3m1n_di" bpmnElement="Event_09biqvi">
         <dc:Bounds x="2472" y="802" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_15ioj7u_di" bpmnElement="Event_13looj1">
+        <dc:Bounds x="2072" y="292" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0uxaryi_di" bpmnElement="Activity_0uxaryi">
         <dc:Bounds x="2160" y="1460" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -597,6 +588,15 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1dbixl4_di" bpmnElement="SaveUserId">
         <dc:Bounds x="1810" y="170" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_124uzwu_di" bpmnElement="Activity_0550sgo">
+        <dc:Bounds x="2040" y="170" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0toem5p_di" bpmnElement="UploadPDFForm">
+        <dc:Bounds x="2040" y="360" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0i9ghph_di" bpmnElement="Activity_1y9jorm">
+        <dc:Bounds x="2040" y="470" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1xsokmq_di" bpmnElement="Event_0fkdar0">
         <dc:Bounds x="3022" y="932" width="36" height="36" />

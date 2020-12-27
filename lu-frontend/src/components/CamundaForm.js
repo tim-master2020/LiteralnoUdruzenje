@@ -74,6 +74,18 @@ const CamundaForm = ({ formFields,
                          </Form.Group>
                     );
                 }
+                if (field.type.name.includes('input_file')) {
+                    return (
+                        <Form.Group key={field.id} as={Col} className="singleInputField">
+                            <Form.Label>{field.label}</Form.Label>
+                            <br/>
+                            <input type="file"/>
+                            {isValid.hasOwnProperty(`${field.id}`) &&
+                                showValidationErrors(field)
+                            }
+                         </Form.Group>
+                    );
+                }
                 else {
                     return (
                         <Form.Group key={field.id} as={Col} className="singleInputField">

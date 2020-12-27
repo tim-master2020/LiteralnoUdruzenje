@@ -16,6 +16,8 @@ const CamundaForm = ({ formFields,
     setSelected,
     isValid,
     setIsValid,
+    uploadedFiles,
+    setUploadedFiles,
     setformFields}) => {
 
     return (
@@ -79,7 +81,7 @@ const CamundaForm = ({ formFields,
                         <Form.Group key={field.id} as={Col} className="singleInputField">
                             <Form.Label>{field.label}</Form.Label>
                             <br/>
-                            <input type="file"/>
+                            <input multiple type="file" id={field.id} name={field.id} onChange={fileSelectedHandler}/>
                             {isValid.hasOwnProperty(`${field.id}`) &&
                                 showValidationErrors(field)
                             }
@@ -100,6 +102,39 @@ const CamundaForm = ({ formFields,
             }
             )
         }
+    }
+
+    function fileSelectedHandler(e) {
+        var field = formFields;
+
+        var imageNames = [];
+        var array = e.target.files;
+        var i;
+
+        for (i = 0; i < array.length; i++) {
+
+            var file = array[i];
+            var reader = new FileReader();
+
+            reader.onload = (em) => {
+                imageNames.push(em.target.result);
+            }
+
+            reader.readAsDataURL(e.target.files[i]);
+        }
+        console.log(imageNames);
+
+        setUploadedFiles(imageNames);
+        setShouldSubmit(true);
+        // field.value = e.target.value;
+        // if (!validate(field, field.value, setIsValid, isValid)) {
+        //     setValidationMessage(`Input value for field ${field.id} should be`);
+        //     if (Object.keys(isValid).length > 0) {
+        //         setShouldSubmit(false);
+        //     } else {
+        //         setShouldSubmit(true);
+        //     }
+        // }
     }
 
     function handleChange(e) {

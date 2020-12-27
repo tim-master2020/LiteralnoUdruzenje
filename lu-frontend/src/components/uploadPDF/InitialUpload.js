@@ -15,10 +15,12 @@ const InitialUpload = ({history, setLoggedIn, type, processId}) => {
     const [isValid, setIsValid] = React.useState({});
     const [taskId, setTaskId] = React.useState('');
     const [shouldSubmit,setShouldSubmit] = React.useState(true);
+    const [ uploadedFiles, setUploadedFiles ] = React.useState([]);
 
     React.useEffect(() => {
         axios.get(`${defaultUrl}/api/writers/upload-pdf-task/${processId}`,).then(
             (resp) => {
+                console.log(resp.data.formFields);
                 setformFields(resp.data.formFields);
                 setTaskId(resp.data.taskId);
             },
@@ -75,6 +77,8 @@ const InitialUpload = ({history, setLoggedIn, type, processId}) => {
                     setformFields={setformFields}
                     isValid={isValid}
                     setIsValid={setIsValid}
+                    uploadedFiles={uploadedFiles}
+                    setUploadedFiles={setUploadedFiles}
                     />              
                 </Card.Body>
             </Card>

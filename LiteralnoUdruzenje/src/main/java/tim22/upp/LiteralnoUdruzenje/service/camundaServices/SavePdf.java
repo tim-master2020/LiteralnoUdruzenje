@@ -24,12 +24,13 @@ public class SavePdf implements JavaDelegate {
     public void execute(DelegateExecution delegateExecution) throws Exception {
         HashMap<String, Object> docs = (HashMap<String, Object>) delegateExecution.getVariable("docs");
         ArrayList<String> listOfPdfBytes = ((ArrayList<String>) docs.get("uploadPDFs"));
-
+        int count = 0;
         for (String pdfBytesItem : listOfPdfBytes) {
             Book book = new Book();
             book.setName("ime");
             book.setBytes(pdfBytesItem);
-            convertToPdf(book.getBytes(), book);
+            convertToPdf(book.getBytes(), book, count);
+            count++;
 
             Book bookSaved = bookService.save(book);
 
@@ -39,9 +40,8 @@ public class SavePdf implements JavaDelegate {
         }
     }
 
-    private void convertToPdf(String bytes, Book book){
-        int count = 0;
-        File file = new File("src/main/resources/pdfs/" + book.getName() + toString().valueOf(++count) + ".pdf");
+    private void convertToPdf(String bytes, Book book, int count){
+        File file = new File("src/main/resources/pdfs/" + book.getName() + toString().valueOf(count) + ".pdf");
 
         try (FileOutputStream fos = new FileOutputStream(file); ) {
             String realPart = bytes.split(";")[1].split(",")[1];

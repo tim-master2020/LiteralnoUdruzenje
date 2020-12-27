@@ -1,8 +1,11 @@
 package tim22.upp.LiteralnoUdruzenje.service.camundaServices;
 
+import org.camunda.bpm.engine.IdentityService;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.camunda.bpm.engine.identity.User;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,9 @@ import java.util.*;
 public class SaveWriter implements JavaDelegate {
 
     @Autowired
+    private IdentityService identityService;
+
+    @Autowired
     private IWriterService writerService;
 
     @Autowired
@@ -31,6 +37,9 @@ public class SaveWriter implements JavaDelegate {
 
     @Autowired
     private IAuthorityService authorityService;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
@@ -63,6 +72,10 @@ public class SaveWriter implements JavaDelegate {
         if(writerSaved != null) {
             delegateExecution.setVariable("isWriterSaved",true);
             runtimeService.setVariable(delegateExecution.getProcessInstanceId(), "registeredUser", writerSaved);
+            tim22.upp.LiteralnoUdruzenje.model.User user1 = writerSaved;
+            org.camunda.bpm.engine.identity.User camundaUser = modelMapper.map(user1, User.class);
+            identityService.saveUser(camundaUser);
+            delegateExecution.setVariable("writer",user1);
         }
     }
 }

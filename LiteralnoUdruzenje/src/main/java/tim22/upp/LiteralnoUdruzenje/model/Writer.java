@@ -8,12 +8,22 @@ import java.util.Set;
 @Entity
 public class Writer extends User implements Serializable {
 
+    @Column
+    private boolean isVerified;
 
     @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
     @JoinTable(name = "writer_books", joinColumns = @JoinColumn(name = "writer_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"))
     private Set<Book> books = new HashSet<Book>();
 
     public Writer() {}
+
+    public boolean isVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(boolean verified) {
+        isVerified = verified;
+    }
 
     public Set<Book> getBooks() {
         return books;

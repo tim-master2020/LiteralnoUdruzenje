@@ -8,7 +8,7 @@ import CamundaForm from '../CamundaForm.js';
 import {validate} from '../../functions/FormFunctions';
 import BetaReader from './BetaReader';
 
-const RegistrationForm = ({history}) => {
+const RegistrationForm = ({history, type}) => {
 
     const [formFields, setformFields] = React.useState([]);
     const [validationMessage, setValidationMessage] = React.useState({});
@@ -16,9 +16,9 @@ const RegistrationForm = ({history}) => {
     const [isValid, setIsValid] = React.useState({});
     const [taskId, setTaskId] = React.useState('');
     const [shouldSubmit,setShouldSubmit] = React.useState(true);
+    console.log(type);
 
     React.useEffect(() => {
-        var type = 'ReaderRegistration';
         axios.get(`${defaultUrl}/api/users/reg-task/${type}`,).then(
             (resp) => {
                 setformFields(resp.data.formFields);
@@ -26,7 +26,7 @@ const RegistrationForm = ({history}) => {
             },
             (resp) => { alert("error getting form fields,try again"); }
         );
-    }, []);
+    }, [type]);
 
 
     function SendRegisterRequest(e) {
@@ -39,10 +39,11 @@ const RegistrationForm = ({history}) => {
             validate(field,field.value.value,setIsValid,isValid);
             if(Object.keys(isValid).length > 0){
                 setValidationMessage(`Input value for field ${field.id} should be`)
-                dataIsValid = false;
-                
+                dataIsValid = false; 
             }
+
             field.value.value = (field.id === "betaReader" && field.value.value === null) ? false : field.value.value;
+            
             if(field.type.name.includes('multiEnum_genres')){
                 field.value.value = selected;
             }
@@ -54,7 +55,8 @@ const RegistrationForm = ({history}) => {
             console.log('taskid',taskId);
             console.log(returnValue);
            
-            axios.post(`${defaultUrl}/api/users/submit-general-data/${taskId}/${"reader"}`, returnValue).then(
+            var role = (type === "WriterRegistration") ? "writer" : "reader";
+            axios.post(`${defaultUrl}/api/users/submit-general-data/${taskId}/${role}`, returnValue).then(
             (resp) => {
                 console.log(resp);
                 if (resp.data !== "") {
@@ -75,13 +77,12 @@ const RegistrationForm = ({history}) => {
                 }
             },
             (resp) => { 
-                //alert(resp);
                 alert("Validation failed,try again"); 
-                
             }
         );
     }
     }
+
 
     return (
         <div className="contentDiv">

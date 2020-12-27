@@ -21,10 +21,7 @@ import tim22.upp.LiteralnoUdruzenje.dto.FormFieldsDTO;
 import tim22.upp.LiteralnoUdruzenje.dto.FormSubmissionDTO;
 import tim22.upp.LiteralnoUdruzenje.dto.ReaderDTO;
 import tim22.upp.LiteralnoUdruzenje.dto.ValidationErrorDTO;
-import tim22.upp.LiteralnoUdruzenje.model.Reader;
-import tim22.upp.LiteralnoUdruzenje.model.Role;
-import tim22.upp.LiteralnoUdruzenje.model.User;
-import tim22.upp.LiteralnoUdruzenje.model.UserTokenState;
+import tim22.upp.LiteralnoUdruzenje.model.*;
 import tim22.upp.LiteralnoUdruzenje.security.TokenUtils;
 import tim22.upp.LiteralnoUdruzenje.security.auth.JwtAuthenticationRequest;
 import tim22.upp.LiteralnoUdruzenje.service.IReaderService;
@@ -152,14 +149,27 @@ public class UserController {
     public ResponseEntity confirmUserAccount(@PathVariable("username") String username,@PathVariable("procesInstanceId") String procesInstanceId) throws URISyntaxException {
 
         User user = userService.findByUsername(username);
+
         if(!user.isActiveAccount()) {
             runtimeService.setVariable(procesInstanceId, "verifed", true);
-            user.setActiveAccount(true);
-            URI newUri = new URI("http://localhost:3000/login");
+            URI newUri = new URI("");
+
+            if(user.getRole().equals(Role.READER)){
+                user.setActiveAccount(true);
+                newUri = new URI("http://localhost:3000/login");
+            } else if (user.getRole().equals((Role.WRITER))) {
+                Writer writer = (Writer) user;
+                writer.setVerified(true);
+                newUri = new URI("http://localhost:3000/upload");
+            } else {
+                return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            }
+
             HttpHeaders headers = new HttpHeaders();
             headers.setLocation(newUri);
             return new ResponseEntity<>(headers, HttpStatus.SEE_OTHER);
         }
+
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 

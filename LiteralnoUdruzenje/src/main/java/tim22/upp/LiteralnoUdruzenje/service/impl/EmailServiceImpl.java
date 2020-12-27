@@ -6,6 +6,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import tim22.upp.LiteralnoUdruzenje.model.Reader;
+import tim22.upp.LiteralnoUdruzenje.model.User;
 import tim22.upp.LiteralnoUdruzenje.model.Writer;
 import tim22.upp.LiteralnoUdruzenje.service.IEmailService;
 
@@ -19,19 +20,9 @@ public class EmailServiceImpl implements IEmailService {
     private Environment env;
 
     @Override
-    public void sendCustomerEmail(Reader reader,String mailText) {
+    public void sendEmail(User user, String mailText) {
         SimpleMailMessage mail = new SimpleMailMessage();
-        mail.setTo(reader.getEmail());
-        mail.setFrom("ebook.app.upp@gmail.com");
-        mail.setSubject("Ebook: Registration");
-        mail.setText(mailText);
-        javaMailSender.send(mail);
-    }
-
-    @Override
-    public void sendWriterEmail(Writer writer, String mailText) {
-        SimpleMailMessage mail = new SimpleMailMessage();
-        mail.setTo(writer.getEmail());
+        mail.setTo(user.getEmail());
         mail.setFrom("ebook.app.upp@gmail.com");
         mail.setSubject("Ebook: Registration");
         mail.setText(mailText);

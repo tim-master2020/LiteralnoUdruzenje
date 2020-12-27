@@ -75,9 +75,9 @@ public class SaveReader implements JavaDelegate{
             }
             reader.setBetaGenres(betas);
         }
-        Reader isSaved = IReaderService.saveReader(reader);
-        if(reader != null) {
-            runtimeService.setVariable(execution.getProcessInstanceId(), "registeredReader",isSaved);
+        Reader readerSaved = IReaderService.saveReader(reader);
+        if(readerSaved != null) {
+            runtimeService.setVariable(execution.getProcessInstanceId(), "registeredUser", readerSaved);
         }
     }
 }

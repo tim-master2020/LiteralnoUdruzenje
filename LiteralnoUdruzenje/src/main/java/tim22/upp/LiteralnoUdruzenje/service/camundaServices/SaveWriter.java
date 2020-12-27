@@ -58,10 +58,11 @@ public class SaveWriter implements JavaDelegate {
         }
 
         writer.setGenres(writerGenres);
+        Writer writerSaved = writerService.saveWriter(writer);
 
-        Writer isSaved = writerService.saveWriter(writer);
-        if(isSaved != null) {
-            runtimeService.setVariable(delegateExecution.getProcessInstanceId(), "registeredWriter", isSaved);
+        if(writerSaved != null) {
+            delegateExecution.setVariable("isWriterSaved",true);
+            runtimeService.setVariable(delegateExecution.getProcessInstanceId(), "registeredUser", writerSaved);
         }
     }
 }

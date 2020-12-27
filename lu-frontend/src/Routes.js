@@ -5,7 +5,7 @@ import HomePage from './containers/HomePage/HomePage';
 import LoginPage from './containers/LoginReg/LoginPage';
 import RegistrationPage from './containers/LoginReg/RegistrationPage';
 import BetaReader from './components/registration/BetaReader.js'
-import WriterRegistration from './components/registration/WriterRegistration.js'
+import InitialUploadPage from './containers/UploadPDF/InitialUploadPage.js'
 
 const Routes = ({loggedInUser,setLoggedIn}) => {
 
@@ -18,13 +18,16 @@ const Routes = ({loggedInUser,setLoggedIn}) => {
                     <LoginPage setLoggedIn={setLoggedIn} />
                 } />
             <Route exact path='/registration' render={props =>
-                    <RegistrationPage/>
+                    <RegistrationPage props={"ReaderRegistration"} />
                 } />
             <Route exact path='/registration/writer' render={props =>
-                    <WriterRegistration/>
+                    <RegistrationPage props={"WriterRegistration"}/>
                 } />
              <Route exact path='/betaReader' render={props =>
                     <BetaReader/>
+                } />
+             <Route exact path='/upload' render={props =>
+                    <InitialUploadPage setLoggedIn={setLoggedIn}/>
                 } />
         </Switch>
         );

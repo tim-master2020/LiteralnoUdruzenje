@@ -199,11 +199,7 @@
         <bpmn:outgoing>Flow_1p5u1ca</bpmn:outgoing>
       </bpmn:task>
     </bpmn:subProcess>
-    <bpmn:task id="UploadPDFs" name="UploadPDFs">
-      <bpmn:incoming>Flow_0zyj4mc</bpmn:incoming>
-      <bpmn:outgoing>Flow_02aw76r</bpmn:outgoing>
-    </bpmn:task>
-    <bpmn:sequenceFlow id="Flow_02aw76r" sourceRef="UploadPDFs" targetRef="Activity_1y9jorm" />
+    <bpmn:sequenceFlow id="Flow_02aw76r" sourceRef="UploadPDFForm" targetRef="Activity_1y9jorm" />
     <bpmn:intermediateCatchEvent id="Event_13looj1">
       <bpmn:incoming>Flow_1kfgd0y</bpmn:incoming>
       <bpmn:outgoing>Flow_0zyj4mc</bpmn:outgoing>
@@ -212,7 +208,7 @@
       </bpmn:conditionalEventDefinition>
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="Flow_1kfgd0y" sourceRef="Activity_0550sgo" targetRef="Event_13looj1" />
-    <bpmn:sequenceFlow id="Flow_0zyj4mc" sourceRef="Event_13looj1" targetRef="UploadPDFs" />
+    <bpmn:sequenceFlow id="Flow_0zyj4mc" sourceRef="Event_13looj1" targetRef="UploadPDFForm" />
     <bpmn:boundaryEvent id="Success" name="Success" attachedToRef="Activity_123k06n">
       <bpmn:outgoing>Flow_0fgkv43</bpmn:outgoing>
       <bpmn:escalationEventDefinition id="EscalationEventDefinition_047kjqe" escalationRef="Escalation_0a18lpj" />
@@ -253,10 +249,6 @@
     <bpmn:sequenceFlow id="Flow_0n2kuxu" sourceRef="Gateway_0h6iy8e" targetRef="Gateway_1kicapy">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isWriterSaved != true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:task id="Activity_1y9jorm" name="Save pdfs">
-      <bpmn:incoming>Flow_02aw76r</bpmn:incoming>
-      <bpmn:outgoing>Flow_1ar6sdx</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:task id="Activity_17tqnoe" name="Decline membership">
       <bpmn:incoming>Flow_1ak7mkm</bpmn:incoming>
       <bpmn:outgoing>Flow_1tkh0j3</bpmn:outgoing>
@@ -264,15 +256,29 @@
     <bpmn:sequenceFlow id="Flow_1tkh0j3" sourceRef="Activity_17tqnoe" targetRef="NotRegistered" />
     <bpmn:sequenceFlow id="Flow_1ar6sdx" sourceRef="Activity_1y9jorm" targetRef="Activity_123k06n" />
     <bpmn:serviceTask id="SaveUserId" name="SaveUser" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.SaveWriter">
-      <bpmn:extensionElements>
-        <camunda:executionListener class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.SaveWriter" event="start" />
-      </bpmn:extensionElements>
       <bpmn:incoming>Flow_03knpbc</bpmn:incoming>
       <bpmn:outgoing>Flow_0z1qq74</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Activity_0550sgo" name="sendEmail" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.WriterEmailService">
+    <bpmn:serviceTask id="Activity_0550sgo" name="sendEmail" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.EmailService">
       <bpmn:incoming>Flow_0gj7jsj</bpmn:incoming>
       <bpmn:outgoing>Flow_1kfgd0y</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="UploadPDFForm" name="UploadPDFForm">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="uploadPDFs" label="Upload PDF" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0zyj4mc</bpmn:incoming>
+      <bpmn:outgoing>Flow_02aw76r</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Activity_1y9jorm" name="Save pdfs" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.SavePdf">
+      <bpmn:incoming>Flow_02aw76r</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ar6sdx</bpmn:outgoing>
     </bpmn:serviceTask>
   </bpmn:process>
   <bpmn:escalation id="Escalation_0a18lpj" name="Success" escalationCode="success" />
@@ -295,7 +301,7 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0gj7jsj_di" bpmnElement="Flow_0gj7jsj">
         <di:waypoint x="1995" y="210" />
-        <di:waypoint x="2030" y="210" />
+        <di:waypoint x="2040" y="210" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1wmljw0_di" bpmnElement="Flow_1wmljw0">
         <di:waypoint x="1585" y="210" />
@@ -315,14 +321,12 @@
         <di:waypoint x="2160" y="1500" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0zyj4mc_di" bpmnElement="Flow_0zyj4mc">
-        <di:waypoint x="2080" y="318" />
-        <di:waypoint x="2080" y="339" />
-        <di:waypoint x="2090" y="339" />
+        <di:waypoint x="2090" y="328" />
         <di:waypoint x="2090" y="360" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1kfgd0y_di" bpmnElement="Flow_1kfgd0y">
-        <di:waypoint x="2080" y="250" />
-        <di:waypoint x="2080" y="282" />
+        <di:waypoint x="2090" y="250" />
+        <di:waypoint x="2090" y="292" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_02aw76r_di" bpmnElement="Flow_02aw76r">
         <di:waypoint x="2090" y="440" />
@@ -346,11 +350,17 @@
       <bpmndi:BPMNShape id="Activity_13z0dv0_di" bpmnElement="RegisterWriterForm">
         <dc:Bounds x="1620" y="170" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1dbixl4_di" bpmnElement="SaveUserId">
-        <dc:Bounds x="1810" y="170" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_0toem5p_di" bpmnElement="UploadPDFForm">
+        <dc:Bounds x="2040" y="360" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_124uzwu_di" bpmnElement="Activity_0550sgo">
-        <dc:Bounds x="2030" y="170" width="100" height="80" />
+        <dc:Bounds x="2040" y="170" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_15ioj7u_di" bpmnElement="Event_13looj1">
+        <dc:Bounds x="2072" y="292" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0i9ghph_di" bpmnElement="Activity_1y9jorm">
+        <dc:Bounds x="2040" y="470" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_123k06n_di" bpmnElement="Activity_123k06n" isExpanded="true">
         <dc:Bounds x="160" y="590" width="2880" height="840" />
@@ -561,12 +571,6 @@
       <bpmndi:BPMNShape id="Event_07l3m1n_di" bpmnElement="Event_09biqvi">
         <dc:Bounds x="2472" y="802" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_06ubgsh_di" bpmnElement="UploadPDFs">
-        <dc:Bounds x="2040" y="360" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_15ioj7u_di" bpmnElement="Event_13looj1">
-        <dc:Bounds x="2062" y="282" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0uxaryi_di" bpmnElement="Activity_0uxaryi">
         <dc:Bounds x="2160" y="1460" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -588,11 +592,11 @@
       <bpmndi:BPMNShape id="Gateway_0h6iy8e_di" bpmnElement="Gateway_0h6iy8e" isMarkerVisible="true">
         <dc:Bounds x="1945" y="185" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1y9jorm_di" bpmnElement="Activity_1y9jorm">
-        <dc:Bounds x="2040" y="470" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_17tqnoe_di" bpmnElement="Activity_17tqnoe">
         <dc:Bounds x="3110" y="910" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1dbixl4_di" bpmnElement="SaveUserId">
+        <dc:Bounds x="1810" y="170" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1xsokmq_di" bpmnElement="Event_0fkdar0">
         <dc:Bounds x="3022" y="932" width="36" height="36" />

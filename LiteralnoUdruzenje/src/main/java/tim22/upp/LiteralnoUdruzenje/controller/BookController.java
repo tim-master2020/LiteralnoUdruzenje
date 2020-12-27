@@ -19,7 +19,8 @@ import tim22.upp.LiteralnoUdruzenje.service.IBookService;
 import java.util.HashMap;
 import java.util.List;
 
-@Controller
+@CrossOrigin("http://localhost:3000")
+@RestController
 @RequestMapping("/api/books")
 public class BookController {
 

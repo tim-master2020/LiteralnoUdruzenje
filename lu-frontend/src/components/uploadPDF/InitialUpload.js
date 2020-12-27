@@ -5,17 +5,17 @@ import { Form, Button, FormGroup, FormControl, ControlLabel, Col, Card } from "r
 import './InitialUpload.css';
 import { withRouter } from 'react-router-dom';
 import CamundaForm from '../CamundaForm.js';
-import {validate} from '../../functions/FormFunctions';
+import { validate } from '../../functions/FormFunctions';
 
-const InitialUpload = ({history, setLoggedIn, type, processId}) => {
+const InitialUpload = ({ history, setLoggedIn, type, processId }) => {
 
     const [formFields, setformFields] = React.useState([]);
     const [validationMessage, setValidationMessage] = React.useState({});
-    const [selected,setSelected] =  React.useState([]);
+    const [selected, setSelected] = React.useState([]);
     const [isValid, setIsValid] = React.useState({});
     const [taskId, setTaskId] = React.useState('');
-    const [shouldSubmit,setShouldSubmit] = React.useState(true);
-    const [ uploadedFiles, setUploadedFiles ] = React.useState([]);
+    const [shouldSubmit, setShouldSubmit] = React.useState(true);
+    const [uploadedFiles, setUploadedFiles] = React.useState([]);
 
     React.useEffect(() => {
         axios.get(`${defaultUrl}/api/writers/upload-pdf-task/${processId}`,).then(
@@ -31,33 +31,25 @@ const InitialUpload = ({history, setLoggedIn, type, processId}) => {
 
     function SavePdfs(e) {
 
-        e.preventDefault();   
+        e.preventDefault();
         const returnValue = [];
-        let dataIsValid = true;
+        //let dataIsValid = true;
         formFields.forEach(field => {
-
-            validate(field,field.value.value,setIsValid,isValid);
-            if(Object.keys(isValid).length > 0){
-                setValidationMessage(`Input value for field ${field.id} should be`)
-                dataIsValid = false; 
-            }
             returnValue.push({ fieldId: field.id, fieldValue: field.value.value })
         });
-        
-        
-        if(dataIsValid){
-            console.log('taskid',taskId);
-            console.log(returnValue);
-           
-            axios.post(`${defaultUrl}/api/books/save-pdfs/${taskId}`, returnValue).then(
+
+
+        console.log('taskid', taskId);
+        console.log(returnValue);
+
+        axios.post(`${defaultUrl}/api/books/save-pdfs/${taskId}`, returnValue).then(
             (resp) => {
                 alert('Your documents are uploaded successfully.')
             },
-            (resp) => { 
-                alert("Uploading failed, try again."); 
+            (resp) => {
+                alert("Uploading failed, try again.");
             }
         );
-    }
     }
 
 
@@ -65,21 +57,21 @@ const InitialUpload = ({history, setLoggedIn, type, processId}) => {
         <div className="contentDiv">
             <Card className="registrationCard" id="registrationCard">
                 <Card.Title></Card.Title>
-                <Card.Body>               
+                <Card.Body>
                     <CamundaForm
-                    formFields={formFields}
-                    onSubmit={(e) => { SavePdfs(e) }} 
-                    shouldSubmit={shouldSubmit} 
-                    setShouldSubmit={setShouldSubmit}
-                    setValidationMessage={setValidationMessage}
-                    selected={selected}
-                    setSelected={setSelected}
-                    setformFields={setformFields}
-                    isValid={isValid}
-                    setIsValid={setIsValid}
-                    uploadedFiles={uploadedFiles}
-                    setUploadedFiles={setUploadedFiles}
-                    />              
+                        formFields={formFields}
+                        onSubmit={(e) => { SavePdfs(e) }}
+                        shouldSubmit={shouldSubmit}
+                        setShouldSubmit={setShouldSubmit}
+                        setValidationMessage={setValidationMessage}
+                        selected={selected}
+                        setSelected={setSelected}
+                        setformFields={setformFields}
+                        isValid={isValid}
+                        setIsValid={setIsValid}
+                        uploadedFiles={uploadedFiles}
+                        setUploadedFiles={setUploadedFiles}
+                    />
                 </Card.Body>
             </Card>
         </div>

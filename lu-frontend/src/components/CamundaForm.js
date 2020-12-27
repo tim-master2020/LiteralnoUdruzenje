@@ -82,9 +82,6 @@ const CamundaForm = ({ formFields,
                             <Form.Label>{field.label}</Form.Label>
                             <br/>
                             <input multiple type="file" id={field.id} name={field.id} onChange={fileSelectedHandler}/>
-                            {isValid.hasOwnProperty(`${field.id}`) &&
-                                showValidationErrors(field)
-                            }
                          </Form.Group>
                     );
                 }
@@ -125,6 +122,13 @@ const CamundaForm = ({ formFields,
         console.log(imageNames);
 
         setUploadedFiles(imageNames);
+        var temp = formFields;
+        temp.forEach(field => {
+            if (e.target.name === field.id) {
+                    field.value.value = imageNames;
+            }
+        });
+        setformFields(temp);
         setShouldSubmit(true);
         // field.value = e.target.value;
         // if (!validate(field, field.value, setIsValid, isValid)) {

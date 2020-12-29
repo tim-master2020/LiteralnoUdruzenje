@@ -104,28 +104,33 @@ const CamundaForm = ({ formFields,
     function fileSelectedHandler(e) {
         var field = formFields;
 
-        var imageNames = [];
+        var fileBytes = [];
+        var fileNames = [];
+        var all = [];
         var array = e.target.files;
         var i;
 
         for (i = 0; i < array.length; i++) {
 
-            var file = array[i];
+            var fileName = "Filename" + array[i].name;
             var reader = new FileReader();
 
             reader.onload = (em) => {
-                imageNames.push(em.target.result);
+                all.push(em.target.result);
+                
             }
+
+            all.push(fileName);
 
             reader.readAsDataURL(e.target.files[i]);
         }
-        console.log(imageNames);
+        console.log(fileBytes);
 
-        setUploadedFiles(imageNames);
+        setUploadedFiles(fileBytes);
         var temp = formFields;
         temp.forEach(field => {
             if (e.target.name === field.id) {
-                    field.value.value = imageNames;
+                    field.value.value = all;
             }
         });
         setformFields(temp);

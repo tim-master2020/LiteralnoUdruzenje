@@ -20,17 +20,35 @@ public class SavePdf implements JavaDelegate {
     @Autowired
     private IBookService bookService;
 
+    private ArrayList<String> fileBytes = new ArrayList<>();
+
+    public ArrayList<String> getFileBytes() {
+        return fileBytes;
+    }
+
+    public void setFileBytes(ArrayList<String> fileBytes) {
+        this.fileBytes = fileBytes;
+    }
+
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
         HashMap<String, Object> docs = (HashMap<String, Object>) delegateExecution.getVariable("docs");
-        ArrayList<String> listOfPdfBytes = ((ArrayList<String>) docs.get("uploadPDFs"));
-        int count = 0;
-        for (String pdfBytesItem : listOfPdfBytes) {
+        ArrayList<String> all = ((ArrayList<String>) docs.get("uploadPDFs"));
+        ArrayList<String> fileNames = new ArrayList<>();
+        for (String item : all) {
+            if (item.contains("Filename")) {
+                String filename = item.split("Filename")[1];
+                fileNames.add(filename);
+            } else {
+                fileBytes.add(item);
+            }
+        }
+
+        for(int i = 0; i<= getFileBytes().size(); i++) {
             Book book = new Book();
-            book.setName("ime");
-            book.setBytes(pdfBytesItem);
-            convertToPdf(book.getBytes(), book, count);
-            count++;
+            book.setName(fileNames.get(i));
+            book.setBytes(getFileBytes().get(i));
+            convertToPdf(book.getBytes(), book);
 
             Book bookSaved = bookService.save(book);
 
@@ -40,8 +58,8 @@ public class SavePdf implements JavaDelegate {
         }
     }
 
-    private void convertToPdf(String bytes, Book book, int count){
-        File file = new File("src/main/resources/pdfs/" + book.getName() + toString().valueOf(count) + ".pdf");
+    private void convertToPdf(String bytes, Book book){
+        File file = new File("src/main/resources/pdfs/" + book.getName());
 
         try (FileOutputStream fos = new FileOutputStream(file); ) {
             String realPart = bytes.split(";")[1].split(",")[1];

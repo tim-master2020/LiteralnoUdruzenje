@@ -44,7 +44,7 @@ public class SavePdf implements JavaDelegate {
             }
         }
 
-        for(int i = 0; i<= getFileBytes().size(); i++) {
+        for(int i = 0; i < getFileBytes().size(); i++) {
             Book book = new Book();
             book.setName(fileNames.get(i));
             book.setBytes(getFileBytes().get(i));

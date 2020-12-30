@@ -1,6 +1,5 @@
 import React from 'react'
 import {Route, withRouter, Switch } from "react-router-dom";
-import Appbar from './components/appbar/Appbar';
 import HomePage from './containers/HomePage/HomePage';
 import LoginPage from './containers/LoginReg/LoginPage';
 import RegistrationPage from './containers/LoginReg/RegistrationPage';
@@ -11,7 +10,7 @@ const Routes = ({loggedInUser,setLoggedIn}) => {
     return (
         <Switch>
             <Route exact path='/' render={props =>
-                    <HomePage/>
+                    <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn}/>
                 } />
             <Route exact path='/login' render={props =>
                     <LoginPage setLoggedIn={setLoggedIn} />

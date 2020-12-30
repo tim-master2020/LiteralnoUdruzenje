@@ -13,10 +13,6 @@ const LoginForm = ({ history , setLoggedIn}) => {
 
     function handleChange(evt) {
         const value = evt.target.value;
-        /*etState({
-            ...state,
-            [evt.target.name]: value
-        });*/
     }
 
     const sendLoginRequest = (e) => {
@@ -59,7 +55,8 @@ const LoginForm = ({ history , setLoggedIn}) => {
                             <Form.Label>Password</Form.Label>
                             <Form.Control 
                             id="password" 
-                            name="password" 
+                            name="password"
+                            type="password" 
                             onChange={(e) => {setPasword(e.target.value)}}
                             required
                             placeholder="Enter password"

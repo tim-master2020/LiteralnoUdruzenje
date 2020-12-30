@@ -4,7 +4,6 @@ import { Route, withRouter, Switch, BrowserRouter as Router } from "react-router
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import getUser from './functions/UserFunctions';
-import Appbar from './components/appbar/Appbar';
 
 const App = () => {
   const [loggedInUser, setLoggedIn] = React.useState(undefined);
@@ -13,11 +12,12 @@ const App = () => {
     getUser(setLoggedIn);
 }, []);
 
+//<Appbar loggedInUser = {loggedInUser} setLoggedIn= {setLoggedIn}/>
+
   return (
     <div className="App">
       <Router>
-        <Appbar loggedInUser = {loggedInUser} setLoggedIn= {setLoggedIn}/>
-        <Routes setLoggedIn= {setLoggedIn}/>
+        <Routes setLoggedIn= {setLoggedIn} loggedInUser={loggedInUser}/>
       </Router>
     </div>
   );

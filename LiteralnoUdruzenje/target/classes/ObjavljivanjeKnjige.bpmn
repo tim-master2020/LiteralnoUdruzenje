@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1du25w8" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
+  <bpmn:process id="BookPublishing" name="BookPublishing" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0pb6q3w</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0pb6q3w" sourceRef="StartEvent_1" targetRef="Activity_01gath5" />
+    <bpmn:userTask id="Activity_01gath5" name="BookGeneralData">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="bookTitle" label="Book title" type="string" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0pb6q3w</bpmn:incoming>
+      <bpmn:outgoing>Flow_1kaj5y0</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1kaj5y0" sourceRef="Activity_01gath5" targetRef="Activity_07nbsww" />
+    <bpmn:sequenceFlow id="Flow_1flmgmp" sourceRef="Activity_07nbsww" targetRef="Activity_1x9xrnw" />
+    <bpmn:sequenceFlow id="Flow_0e7hoe4" sourceRef="Activity_1x9xrnw" targetRef="Event_0brcw0b" />
+    <bpmn:endEvent id="Event_1xvllid">
+      <bpmn:incoming>Flow_0z9vau1</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Activity_07nbsww" name="Save book data" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.bookPublishing.SaveGeneralBookData">
+      <bpmn:incoming>Flow_1kaj5y0</bpmn:incoming>
+      <bpmn:outgoing>Flow_1flmgmp</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0z9vau1" sourceRef="Event_0brcw0b" targetRef="Event_1xvllid" />
+    <bpmn:intermediateThrowEvent id="Event_0brcw0b" name="Notify choosen editor">
+      <bpmn:incoming>Flow_0e7hoe4</bpmn:incoming>
+      <bpmn:outgoing>Flow_0z9vau1</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_11ed7zn" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.EmailServices.SendEditorEmailForReview" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:serviceTask id="Activity_1x9xrnw" name="Choose one editor" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.bookPublishing.ChooseEditorForBookReview">
+      <bpmn:incoming>Flow_1flmgmp</bpmn:incoming>
+      <bpmn:outgoing>Flow_0e7hoe4</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmn:message id="Message_1w8d8gf" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="BookPublishing">
+      <bpmndi:BPMNEdge id="Flow_0pb6q3w_di" bpmnElement="Flow_0pb6q3w">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="270" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1kaj5y0_di" bpmnElement="Flow_1kaj5y0">
+        <di:waypoint x="370" y="117" />
+        <di:waypoint x="430" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1flmgmp_di" bpmnElement="Flow_1flmgmp">
+        <di:waypoint x="530" y="117" />
+        <di:waypoint x="590" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0e7hoe4_di" bpmnElement="Flow_0e7hoe4">
+        <di:waypoint x="690" y="117" />
+        <di:waypoint x="742" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0z9vau1_di" bpmnElement="Flow_0z9vau1">
+        <di:waypoint x="778" y="117" />
+        <di:waypoint x="852" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1m0ykaa_di" bpmnElement="Activity_01gath5">
+        <dc:Bounds x="270" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1xvllid_di" bpmnElement="Event_1xvllid">
+        <dc:Bounds x="852" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_09cvnni_di" bpmnElement="Activity_07nbsww">
+        <dc:Bounds x="430" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0fechj8_di" bpmnElement="Event_0brcw0b">
+        <dc:Bounds x="742" y="99" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="724" y="142" width="74" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1fv8w25_di" bpmnElement="Activity_1x9xrnw">
+        <dc:Bounds x="590" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

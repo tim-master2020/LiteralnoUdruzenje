@@ -8,7 +8,7 @@ export default function getUser(setLoggedIn) {
             headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
         };
 
-        axios.get(`${defaultUrl}/api/users/user`, options).then(
+        axios.get(`${defaultUrl}/auth/user`, options).then(
             (resp) => {
                 setLoggedIn(resp.data);
             },

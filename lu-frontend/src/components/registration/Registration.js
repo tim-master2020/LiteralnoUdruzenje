@@ -57,10 +57,7 @@ const RegistrationForm = ({history}) => {
             (resp) => {
                 console.log(resp);
                 if (resp.data !== "") {
-                    /*setformFields(resp.data.formFields);
-                    setTaskId(resp.data.taskId);
-                    setSelected([]);*/
-
+                
                     history.push({
                         pathname: '/betaReader',
                         state: {

@@ -9,6 +9,5 @@ import java.util.List;
 public interface WriterRepository extends JpaRepository<Writer, Long> {
     Writer findByUsername(String name);
     Writer findWriterByEmail(String email);
-    //List<Writer> findWritersByGenre(Genre genre);
     List<Writer> findAll();
 }

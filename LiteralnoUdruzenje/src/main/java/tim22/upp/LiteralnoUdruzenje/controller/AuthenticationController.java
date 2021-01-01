@@ -73,19 +73,17 @@ public class AuthenticationController {
         return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
     }
 
-
-
     @RequestMapping(method = RequestMethod.GET, value = "/user")
     public ResponseEntity<?> getCurrentUser() {
         Authentication a = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) a.getPrincipal();
 
-        if(user.getRole() == Role.READER) {
+        if(user.getRole().equals(Role.READER)) {
             Reader reader = readerService.findByEmail(user.getEmail());
             ReaderDTO readerDTO = modelMapper.map(reader, ReaderDTO.class);
             return new ResponseEntity<>(readerDTO, HttpStatus.OK);
 
-        } else if ( user.getRole() == Role.WRITER){
+        } else if ( user.getRole().equals(Role.WRITER)){
             Writer writer = writerService.findByEmail(user.getEmail());
             WriterDTO writerDTO = modelMapper.map(writer, WriterDTO.class);
             return new ResponseEntity<>(writerDTO, HttpStatus.OK);

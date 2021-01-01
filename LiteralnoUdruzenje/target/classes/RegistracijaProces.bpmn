@@ -104,7 +104,7 @@
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="Flow_0gpwr7r" sourceRef="Event_1vgiwo4" targetRef="Event_0dbetm8" />
     <bpmn:sequenceFlow id="Flow_080xiqu" sourceRef="sendEmail" targetRef="Event_1vgiwo4" />
-    <bpmn:serviceTask id="sendEmail" name="sendEmail" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.EmailService">
+    <bpmn:serviceTask id="sendEmail" name="sendEmail" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.EmailServices.EmailService">
       <bpmn:incoming>Flow_0g37d8i</bpmn:incoming>
       <bpmn:outgoing>Flow_080xiqu</bpmn:outgoing>
     </bpmn:serviceTask>

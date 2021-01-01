@@ -18,6 +18,8 @@ public class ReaderDTO {
 
     private boolean betaReader;
 
+    private String role = "READER";
+
     public ReaderDTO(String firstname, String lastname, String city, String country, String email, String username, String password, boolean betaReader) {
         this.firstname = firstname;
         this.lastname = lastname;
@@ -93,5 +95,13 @@ public class ReaderDTO {
 
     public void setBetaReader(boolean betaReader) {
         this.betaReader = betaReader;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

@@ -1,5 +1,8 @@
 package tim22.upp.LiteralnoUdruzenje.model;
 
+import tim22.upp.LiteralnoUdruzenje.model.Book;
+import tim22.upp.LiteralnoUdruzenje.model.User;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;

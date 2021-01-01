@@ -4,13 +4,12 @@ package tim22.upp.LiteralnoUdruzenje.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.camunda.bpm.engine.identity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import tim22.upp.LiteralnoUdruzenje.helper.TimeProvider;
-import tim22.upp.LiteralnoUdruzenje.model.Reader;
+import tim22.upp.LiteralnoUdruzenje.model.User;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -82,7 +81,7 @@ public class TokenUtils {
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {
-        Reader user = (Reader) userDetails;
+        User user = (User) userDetails;
         final String email = getEmailFromToken(token);
         final Date created = getIssuedAtDateFromToken(token);
 

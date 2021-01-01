@@ -1,4 +1,4 @@
-package tim22.upp.LiteralnoUdruzenje.service.camundaServices;
+package tim22.upp.LiteralnoUdruzenje.service.camundaServices.EmailServices;
 
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;

@@ -3,7 +3,7 @@ import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
 import MenuIcon from '@material-ui/icons/Menu';
 import Divider from '@material-ui/core/Divider';
-import { withRouter } from 'react-router-dom';
+import { withRouter, useParams } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import clsx from 'clsx';
@@ -14,6 +14,7 @@ import { SidebarList } from './SidebarList';
 import { styling } from './SidebarStyling';
 import { AppBar, Toolbar } from "@material-ui/core";
 import { defaultUrl } from '../../backendConfig';
+import InitialUpload from "../../components/uploadPDF/InitialUpload";
 
 const LoggedInHomepage = ({ loggedInUser, setLoggedIn,history, isInitialUpload }) => {
     const [isOpen, setOpen] = useState(false);
@@ -25,7 +26,9 @@ const LoggedInHomepage = ({ loggedInUser, setLoggedIn,history, isInitialUpload }
     const theme = useTheme();
     const useStyles = makeStyles((theme) => (styling(theme)));
     const classes = useStyles();
-    
+
+    let {id} = useParams();
+
     // const startPublishBookProcess = () => {
     //     axios.get(`${defaultUrl}/auth/user`, options).then(
     //         (resp) => {
@@ -74,6 +77,9 @@ const LoggedInHomepage = ({ loggedInUser, setLoggedIn,history, isInitialUpload }
             </Drawer>
             <main className={clsx(classes.content, { [classes.contentShift]: isOpen })}>
                 <div className={classes.drawerHeader} />
+                { isInitialUpload &&
+                    <InitialUpload processId={id}/>
+                }
             </main>
         </div>
     );

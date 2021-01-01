@@ -25,8 +25,11 @@ const Routes = ({loggedInUser,setLoggedIn}) => {
              <Route exact path='/betaReader' render={props =>
                     <BetaReader/>
                 } />
-             <Route exact path='/upload/:id' render={props =>
+             {/* <Route exact path='/upload/:id' render={props =>
                     <InitialUploadPage />
+                } /> */}
+                 <Route exact path='/upload/:id' render={props =>
+                    <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} isInitialUpload={true}/>
                 } />
         </Switch>
         );

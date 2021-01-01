@@ -14,11 +14,21 @@ public class WriterServiceImpl implements IWriterService {
 
     @Override
     public Writer saveWriter(Writer writer) {
-        return writerRepository.findByUsername(writer.getUsername()) == null ? writerRepository.save(writer) : null;
+        return (writerRepository.findByUsername(writer.getUsername()) == null && writerRepository.findWriterByEmail(writer.getEmail()) == null) ? writerRepository.save(writer) : null;
     }
 
     @Override
     public Writer findByEmail(String email) {
         return writerRepository.findWriterByEmail(email);
+    }
+
+    @Override
+    public Writer findByUsername(String username) {
+        return writerRepository.findByUsername(username);
+    }
+
+    @Override
+    public Writer updateWriter(Writer writer) {
+        return writerRepository.save(writer);
     }
 }

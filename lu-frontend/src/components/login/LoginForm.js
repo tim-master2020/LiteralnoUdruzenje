@@ -22,7 +22,7 @@ const LoginForm = ({ history , setLoggedIn}) => {
 
         const user = {username: username, password: password};
 
-        axios.post(`${defaultUrl}/api/users/login`,user).then(
+        axios.post(`${defaultUrl}/auth/login`,user).then(
             (resp) => {               
                 alert('success');
                 localStorage.setItem('token', resp.data.accessToken);

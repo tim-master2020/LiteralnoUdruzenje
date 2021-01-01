@@ -4,18 +4,17 @@ import { withRouter, useParams } from 'react-router-dom';
 import HomePage from '../HomePage/HomePage';
 
 
-const InitialUploadPage = ({setLoggedIn,history}) => {
+const InitialUploadPage = ({history}) => {
 
     let { id } = useParams();
-    console.log(id)
 
     React.useEffect(() => {
-        if(localStorage.length > 0){
+        if(localStorage.length == 0){
             history.push('/');
         }
     }, []);
 
-    return(!localStorage.getItem('token') && <InitialUpload setLoggedIn={setLoggedIn} processId={id}/>);
+    return(localStorage.getItem('token') && <InitialUpload processId={id}/>);
 
 }
 export default withRouter(InitialUploadPage);

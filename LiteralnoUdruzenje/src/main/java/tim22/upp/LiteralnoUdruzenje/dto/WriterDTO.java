@@ -5,7 +5,9 @@ import tim22.upp.LiteralnoUdruzenje.model.Genre;
 import tim22.upp.LiteralnoUdruzenje.model.Writer;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class WriterDTO {
@@ -32,9 +34,11 @@ public class WriterDTO {
 
     private String role = "WRITER";
 
+    private List<TaskDTO> tasks = new ArrayList<>();
+
     public WriterDTO(){}
 
-    public WriterDTO(Long id, String firstname, String lastname, String password, String username, String email, String city, String country, boolean isActiveAccount, Set<BookDTO> books) {
+    public WriterDTO(Long id, String firstname, String lastname, String password, String username, String email, String city, String country, boolean isActiveAccount, Set<BookDTO> books, List<TaskDTO> tasks) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -45,6 +49,7 @@ public class WriterDTO {
         this.country = country;
         this.isActiveAccount = isActiveAccount;
         this.books = books;
+        this.tasks = tasks;
     }
 
     public Long getId() {
@@ -133,5 +138,13 @@ public class WriterDTO {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public List<TaskDTO> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<TaskDTO> tasks) {
+        this.tasks = tasks;
     }
 }

@@ -29,13 +29,14 @@ public class WriterController {
     @Autowired
     FormService formService;
 
-    @GetMapping(path = "/upload-pdf-task/{processInstanceId}", produces = "application/json")
-    public @ResponseBody FormFieldsDTO getFormFieldUploadPdf(@PathVariable String processInstanceId) {
-        Task nextTask = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
+    @GetMapping(path = "/upload-pdf-task/{taskId}", produces = "application/json")
+    public @ResponseBody FormFieldsDTO getFormFieldUploadPdf(@PathVariable String taskId) {
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+        String piId = task.getProcessInstanceId();
         List<FormField> properties = null;
-        if(nextTask !=  null && formService.getTaskFormData(nextTask.getId()) != null) {
-            properties = formService.getTaskFormData(nextTask.getId()).getFormFields();
+        if(task !=  null && formService.getTaskFormData(task.getId()) != null) {
+            properties = formService.getTaskFormData(task.getId()).getFormFields();
         }
-        return new FormFieldsDTO(nextTask.getId(), processInstanceId, properties);
+        return new FormFieldsDTO(taskId, piId, properties);
     }
 }

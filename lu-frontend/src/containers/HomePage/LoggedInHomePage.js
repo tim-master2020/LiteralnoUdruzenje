@@ -15,7 +15,7 @@ import { styling } from './SidebarStyling';
 import { AppBar, Toolbar } from "@material-ui/core";
 import { defaultUrl } from '../../backendConfig';
 
-const LoggedInHomepage = ({ loggedInUser, setLoggedIn,history }) => {
+const LoggedInHomepage = ({ loggedInUser, setLoggedIn,history, isInitialUpload }) => {
     const [isOpen, setOpen] = useState(false);
 
     const handleDrawerToggle = () => {
@@ -70,11 +70,10 @@ const LoggedInHomepage = ({ loggedInUser, setLoggedIn,history }) => {
                     </IconButton>
                 </div>
                 <Divider />
-                {SidebarList(loggedInUser.role)}
+                {SidebarList(history, loggedInUser)}
             </Drawer>
             <main className={clsx(classes.content, { [classes.contentShift]: isOpen })}>
                 <div className={classes.drawerHeader} />
-                <div>main content</div>
             </main>
         </div>
     );

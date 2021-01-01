@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 import CamundaForm from '../CamundaForm.js';
 import { validate } from '../../functions/FormFunctions';
 
-const InitialUpload = ({ history, setLoggedIn, type, processId }) => {
+const InitialUpload = ({ history, type, processId }) => {
 
     const [formFields, setformFields] = React.useState([]);
     const [validationMessage, setValidationMessage] = React.useState({});
@@ -16,6 +16,7 @@ const InitialUpload = ({ history, setLoggedIn, type, processId }) => {
     const [taskId, setTaskId] = React.useState('');
     const [shouldSubmit, setShouldSubmit] = React.useState(true);
     const [uploadedFiles, setUploadedFiles] = React.useState([]);
+    console.log(processId);
 
     React.useEffect(() => {
         axios.get(`${defaultUrl}/api/writers/upload-pdf-task/${processId}`,).then(
@@ -26,7 +27,7 @@ const InitialUpload = ({ history, setLoggedIn, type, processId }) => {
             },
             (resp) => { alert("error getting form fields,try again"); }
         );
-    }, [type]);
+    }, []);
 
 
     function SavePdfs(e) {

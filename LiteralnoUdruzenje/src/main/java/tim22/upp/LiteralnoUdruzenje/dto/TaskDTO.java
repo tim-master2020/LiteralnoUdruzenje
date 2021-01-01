@@ -3,6 +3,7 @@ package tim22.upp.LiteralnoUdruzenje.dto;
 public class TaskDTO {
 
     String taskId;
+    String processInstanceId;
     String name;
     String assignee;
 
@@ -11,11 +12,20 @@ public class TaskDTO {
         // TODO Auto-generated constructor stub
     }
 
-    public TaskDTO(String taskId, String name, String assignee) {
+    public TaskDTO(String taskId, String processInstanceId, String name, String assignee) {
         super();
         this.taskId = taskId;
+        this.processInstanceId = processInstanceId;
         this.name = name;
         this.assignee = assignee;
+    }
+
+    public String getprocessInstanceId() {
+        return processInstanceId;
+    }
+
+    public void setprocessInstanceId(String processInstanceId) {
+        this.processInstanceId = processInstanceId;
     }
 
     public String getTaskId() {

@@ -14,10 +14,15 @@ public class IReaderServiceImpl implements IReaderService {
 
     @Override
     public Reader saveReader(Reader reader) {
-        if (readerRepository.findByUsername(reader.getUsername()) == null) {
+        if (readerRepository.findByUsername(reader.getUsername()) == null && readerRepository.findByEmail(reader.getEmail()) == null) {
             return  readerRepository.save(reader);
         }
         return null;
+    }
+
+    @Override
+    public Reader updateReader(Reader reader) {
+        return readerRepository.save(reader);
     }
 
     @Override

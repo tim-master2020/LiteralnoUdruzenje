@@ -71,6 +71,7 @@ const RegistrationForm = ({history, type}) => {
                                        
                 }else{
                     alert('We have sent you email with conformation link.')
+                    history.push('/');
                 }
             },
             (resp) => { 

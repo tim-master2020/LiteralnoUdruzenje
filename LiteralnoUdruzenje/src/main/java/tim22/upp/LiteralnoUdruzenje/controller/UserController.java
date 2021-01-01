@@ -26,6 +26,7 @@ import tim22.upp.LiteralnoUdruzenje.security.TokenUtils;
 import tim22.upp.LiteralnoUdruzenje.security.auth.JwtAuthenticationRequest;
 import tim22.upp.LiteralnoUdruzenje.service.IReaderService;
 import tim22.upp.LiteralnoUdruzenje.service.IUserService;
+import tim22.upp.LiteralnoUdruzenje.service.IWriterService;
 import tim22.upp.LiteralnoUdruzenje.service.impl.CustomUserDetailsService;
 
 import java.net.URI;
@@ -74,6 +75,9 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
+    @Autowired
+    private IWriterService writerService;
+
     @GetMapping(path = "/reg-task/{type}", produces = "application/json")
     public @ResponseBody FormFieldsDTO getFormFieldsReaderRegistration(@PathVariable String type) {
         ProcessInstance pi = runtimeService.startProcessInstanceByKey(type);
@@ -81,27 +85,6 @@ public class UserController {
         TaskFormData taskFormData = formService.getTaskFormData(task.getId());
         List<FormField> properties = taskFormData.getFormFields();
         return new FormFieldsDTO(task.getId(), pi.getId(), properties);
-    }
-
-    @PostMapping(value = "/login")
-    public ResponseEntity<?> login(@RequestBody JwtAuthenticationRequest authenticationRequest) {
-
-        final Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
-                        authenticationRequest.getPassword()));
-        if(authentication == null){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        UserDetails details = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
-
-        //username = email in this case
-        String jwt = tokenUtils.generateToken(details.getUsername());
-        int expiresIn = tokenUtils.getExpiredIn();
-
-        return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
     }
 
     @PostMapping(path = "/submit-general-data/{taskId}/{role}", produces = "application/json")
@@ -119,7 +102,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        if (role == "writer"){
+        if (role.equals("writer")){
             return new ResponseEntity<>(HttpStatus.OK);
         }
 
@@ -156,16 +139,16 @@ public class UserController {
 
             if(user.getRole().equals(Role.READER)){
                 user.setActiveAccount(true);
-                newUri = new URI("http://localhost:3000/login");
+                userService.updateUser(user);
             } else if (user.getRole().equals((Role.WRITER))) {
-                Writer writer = (Writer) user;
-                writer.setVerified(true);
-                String path = "http://localhost:3000/upload/".concat(processInstanceId);
-                newUri = new URI(path);
+               Writer writer = writerService.findByUsername(username);
+               writer.setVerified(true);
+               writerService.updateWriter(writer);
             } else {
                 return new ResponseEntity(HttpStatus.BAD_REQUEST);
             }
 
+            newUri = new URI("http://localhost:3000/login");
             HttpHeaders headers = new HttpHeaders();
             headers.setLocation(newUri);
             return new ResponseEntity<>(headers, HttpStatus.SEE_OTHER);

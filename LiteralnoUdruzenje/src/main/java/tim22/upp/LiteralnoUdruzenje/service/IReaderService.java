@@ -6,6 +6,7 @@ import tim22.upp.LiteralnoUdruzenje.model.Reader;
 public interface IReaderService {
 
     Reader saveReader(Reader reader);
+    Reader updateReader(Reader reader);
     Reader getOne(Long id);
     Reader findByUsername(String username);
     Reader findByEmail(String email);

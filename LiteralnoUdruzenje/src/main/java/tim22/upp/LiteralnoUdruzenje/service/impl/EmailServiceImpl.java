@@ -19,7 +19,7 @@ public class EmailServiceImpl implements IEmailService {
     private Environment env;
 
     @Override
-    public void sendEmail(User user, String mailText) {
+    public void sendCustomerEmail(User user, String mailText) {
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(user.getEmail());
         mail.setFrom("ebook.app.upp@gmail.com");

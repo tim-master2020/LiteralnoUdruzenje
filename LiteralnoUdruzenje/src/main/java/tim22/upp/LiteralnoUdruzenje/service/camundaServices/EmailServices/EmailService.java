@@ -31,7 +31,7 @@ public class EmailService implements JavaDelegate {
                 "Click the following link to verify your account:\n\n" + "http://localhost:8081/api/users/confirm-account/" +
                 delegateExecution.getProcessInstanceId()+"/"+user.getUsername()+ "\n\n\neBook Team";
 
-        emailService.sendEmail(user, msg);
+        emailService.sendCustomerEmail(user, msg);
         this.runtimeService.setVariable(delegateExecution.getProcessInstanceId(), "verifed", false);
     }
 }

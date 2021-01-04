@@ -1,9 +1,12 @@
 package tim22.upp.LiteralnoUdruzenje.dto;
 
+import tim22.upp.LiteralnoUdruzenje.model.Role;
+import tim22.upp.LiteralnoUdruzenje.model.User;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReaderDTO {
+public class UserDTO {
 
     private String firstname;
 
@@ -17,26 +20,25 @@ public class ReaderDTO {
 
     private String username;
 
-    private String password;
-
-    private boolean betaReader;
-
-    private String role = "READER";
+    private Role role;
 
     private List<TaskDTO> tasks = new ArrayList<>();
 
-    public ReaderDTO(String firstname, String lastname, String city, String country, String email, String username, String password, boolean betaReader) {
+    public UserDTO(String firstname, String lastname, String city, String country, String email, String username, Role role) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.city = city;
         this.country = country;
         this.email = email;
         this.username = username;
-        this.password = password;
-        this.betaReader = betaReader;
+        this.role = role;
     }
 
-    public ReaderDTO() { }
+    public UserDTO(User user){
+        this(user.getFirstname(), user.getLastname(), user.getCity(), user.getCountry(), user.getEmail(), user.getUsername(), user.getRole());
+    }
+
+    public UserDTO() { }
 
     public String getFirstname() {
         return firstname;
@@ -86,27 +88,11 @@ public class ReaderDTO {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean isBetaReader() {
-        return betaReader;
-    }
-
-    public void setBetaReader(boolean betaReader) {
-        this.betaReader = betaReader;
-    }
-
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 

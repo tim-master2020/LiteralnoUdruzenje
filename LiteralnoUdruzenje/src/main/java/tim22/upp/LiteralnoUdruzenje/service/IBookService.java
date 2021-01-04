@@ -4,7 +4,6 @@ package tim22.upp.LiteralnoUdruzenje.service;
 import tim22.upp.LiteralnoUdruzenje.dto.BookDTO;
 import tim22.upp.LiteralnoUdruzenje.model.Book;
 import tim22.upp.LiteralnoUdruzenje.model.Genre;
-import tim22.upp.LiteralnoUdruzenje.model.Writer;
 
 import java.util.List;
 

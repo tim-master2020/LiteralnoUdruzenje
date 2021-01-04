@@ -155,10 +155,6 @@
       <bpmn:sequenceFlow id="Flow_000l6w3" name="Need more work" sourceRef="Gateway_1oo7ffr" targetRef="Activity_0n9f5p0">
         <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${result == 'moreWork'}</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
-      <bpmn:task id="Activity_1ic951a" name="Initialized counter to zero">
-        <bpmn:incoming>Flow_0j082ih</bpmn:incoming>
-        <bpmn:outgoing>Flow_0mix94c</bpmn:outgoing>
-      </bpmn:task>
       <bpmn:sequenceFlow id="Flow_0mix94c" sourceRef="Activity_1ic951a" targetRef="Gateway_15x2yfg" />
       <bpmn:task id="Activity_0phkuhz" name="Save pdfs" />
       <bpmn:task id="Activity_1ks73vf" name="Reset votes and commnets">
@@ -202,6 +198,10 @@
         <bpmn:outgoing>Flow_1p5u1ca</bpmn:outgoing>
       </bpmn:task>
       <bpmn:sequenceFlow id="Flow_12mx4pj" sourceRef="Activity_1qjf84k" targetRef="Gateway_15p4y16" />
+      <bpmn:serviceTask id="Activity_1ic951a" name="Initialized counter to zero" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.InitializeReviewCount">
+        <bpmn:incoming>Flow_0j082ih</bpmn:incoming>
+        <bpmn:outgoing>Flow_0mix94c</bpmn:outgoing>
+      </bpmn:serviceTask>
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_02aw76r" sourceRef="UploadPDFForm" targetRef="Activity_1y9jorm" />
     <bpmn:intermediateCatchEvent id="Event_13looj1">
@@ -357,6 +357,10 @@
       <bpmndi:BPMNShape id="Activity_123k06n_di" bpmnElement="Activity_123k06n" isExpanded="true">
         <dc:Bounds x="160" y="590" width="2880" height="840" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_12mx4pj_di" bpmnElement="Flow_12mx4pj">
+        <di:waypoint x="610" y="910" />
+        <di:waypoint x="665" y="910" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1553lhg_di" bpmnElement="Flow_1553lhg">
         <di:waypoint x="2238" y="1045" />
         <di:waypoint x="2312" y="1045" />
@@ -467,10 +471,6 @@
         <di:waypoint x="238" y="910" />
         <di:waypoint x="280" y="910" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_12mx4pj_di" bpmnElement="Flow_12mx4pj">
-        <di:waypoint x="610" y="910" />
-        <di:waypoint x="665" y="910" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_0olytnp_di" bpmnElement="Event_0olytnp">
         <dc:Bounds x="202" y="892" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -531,9 +531,6 @@
           <dc:Bounds x="709" y="848" width="82" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1ic951a_di" bpmnElement="Activity_1ic951a">
-        <dc:Bounds x="280" y="870" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0phkuhz_di" bpmnElement="Activity_0phkuhz">
         <dc:Bounds x="1580" y="600" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -542,6 +539,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_15x2yfg_di" bpmnElement="Gateway_15x2yfg" isMarkerVisible="true">
         <dc:Bounds x="425" y="885" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1qjf84k_di" bpmnElement="Activity_1qjf84k">
+        <dc:Bounds x="510" y="870" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0xk531h_di" bpmnElement="Event_066r7ds">
         <dc:Bounds x="2632" y="762" width="36" height="36" />
@@ -561,8 +561,8 @@
       <bpmndi:BPMNShape id="Activity_1xxza4a_di" bpmnElement="Activity_0luoke3">
         <dc:Bounds x="2080" y="770" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1qjf84k_di" bpmnElement="Activity_1qjf84k">
-        <dc:Bounds x="510" y="870" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_157kzmy_di" bpmnElement="Activity_1ic951a">
+        <dc:Bounds x="280" y="870" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_07l3m1n_di" bpmnElement="Event_09biqvi">
         <dc:Bounds x="2472" y="802" width="36" height="36" />

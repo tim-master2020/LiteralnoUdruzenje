@@ -4,11 +4,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tim22.upp.LiteralnoUdruzenje.dto.BookDTO;
-import tim22.upp.LiteralnoUdruzenje.dto.GenreDTO;
-import tim22.upp.LiteralnoUdruzenje.helper.ModelMapperBean;
 import tim22.upp.LiteralnoUdruzenje.model.Book;
 import tim22.upp.LiteralnoUdruzenje.model.Genre;
-import tim22.upp.LiteralnoUdruzenje.model.Writer;
 import tim22.upp.LiteralnoUdruzenje.repository.BookRepository;
 import tim22.upp.LiteralnoUdruzenje.service.IBookService;
 
@@ -30,7 +27,12 @@ public class BookServiceImpl implements IBookService {
     }
 
     public List<BookDTO> convertFromModelToDto(List<Book> books) {
-        return books.stream().map(b -> modelMapper.map(b, BookDTO.class)).collect(Collectors.toCollection(ArrayList::new));
+        List<BookDTO> bookDTOs = new ArrayList<>();
+        for(Book b : books){
+            BookDTO bookDTO = new BookDTO(b.getName(), b.getAuthors(), b.getGenre().getName());
+            bookDTOs.add(bookDTO);
+        }
+        return bookDTOs;
     }
 
     public Book findBookByName(String name) {

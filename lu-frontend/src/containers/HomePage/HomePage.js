@@ -3,13 +3,13 @@ import React from 'react';
 import LoggedInHomePage from './LoggedInHomePage';
 import LoggedOutHomepage from './LoggedOutHomepage';
 
-const HomePage = ({loggedInUser,setLoggedIn,isInitialUpload}) => {
+const HomePage = ({loggedInUser,setLoggedIn,isInitialUpload,isReview}) => {
     if(loggedInUser === undefined){
     return (
         <LoggedOutHomepage/>
     );
     }else if( loggedInUser !== undefined){
-        return(<LoggedInHomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} isInitialUpload={isInitialUpload}/>);
+        return(<LoggedInHomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} isInitialUpload={isInitialUpload} isReview={isReview}/>);
     }
 
 }

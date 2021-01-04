@@ -15,8 +15,9 @@ import { styling } from './SidebarStyling';
 import { AppBar, Toolbar } from "@material-ui/core";
 import { defaultUrl } from '../../backendConfig';
 import InitialUpload from "../../components/uploadPDF/InitialUpload";
+import BookReview from '../../components/bookReview/BookReview'
 
-const LoggedInHomepage = ({ loggedInUser, setLoggedIn,history, isInitialUpload }) => {
+const LoggedInHomepage = ({ loggedInUser, setLoggedIn,history, isInitialUpload, isReview }) => {
     const [isOpen, setOpen] = useState(false);
 
     const handleDrawerToggle = () => {
@@ -50,19 +51,18 @@ const LoggedInHomepage = ({ loggedInUser, setLoggedIn,history, isInitialUpload }
                         <MenuIcon style={{ color: 'black' }} />
                     </IconButton>
                     <div style={{ width: '100%' }}></div>
-                    <Button>my account</Button>
+                    <Button onClick={() => history.push('/')}>Home</Button>
+                    <Button>My account</Button>
                     { loggedInUser.role === 'WRITER' &&
-
-                        <Button  
-                        //onClick={() => {startPublishBookProcess()}}
-                        >
-                        Book publishing
-                        </Button>
+                        <Button>Book publishing</Button>
+                    }
+                    { loggedInUser.role === 'COMMITTEE' &&
+                        <Button onClick={() => history.push('/review')}>Book review</Button>
                     }
                     <Button onClick={() => { 
                             localStorage.clear(); 
                             history.push('/')
-                            setLoggedIn(undefined)}}>logout</Button>
+                            setLoggedIn(undefined)}}>Logout</Button>
                 </Toolbar>
             </AppBar>
             <MenuIcon />
@@ -79,6 +79,9 @@ const LoggedInHomepage = ({ loggedInUser, setLoggedIn,history, isInitialUpload }
                 <div className={classes.drawerHeader} />
                 { isInitialUpload &&
                     <InitialUpload processId={id}/>
+                }
+                { isReview &&
+                    <BookReview />
                 }
             </main>
         </div>

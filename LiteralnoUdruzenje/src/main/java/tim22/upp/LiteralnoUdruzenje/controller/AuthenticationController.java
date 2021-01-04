@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import tim22.upp.LiteralnoUdruzenje.dto.ReaderDTO;
 import tim22.upp.LiteralnoUdruzenje.dto.TaskDTO;
+import tim22.upp.LiteralnoUdruzenje.dto.UserDTO;
 import tim22.upp.LiteralnoUdruzenje.dto.WriterDTO;
 import tim22.upp.LiteralnoUdruzenje.model.*;
 import tim22.upp.LiteralnoUdruzenje.security.TokenUtils;
@@ -73,7 +74,8 @@ public class AuthenticationController {
         UserDetails details = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         String username = authenticationRequest.getUsername();
 
-        if(userService.findByUsername(username).getRole().equals(Role.READER) && userService.findByUsername(username).isActiveAccount()){
+        if((userService.findByUsername(username).getRole().equals(Role.READER) || userService.findByUsername(username).getRole().equals(Role.COMMITTEE))
+                && userService.findByUsername(username).isActiveAccount()){
             String jwt = tokenUtils.generateToken(details.getUsername());
             int expiresIn = tokenUtils.getExpiredIn();
 
@@ -110,6 +112,10 @@ public class AuthenticationController {
             List<Task> tasks = taskService.createTaskQuery().taskAssignee(user.getUsername()).list();
             writerDTO.setTasks(mapTasks(tasks));
             return new ResponseEntity<>(writerDTO, HttpStatus.OK);
+
+        } else if (user.getRole().equals(Role.COMMITTEE)) {
+            UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+            return new ResponseEntity<>(userDTO, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

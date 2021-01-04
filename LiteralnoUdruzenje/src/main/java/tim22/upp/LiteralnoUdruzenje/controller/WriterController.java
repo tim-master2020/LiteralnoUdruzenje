@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import tim22.upp.LiteralnoUdruzenje.dto.FormFieldsDTO;
 
+import java.security.Principal;
 import java.util.List;
 
 @CrossOrigin("http://localhost:3000")

@@ -32,9 +32,14 @@ const InitialUpload = ({ history, type, processId }) => {
 
     function SavePdfs(e) {
 
+        let token = localStorage.getItem('token');
+        const options = {
+            headers: { 'Authorization': 'Bearer ' + token}
+        };
+
         e.preventDefault();
         const returnValue = [];
-        //let dataIsValid = true;
+
         formFields.forEach(field => {
             returnValue.push({ fieldId: field.id, fieldValue: field.value.value })
         });
@@ -43,7 +48,7 @@ const InitialUpload = ({ history, type, processId }) => {
         console.log('taskid', taskId);
         console.log(returnValue);
 
-        axios.post(`${defaultUrl}/api/books/save-pdfs/${taskId}`, returnValue).then(
+        axios.post(`${defaultUrl}/api/books/save-pdfs/${taskId}`, returnValue, options).then(
             (resp) => {
                 alert('Your documents are uploaded successfully.')
             },

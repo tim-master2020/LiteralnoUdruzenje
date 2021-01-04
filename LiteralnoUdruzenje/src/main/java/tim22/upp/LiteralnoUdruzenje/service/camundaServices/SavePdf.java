@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tim22.upp.LiteralnoUdruzenje.model.*;
 import tim22.upp.LiteralnoUdruzenje.service.IBookService;
+import tim22.upp.LiteralnoUdruzenje.service.IWriterService;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -19,6 +20,9 @@ public class SavePdf implements JavaDelegate {
 
     @Autowired
     private IBookService bookService;
+
+    @Autowired
+    private IWriterService writerService;
 
     private ArrayList<String> fileBytes = new ArrayList<>();
 
@@ -43,10 +47,15 @@ public class SavePdf implements JavaDelegate {
                 fileBytes.add(item);
             }
         }
+        String username = (String) delegateExecution.getVariable("writer");
+        Writer writer = writerService.findByUsername(username);
 
         for(int i = 0; i < getFileBytes().size(); i++) {
             Book book = new Book();
             book.setName(fileNames.get(i));
+            if (writer != null){
+                book.getAuthors().add(writer);
+            }
             book.setBytes(getFileBytes().get(i));
             convertToPdf(book.getBytes(), book);
 

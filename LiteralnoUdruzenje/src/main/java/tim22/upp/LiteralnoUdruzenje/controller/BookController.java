@@ -16,6 +16,7 @@ import tim22.upp.LiteralnoUdruzenje.model.Genre;
 import tim22.upp.LiteralnoUdruzenje.model.Writer;
 import tim22.upp.LiteralnoUdruzenje.service.IBookService;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 
@@ -55,7 +56,7 @@ public class BookController {
     }*/
 
     @PostMapping(path = "/save-pdfs/{taskId}", produces = "application/json")
-    public ResponseEntity<?> submitInitialPdfs(@RequestBody List<FormSubmissionDTO> formDTO, @PathVariable String taskId) {
+    public ResponseEntity<?> submitInitialPdfs(@RequestBody List<FormSubmissionDTO> formDTO, @PathVariable String taskId, Principal principal) {
 
         HashMap<String, Object> map = this.mapListToDto(formDTO);
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();

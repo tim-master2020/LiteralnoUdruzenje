@@ -58,11 +58,17 @@ public class BookController {
     @PostMapping(path = "/save-pdfs/{taskId}", produces = "application/json")
     public ResponseEntity<?> submitInitialPdfs(@RequestBody List<FormSubmissionDTO> formDTO, @PathVariable String taskId, Principal principal) {
 
-        HashMap<String, Object> map = this.mapListToDto(formDTO);
+        List<String> booksSaved = bookService.savePdf(formDTO, principal);
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
         String processInstanceId = task.getProcessInstanceId();
 
-        runtimeService.setVariable(processInstanceId, "docs", map);
+        runtimeService.setVariable(processInstanceId, "booksSaved", booksSaved);
+
+        HashMap<String, Object> map = new HashMap<>();
+        for (String name : booksSaved){
+            map.put("name", name);
+        }
+
         try {
             formService.submitTaskForm(taskId, map);
         }catch (Exception e){

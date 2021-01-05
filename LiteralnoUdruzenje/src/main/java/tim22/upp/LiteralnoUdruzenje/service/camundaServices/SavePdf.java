@@ -24,15 +24,7 @@ public class SavePdf implements JavaDelegate {
     @Autowired
     private IWriterService writerService;
 
-//    private ArrayList<String> fileBytes = new ArrayList<>();
-//
-//    public ArrayList<String> getFileBytes() {
-//        return fileBytes;
-//    }
-//
-//    public void setFileBytes(ArrayList<String> fileBytes) {
-//        this.fileBytes = fileBytes;
-//    }
+
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {

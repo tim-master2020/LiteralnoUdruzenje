@@ -2,9 +2,11 @@ package tim22.upp.LiteralnoUdruzenje.service;
 
 
 import tim22.upp.LiteralnoUdruzenje.dto.BookDTO;
+import tim22.upp.LiteralnoUdruzenje.dto.FormSubmissionDTO;
 import tim22.upp.LiteralnoUdruzenje.model.Book;
 import tim22.upp.LiteralnoUdruzenje.model.Genre;
 
+import java.security.Principal;
 import java.util.List;
 
 public interface IBookService {
@@ -14,5 +16,6 @@ public interface IBookService {
     Book findBookByName(String name);
     List<Book> findAllByGenre(Genre genre);
     //List<Book> findAllByWriter(Writer writer);
+    List<String> savePdf(List<FormSubmissionDTO> formDTO, Principal principal);
     Book save(Book book);
 }

@@ -23,7 +23,7 @@ public class EmailServiceImpl implements IEmailService {
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(user.getEmail());
         mail.setFrom("ebook.app.upp@gmail.com");
-        mail.setSubject("Ebook: Registration");
+        mail.setSubject("Ebook");
         mail.setText(mailText);
         javaMailSender.send(mail);
     }

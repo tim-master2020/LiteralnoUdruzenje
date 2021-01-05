@@ -21,7 +21,8 @@ public class Book implements Serializable {
     private String name;
 
     @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
-    private Set<Writer> authors = new HashSet<Writer>();
+    @JoinTable(name = "book_writers", joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "writer_id", referencedColumnName = "id"))
+    private Set<Writer> writers = new HashSet<Writer>();
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
@@ -44,9 +45,6 @@ public class Book implements Serializable {
 
     @Column
     private String synopsis;
-
-    @Column(insertable = false, updatable = false)
-    private String bytes;
 
     @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
     @JoinTable(name = "book_keywords", joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "keyword_id", referencedColumnName = "id"))
@@ -71,12 +69,12 @@ public class Book implements Serializable {
         this.name = name;
     }
 
-    public Set<Writer> getAuthors() {
-        return authors;
+    public Set<Writer> getWriters() {
+        return writers;
     }
 
-    public void setAuthors(Set<Writer> authors) {
-        this.authors = authors;
+    public void setWriters(Set<Writer> writers) {
+        this.writers = writers;
     }
 
     public Genre getGenre() {
@@ -143,11 +141,4 @@ public class Book implements Serializable {
         this.keywords = keywords;
     }
 
-    public String getBytes() {
-        return bytes;
-    }
-
-    public void setBytes(String bytes) {
-        this.bytes = bytes;
-    }
 }

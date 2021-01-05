@@ -5,9 +5,11 @@ import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class InitializeReviewCount implements JavaDelegate {
+public class IncrementReviewCounter implements JavaDelegate {
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
-        delegateExecution.setVariable("reviewCount", 0);
+        int count = (int) delegateExecution.getVariable("reviewCount");
+        count += 1;
+        delegateExecution.setVariable("reviewCount", count);
     }
 }

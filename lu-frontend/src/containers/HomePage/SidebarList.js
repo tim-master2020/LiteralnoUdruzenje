@@ -9,7 +9,7 @@ export function SidebarList(history, user) {
     return (
         <List>
             {
-                user.tasks.lenght &&
+                user.tasks &&
                 <div>
                     <ListItem  onClick={() => {history.push(`${TaskNameRoutes(user.tasks[0].name)}/${user.tasks[0].taskId}`)}} button>
                     <ListItemText primary={user.tasks[0].name} />

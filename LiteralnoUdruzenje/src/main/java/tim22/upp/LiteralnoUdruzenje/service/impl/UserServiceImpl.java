@@ -6,9 +6,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import tim22.upp.LiteralnoUdruzenje.model.Role;
 import tim22.upp.LiteralnoUdruzenje.model.User;
 import tim22.upp.LiteralnoUdruzenje.repository.UserRepository;
 import tim22.upp.LiteralnoUdruzenje.service.IUserService;
+
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements IUserService, UserDetailsService {
@@ -39,5 +42,10 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
     @Override
     public User updateUser(User user) {
         return userRepository.save(user);
+    }
+
+    @Override
+    public List<User> findByRole(Role role) {
+        return userRepository.findByRole(Role.COMMITTEE);
     }
 }

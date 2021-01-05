@@ -29,7 +29,7 @@ public class BookServiceImpl implements IBookService {
     public List<BookDTO> convertFromModelToDto(List<Book> books) {
         List<BookDTO> bookDTOs = new ArrayList<>();
         for(Book b : books){
-            BookDTO bookDTO = new BookDTO(b.getName(), b.getAuthors(), b.getGenre().getName());
+            BookDTO bookDTO = new BookDTO(b.getName(), b.getWriters(), b.getGenre().getName());
             bookDTOs.add(bookDTO);
         }
         return bookDTOs;

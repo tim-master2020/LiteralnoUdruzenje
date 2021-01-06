@@ -55,7 +55,7 @@ public class BookServiceImpl implements IBookService {
     }
 
     @Override
-    public List<String> savePdf(List<FormSubmissionDTO> formDTO, Principal principal) {
+    public List<String> savePdf(List<FormSubmissionDTO> formDTO, String username) {
         ArrayList<String> fileNames = new ArrayList<>();
         List<String> fileBytes = new ArrayList<>();
         for (FormSubmissionDTO item : formDTO) {
@@ -66,7 +66,7 @@ public class BookServiceImpl implements IBookService {
                 fileBytes.add(item.getFieldValue().toString());
             }
         }
-        Writer writer = writerService.findByUsername(principal.getName());
+        Writer writer = writerService.findByUsername(username);
 
         List<String> booksSaved = new ArrayList<>();
         for(int i = 0; i < fileNames.size(); i++) {

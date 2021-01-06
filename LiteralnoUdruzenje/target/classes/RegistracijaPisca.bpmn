@@ -307,8 +307,8 @@
         <di:waypoint x="1620" y="210" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1p69nof_di" bpmnElement="Flow_1p69nof">
-        <di:waypoint x="2260" y="1500" />
-        <di:waypoint x="2332" y="1500" />
+        <di:waypoint x="2260" y="1540" />
+        <di:waypoint x="2342" y="1540" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ak7mkm_di" bpmnElement="Flow_1ak7mkm">
         <di:waypoint x="3058" y="990" />
@@ -318,8 +318,8 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0fgkv43_di" bpmnElement="Flow_0fgkv43">
         <di:waypoint x="2090" y="1488" />
-        <di:waypoint x="2090" y="1500" />
-        <di:waypoint x="2160" y="1500" />
+        <di:waypoint x="2090" y="1540" />
+        <di:waypoint x="2160" y="1540" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0zyj4mc_di" bpmnElement="Flow_0zyj4mc">
         <di:waypoint x="2090" y="328" />
@@ -354,19 +354,10 @@
       <bpmndi:BPMNShape id="Event_15ioj7u_di" bpmnElement="Event_13looj1">
         <dc:Bounds x="2072" y="292" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0uxaryi_di" bpmnElement="Activity_0uxaryi">
-        <dc:Bounds x="2160" y="1460" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1xow8sn_di" bpmnElement="NotRegistered">
         <dc:Bounds x="3282" y="932" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="3265" y="975" width="71" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1wlobqe_di" bpmnElement="Registered">
-        <dc:Bounds x="2332" y="1482" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2323" y="1543" width="54" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1kicapy_di" bpmnElement="Gateway_1kicapy" isMarkerVisible="true">
@@ -386,6 +377,15 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0toem5p_di" bpmnElement="UploadPDFForm">
         <dc:Bounds x="2040" y="410" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0uxaryi_di" bpmnElement="Activity_0uxaryi">
+        <dc:Bounds x="2160" y="1500" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1wlobqe_di" bpmnElement="Registered">
+        <dc:Bounds x="2342" y="1522" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2333" y="1583" width="54" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_123k06n_di" bpmnElement="Activity_123k06n" isExpanded="true">
         <dc:Bounds x="160" y="570" width="2880" height="900" />

@@ -58,10 +58,11 @@ public class BookController {
     @PostMapping(path = "/save-pdfs/{taskId}", produces = "application/json")
     public ResponseEntity<?> submitInitialPdfs(@RequestBody List<FormSubmissionDTO> formDTO, @PathVariable String taskId, Principal principal) {
 
-        List<String> booksSaved = bookService.savePdf(formDTO, principal);
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+        String username = task.getAssignee();
         String processInstanceId = task.getProcessInstanceId();
 
+        List<String> booksSaved = bookService.savePdf(formDTO, username);
         runtimeService.setVariable(processInstanceId, "booksSaved", booksSaved);
 
         HashMap<String, Object> map = new HashMap<>();

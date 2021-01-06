@@ -62,7 +62,7 @@ public class BookController {
         String username = task.getAssignee();
         String processInstanceId = task.getProcessInstanceId();
 
-        List<String> booksSaved = bookService.savePdf(formDTO, username);
+        List<String> booksSaved = bookService.savePdf((List<String>) formDTO.get(0).getFieldValue(), username);
         runtimeService.setVariable(processInstanceId, "booksSaved", booksSaved);
 
         HashMap<String, Object> map = new HashMap<>();

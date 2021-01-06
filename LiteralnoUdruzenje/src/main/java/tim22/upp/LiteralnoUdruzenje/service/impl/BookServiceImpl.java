@@ -55,15 +55,15 @@ public class BookServiceImpl implements IBookService {
     }
 
     @Override
-    public List<String> savePdf(List<FormSubmissionDTO> formDTO, String username) {
+    public List<String> savePdf(List<String> lists, String username) {
         ArrayList<String> fileNames = new ArrayList<>();
         List<String> fileBytes = new ArrayList<>();
-        for (FormSubmissionDTO item : formDTO) {
-            if (item.getFieldValue().toString().contains("Filename")) {
-                String filename = item.getFieldValue().toString().split("Filename")[1];
+        for (String item : lists) {
+            if (item.contains("Filename")) {
+                String filename = item.split("Filename")[1];
                 fileNames.add(filename);
             } else {
-                fileBytes.add(item.getFieldValue().toString());
+                fileBytes.add(item);
             }
         }
         Writer writer = writerService.findByUsername(username);

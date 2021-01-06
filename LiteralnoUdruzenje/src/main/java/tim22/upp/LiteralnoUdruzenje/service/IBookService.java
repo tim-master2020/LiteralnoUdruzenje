@@ -16,6 +16,6 @@ public interface IBookService {
     Book findBookByName(String name);
     List<Book> findAllByGenre(Genre genre);
     //List<Book> findAllByWriter(Writer writer);
-    List<String> savePdf(List<FormSubmissionDTO> formDTO, String username);
+    List<String> savePdf(List<String> filesNames, String username);
     Book save(Book book);
 }

@@ -14,8 +14,10 @@ import { SidebarList } from './SidebarList';
 import { styling } from './SidebarStyling';
 import { AppBar, Toolbar } from "@material-ui/core";
 import { defaultUrl } from '../../backendConfig';
+import axios from 'axios';
+import PublishBookGeneralData from "../../components/publish-book/PublishBookGeneralData";
 
-const LoggedInHomepage = ({ loggedInUser, setLoggedIn,history }) => {
+const LoggedInHomepage = ({ loggedInUser, setLoggedIn, history,publishBookGeneralData}) => {
     const [isOpen, setOpen] = useState(false);
 
     const handleDrawerToggle = () => {
@@ -25,18 +27,27 @@ const LoggedInHomepage = ({ loggedInUser, setLoggedIn,history }) => {
     const theme = useTheme();
     const useStyles = makeStyles((theme) => (styling(theme)));
     const classes = useStyles();
-    
-    // const startPublishBookProcess = () => {
-    //     axios.get(`${defaultUrl}/auth/user`, options).then(
-    //         (resp) => {
-    //             setLoggedIn(resp.data);
-    //         },
-    //         (resp) => {
-    //             alert('error getting logged in user data');
-    //             setLoggedIn(undefined);
-    //         }
-    //     );
-    // }
+
+    const startPublishBookProcess = () => {
+
+        const options = {
+            headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
+        };
+
+        axios.get(`${defaultUrl}/process/start-process-specific/BookPublishing`, options).then(
+            (resp) => {
+                history.push({
+                    pathname: '/bookGeneralData',
+                    state: {
+                      taskId: resp.data.taskId
+                    }
+                  });
+            },
+            (resp) => {
+                alert('fail start of process');
+            }
+        );
+    }
 
     return (
         <div className={classes.root}>
@@ -48,18 +59,19 @@ const LoggedInHomepage = ({ loggedInUser, setLoggedIn,history }) => {
                     </IconButton>
                     <div style={{ width: '100%' }}></div>
                     <Button>my account</Button>
-                    { loggedInUser.role === 'WRITER' &&
+                    {loggedInUser.role === 'WRITER' &&
 
-                        <Button  
-                        //onClick={() => {startPublishBookProcess()}}
+                        <Button
+                            onClick={() => { startPublishBookProcess() }}
                         >
-                        Book publishing
+                            Book publishing
                         </Button>
                     }
-                    <Button onClick={() => { 
-                            localStorage.clear(); 
-                            history.push('/')
-                            setLoggedIn(undefined)}}>logout</Button>
+                    <Button onClick={() => {
+                        localStorage.clear();
+                        history.push('/')
+                        setLoggedIn(undefined)
+                    }}>logout</Button>
                 </Toolbar>
             </AppBar>
             <MenuIcon />
@@ -74,7 +86,11 @@ const LoggedInHomepage = ({ loggedInUser, setLoggedIn,history }) => {
             </Drawer>
             <main className={clsx(classes.content, { [classes.contentShift]: isOpen })}>
                 <div className={classes.drawerHeader} />
-                <div>main content</div>
+                <div>
+                    { publishBookGeneralData &&
+                        <PublishBookGeneralData/>
+                    }
+                </div>
             </main>
         </div>
     );

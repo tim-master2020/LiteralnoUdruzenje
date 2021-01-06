@@ -2,46 +2,55 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8b41c566-e1ec-4b1c-9879-7d332aa2318e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/ProcessController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/EmailServices/SendEditorEmailForReview.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/bookPublishing/ChooseEditorForBookReview.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/bookPublishing/SaveGeneralBookData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/model/camundaCustomTypes/EnumType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/AuthenticationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/dto/ReaderDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/dto/ReaderDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/dto/WriterDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/dto/WriterDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/model/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/model/Role.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/model/Writer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/model/Writer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/BookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/BookController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/ProcessController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/ProcessController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/model/Keyword.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/model/Keyword.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/repository/BookRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/repository/BookRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/repository/UserRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/repository/WriterRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/repository/WriterRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/security/TokenUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/security/TokenUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/IEmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/IEmailService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/EmailServices/EmailService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/impl/EmailServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/impl/EmailServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/RegistracijaProces.bpmn" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/RegistracijaProces.bpmn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/IBookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/IBookService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/IUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/IWriterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/IWriterService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/CustomTypeProcessEnginePlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/CustomTypeProcessEnginePlugin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/LoadGenres.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/LoadGenres.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/bookPublishing/ChooseEditorForBookReview.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/bookPublishing/ChooseEditorForBookReview.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/bookPublishing/SaveGeneralBookData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/bookPublishing/SaveGeneralBookData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/impl/BookServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/impl/BookServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/impl/WriterServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/impl/WriterServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/ObjavljivanjeKnjige.bpmn" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ObjavljivanjeKnjige.bpmn" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/data.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/RegistracijaProces.bpmn" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/RegistracijaProces.bpmn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ObjavljivanjeKnjige.bpmn" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ObjavljivanjeKnjige.bpmn" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/data.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/Application.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/controller/AuthenticationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/controller/AuthenticationController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/dto/WriterDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/dto/WriterDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/model/Role.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/model/Role.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/model/Writer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/model/Writer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/controller/BookController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/controller/BookController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/controller/ProcessController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/controller/ProcessController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/model/Keyword.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/model/Keyword.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/repository/BookRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/repository/BookRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/repository/UserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/repository/UserRepository.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/repository/WriterRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/repository/WriterRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/security/TokenUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/security/TokenUtils.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/IEmailService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/IEmailService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/camundaServices/EmailService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/camundaServices/SaveReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/camundaServices/SaveReader.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/impl/EmailServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/impl/EmailServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/IBookService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/IBookService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/IUserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/IUserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/IWriterService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/IWriterService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/camundaServices/CustomTypeProcessEnginePlugin.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/camundaServices/CustomTypeProcessEnginePlugin.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/camundaServices/LoadGenres.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/camundaServices/LoadGenres.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/camundaServices/bookPublishing/ChooseEditorForBookReview.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/camundaServices/bookPublishing/ChooseEditorForBookReview.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/camundaServices/bookPublishing/SaveGeneralBookData.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/camundaServices/bookPublishing/SaveGeneralBookData.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/impl/BookServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/impl/BookServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/impl/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/impl/UserServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/impl/WriterServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/impl/WriterServiceImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lu-frontend/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lu-frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lu-frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lu-frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lu-frontend/src/Routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/src/Routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lu-frontend/src/components/CamundaForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/src/components/CamundaForm.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lu-frontend/src/components/login/LoginForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/src/components/login/LoginForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lu-frontend/src/components/registration/Registration.js" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/src/components/registration/Registration.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lu-frontend/src/containers/HomePage/HomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/src/containers/HomePage/HomePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lu-frontend/src/containers/HomePage/LoggedInHomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/src/containers/HomePage/LoggedInHomePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lu-frontend/src/containers/HomePage/LoggedOutHomepage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/src/containers/HomePage/LoggedOutHomepage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lu-frontend/src/containers/HomePage/SidebarList.js" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/src/containers/HomePage/SidebarList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lu-frontend/src/functions/FormFunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/src/functions/FormFunctions.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,67 +140,71 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="361" y="73" key="#Project_Structure/0.0.1536.824@0.0.1536.824" timestamp="1607432782369" />
-    <state x="223" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1607432995024">
+    <state x="223" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1609855536772">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="223" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1607432995024" />
-    <state x="574" y="131" key="#com.intellij.ide.util.MemberChooser" timestamp="1609353258022">
+    <state x="223" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1609855536772" />
+    <state x="574" y="131" key="#com.intellij.ide.util.MemberChooser" timestamp="1609931634804">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="574" y="131" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1607793450418" />
-    <state x="574" y="131" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1609353258022" />
-    <state x="620" y="304" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1608669816004">
+    <state x="574" y="131" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1609931634804" />
+    <state x="498" y="202" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1609855534869">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="620" y="304" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1536.824@0.0.1536.824" timestamp="1608669816004" />
-    <state width="1493" height="298" key="GridCell.Tab.0.bottom" timestamp="1609354799187">
+    <state x="498" y="202" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1536.824@0.0.1536.824" timestamp="1609855534869" />
+    <state x="620" y="304" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1609855553318">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="298" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1609354799187" />
-    <state width="1493" height="298" key="GridCell.Tab.0.center" timestamp="1609354799186">
+    <state x="620" y="304" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1536.824@0.0.1536.824" timestamp="1609855553318" />
+    <state width="1493" height="210" key="GridCell.Tab.0.bottom" timestamp="1609932002183">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="298" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1609354799186" />
-    <state width="1493" height="298" key="GridCell.Tab.0.left" timestamp="1609354799186">
+    <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1609932002183" />
+    <state width="1493" height="210" key="GridCell.Tab.0.center" timestamp="1609932002183">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="298" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1609354799186" />
-    <state width="1493" height="298" key="GridCell.Tab.0.right" timestamp="1609354799187">
+    <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1609932002183" />
+    <state width="1493" height="210" key="GridCell.Tab.0.left" timestamp="1609932002183">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="298" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1609354799187" />
-    <state width="1493" height="298" key="GridCell.Tab.1.bottom" timestamp="1609354799187">
+    <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1609932002183" />
+    <state width="1493" height="210" key="GridCell.Tab.0.right" timestamp="1609932002183">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="298" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1609354799187" />
-    <state width="1493" height="298" key="GridCell.Tab.1.center" timestamp="1609354799187">
+    <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1609932002183" />
+    <state width="1493" height="210" key="GridCell.Tab.1.bottom" timestamp="1609932002183">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="298" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1609354799187" />
-    <state width="1493" height="298" key="GridCell.Tab.1.left" timestamp="1609354799187">
+    <state width="1493" height="210" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1609932002183" />
+    <state width="1493" height="210" key="GridCell.Tab.1.center" timestamp="1609932002183">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="298" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1609354799187" />
-    <state width="1493" height="298" key="GridCell.Tab.1.right" timestamp="1609354799187">
+    <state width="1493" height="210" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1609932002183" />
+    <state width="1493" height="210" key="GridCell.Tab.1.left" timestamp="1609932002183">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="298" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1609354799187" />
-    <state width="1493" height="308" key="GridCell.Tab.2.bottom" timestamp="1609354716413">
+    <state width="1493" height="210" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1609932002183" />
+    <state width="1493" height="210" key="GridCell.Tab.1.right" timestamp="1609932002183">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="308" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1609354716413" />
-    <state width="1493" height="308" key="GridCell.Tab.2.center" timestamp="1609354716413">
+    <state width="1493" height="210" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1609932002183" />
+    <state width="1493" height="222" key="GridCell.Tab.2.bottom" timestamp="1609928853076">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="308" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1609354716413" />
-    <state width="1493" height="308" key="GridCell.Tab.2.left" timestamp="1609354716412">
+    <state width="1493" height="222" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1609928853076" />
+    <state width="1493" height="222" key="GridCell.Tab.2.center" timestamp="1609928853076">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="308" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1609354716412" />
-    <state width="1493" height="308" key="GridCell.Tab.2.right" timestamp="1609354716413">
+    <state width="1493" height="222" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1609928853076" />
+    <state width="1493" height="222" key="GridCell.Tab.2.left" timestamp="1609928853076">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="308" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1609354716413" />
+    <state width="1493" height="222" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1609928853076" />
+    <state width="1493" height="222" key="GridCell.Tab.2.right" timestamp="1609928853076">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="222" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1609928853076" />
     <state x="279" y="0" key="SettingsEditor" timestamp="1608669807698">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -212,10 +225,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="473" y="53" width="590" height="717" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1609354059316" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1608712367566">
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1609931656789">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1608712367566" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1609931656789" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -281,14 +294,14 @@
           <option name="timeStamp" value="37" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/UserController.java</url>
-          <line>86</line>
-          <option name="timeStamp" value="40" />
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/bookPublishing/SaveGeneralBookData.java</url>
+          <line>43</line>
+          <option name="timeStamp" value="72" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/AuthenticationController.java</url>
-          <line>78</line>
-          <option name="timeStamp" value="55" />
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/bookPublishing/SaveGeneralBookData.java</url>
+          <line>34</line>
+          <option name="timeStamp" value="73" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

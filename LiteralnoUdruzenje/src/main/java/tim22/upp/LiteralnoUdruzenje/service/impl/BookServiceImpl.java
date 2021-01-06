@@ -41,6 +41,16 @@ public class BookServiceImpl implements IBookService {
         return bookRepository.findBooksByGenre(genre);
     }
 
+    @Override
+    public boolean saveBook(Book book) {
+        Book bookSaved = bookRepository.save(book);
+        if(bookSaved != null){
+            return  true;
+        }else{
+            return  false;
+        }
+    }
+
     /*public List<Book> findAllByWriter(Writer writer) {
         return bookRepository.findBooskByWriter(writer);
     }*/

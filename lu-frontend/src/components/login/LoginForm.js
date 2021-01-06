@@ -27,7 +27,6 @@ const LoginForm = ({ history , setLoggedIn}) => {
                 alert('success');
                 localStorage.setItem('token', resp.data.accessToken);
                 history.push({pathname: '/'});
-                debugger;
                 getUser(setLoggedIn);
         },
             (resp) => {alert('wrong')}

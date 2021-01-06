@@ -5,6 +5,7 @@ import reading from '../icons/readingbook.svg';
 import { React, useImperativeHandle, forwardRef } from 'react';
 import { Form, Button, Col } from "react-bootstrap";
 import {validate} from '../functions/FormFunctions.js';
+import Select from 'react-select';
 
 
 const CamundaForm = ({ formFields,
@@ -29,7 +30,6 @@ const CamundaForm = ({ formFields,
     function renderFormFields(formFields) {
         if (formFields !== undefined && formFields.length > 0) {
             return formFields.map((field) => {
-
                 if (field.type.name === "boolean") {
                     return (<div className="checkBoxField">
                         {field.label}
@@ -52,6 +52,18 @@ const CamundaForm = ({ formFields,
                         </div>
                     );
                 }
+                if(field.type.name.includes('singleEnum')){
+                    return(
+                        <div className="selectDiv">  
+                        <Select
+                            value={selected}
+                            onChange={setSelected}
+                            options={initializeOptions(field.type.values)}
+                        />
+                        </div>
+                       
+                    )
+                }
                 if (field.type.name.includes('password')) {
                     return (
                         <Form.Group key={field.id} as={Col} className="singleInputField">
@@ -68,6 +80,17 @@ const CamundaForm = ({ formFields,
                         <Form.Group key={field.id} as={Col} className="singleInputField">
                             <Form.Label>{field.label}</Form.Label>
                             <Form.Control type="email" id={field.id} name={field.id} onChange={handleChange} />
+                            {isValid.hasOwnProperty(`${field.id}`) &&
+                                showValidationErrors(field)
+                            }
+                         </Form.Group>
+                    );
+                }
+                if (field.type.name.includes('textArea')) {
+                    return (
+                        <Form.Group key={field.id} as={Col} className="singleInputField">
+                            <Form.Label>{field.label}</Form.Label>
+                            <textarea class="form-control" id={field.id} rows="3" name={field.id} onChange={handleChange}></textarea>
                             {isValid.hasOwnProperty(`${field.id}`) &&
                                 showValidationErrors(field)
                             }
@@ -113,7 +136,7 @@ const CamundaForm = ({ formFields,
     };
 
     function showValidationErrors(field) {
-
+        debugger;
         if (isValid.hasOwnProperty(`${field.id}`)) {
             return (
                 <div style={{ color: 'red' }}>
@@ -132,6 +155,7 @@ const CamundaForm = ({ formFields,
             }
 
         }
+        console.log('options',options);
         return options;
     }
 }

@@ -16,7 +16,7 @@ public class Keyword  implements Serializable {
     @Column
     private String name;
 
-    @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "keywords")
     private Set<Book> books = new HashSet<Book>();
 
     public Keyword() {}

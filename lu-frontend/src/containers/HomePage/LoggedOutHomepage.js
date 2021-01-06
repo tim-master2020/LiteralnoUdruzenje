@@ -29,7 +29,6 @@ const LoggedOutHomepage = ({history }) => {
     const theme = useTheme();
     const useStyles = makeStyles((theme) => (styling(theme)));
     const classes = useStyles();
-    debugger;
 
     return (
         <div className={classes.root}>
@@ -37,7 +36,7 @@ const LoggedOutHomepage = ({history }) => {
             <AppBar position="fixed" className={clsx(classes.appBar, { [classes.appBarShift]: isOpen })}>
                 <Toolbar className={classes.toolbar}>
                     <div style={{ width: '100%' }}></div>
-                    <Button>register as reader</Button>
+                    <Button onClick={() => { history.push('/registration') }}>register as reader</Button>
                     <Button >register as writer</Button>
                     <Button onClick={() => {history.push(`/login`);}}>login</Button>
                 </Toolbar>
@@ -45,7 +44,7 @@ const LoggedOutHomepage = ({history }) => {
             <MenuIcon />
 
             <main className={clsx(classes.content, { [classes.contentShift]: isOpen })}>
-            <Carousel style={{heigth:'30%',width:'40%',marginLeft:'30%',marginTop:'2%'}}>
+            {/* <Carousel style={{heigth:'30%',width:'40%',marginLeft:'30%',marginTop:'2%'}}>
                 <Carousel.Item>
                     <img className="d-block w-100"src={photo1} style={{height:'inherit'}}/>
                 </Carousel.Item>
@@ -55,7 +54,7 @@ const LoggedOutHomepage = ({history }) => {
                 <Carousel.Item>
                     <img className="d-block w-100"src={photo3} style={{height:'inherit'}}/>
                 </Carousel.Item>
-            </Carousel>
+            </Carousel> */}
             </main>
         </div>
     );

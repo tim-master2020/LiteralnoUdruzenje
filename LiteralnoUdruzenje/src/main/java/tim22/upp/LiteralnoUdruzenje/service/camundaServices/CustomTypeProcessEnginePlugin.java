@@ -5,6 +5,7 @@ import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.camunda.bpm.engine.impl.form.type.AbstractFormFieldType;
 import org.springframework.stereotype.Service;
 import tim22.upp.LiteralnoUdruzenje.model.camundaCustomTypes.CustomType;
+import tim22.upp.LiteralnoUdruzenje.model.camundaCustomTypes.EnumType;
 import tim22.upp.LiteralnoUdruzenje.model.camundaCustomTypes.MultiEnumType;
 
 import java.util.ArrayList;
@@ -20,7 +21,9 @@ public class CustomTypeProcessEnginePlugin extends AbstractProcessEnginePlugin {
 
         List<AbstractFormFieldType> formTypes = processEngineConfiguration.getCustomFormTypes();
         formTypes.add(new MultiEnumType("genres"));
+        formTypes.add(new EnumType("genre"));
         formTypes.add(new CustomType("password"));
         formTypes.add(new CustomType("email"));
+        formTypes.add(new CustomType("textArea"));
     }
 }

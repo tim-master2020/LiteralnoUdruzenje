@@ -21,6 +21,9 @@ const Routes = ({loggedInUser,setLoggedIn}) => {
              <Route exact path='/betaReader' render={props =>
                     <BetaReader/>
                 } />
+             <Route exact path='/bookGeneralData' render={props =>
+                    <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} publishBookGeneralData={true}/>
+                } />
         </Switch>
         );
 }

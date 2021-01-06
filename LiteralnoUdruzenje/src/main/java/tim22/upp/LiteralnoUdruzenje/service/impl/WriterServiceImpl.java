@@ -16,4 +16,9 @@ public class WriterServiceImpl implements IWriterService {
     public Writer findByEmail(String email) {
         return writerRepository.findWriterByEmail(email);
     }
+
+    @Override
+    public Writer findByUsername(String username) {
+        return  writerRepository.findByUsername(username);
+    }
 }

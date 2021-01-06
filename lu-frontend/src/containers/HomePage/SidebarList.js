@@ -5,7 +5,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
 export function SidebarList(role) {
-    debugger;
     return (
         <List>
            { role === 'WRITER' &&

@@ -71,7 +71,7 @@ public class BookServiceImpl implements IBookService {
         List<String> booksSaved = new ArrayList<>();
         for(int i = 0; i < fileNames.size(); i++) {
             Book book = new Book();
-            book.setName(fileNames.get(i));
+            book.setName(fileNames.get(i).split(".pdf")[0]);
             if (writer != null){
                 book.getWriters().add(writer);
             }
@@ -93,7 +93,27 @@ public class BookServiceImpl implements IBookService {
     }
 
     private void convertToPdf(String bytes, Book book) {
-        File file = new File("src/main/resources/pdfs/" + book.getName());
+        String[] existingFileNamesWithExtenstion = new File("src/main/resources/pdfs").list();
+        List<String> existingFileNames = new ArrayList<>();
+
+        boolean oneAlreadyExists = false;
+        for (String name : existingFileNamesWithExtenstion) {
+            if(name.equals(book.getName() + "(1)"))
+                oneAlreadyExists = true;
+            existingFileNames.add(name.split(".pdf")[0]);
+        }
+
+        for (String name : existingFileNames) {
+            if(name.equals(book.getName()) && oneAlreadyExists == false)
+                book.setName(book.getName() + "(1)");
+            else if (name.contains(book.getName()) && name.contains("(") && name.contains(")")) {
+                int fileNumber = Integer.parseInt(name.split("[\\(\\)]")[1]);
+                fileNumber++;
+                book.setName(name.replace(name.split("[\\(\\)]")[1], String.valueOf(fileNumber)));
+            }
+        }
+
+        File file = new File("src/main/resources/pdfs/" + book.getName() + ".pdf");
 
         try (FileOutputStream fos = new FileOutputStream(file);) {
             String realPart = bytes.split(";")[1].split(",")[1];

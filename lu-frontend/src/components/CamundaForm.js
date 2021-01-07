@@ -195,9 +195,10 @@ const CamundaForm = ({ formFields,
 
     function initializeOptions(fields) {
         let options = [];
+
         if (fields !== null && fields !== undefined) {
             for (const [key, value] of Object.entries(fields)) {
-                options.push({ value: `${value}`, label: `${value}` })
+                options.push({ value: `${key}`, label: `${value}` })
             }
 
         }

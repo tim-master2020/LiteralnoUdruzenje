@@ -7,6 +7,7 @@ import getUser from '../../functions/UserFunctions.js';
 import './BookReview.css';
 import CamundaForm from '../CamundaForm.js';
 import streamSaver from 'streamsaver';
+import {validate} from '../../functions/FormFunctions';
 
 const BookReview = ({ history , setLoggedIn, tId}) => {
     const [formFields, setformFields] = React.useState([]);
@@ -25,7 +26,6 @@ const BookReview = ({ history , setLoggedIn, tId}) => {
                 setWriter(resp.data.writer);
                 setformFields(resp.data.formFields);
                 setTaskId(resp.data.taskId);
-                console.log(resp.data);
             },
             (resp) => { alert("Cannot load books."); }
         );
@@ -33,6 +33,7 @@ const BookReview = ({ history , setLoggedIn, tId}) => {
 
     function downloadBook(e, book) {
         e.preventDefault();
+        console.log(book);
         var url = `${defaultUrl}/api/books/download/${book}`;
         fetch(url, {
             method: 'GET',
@@ -70,6 +71,43 @@ const BookReview = ({ history , setLoggedIn, tId}) => {
         })
     }
 
+    function submitReview(e) {
+
+        e.preventDefault();   
+        const returnValue = [];
+        let dataIsValid = true;
+        formFields.forEach(field => {
+
+            validate(field,field.value.value,setIsValid,isValid);
+            if(Object.keys(isValid).length > 0){
+                setValidationMessage(`Input value for field ${field.id} should be`)
+                dataIsValid = false; 
+            }
+            
+            if(field.type.name.includes('enum')){
+                field.value.value = selected.value;
+            }
+            returnValue.push({ fieldId: field.id, fieldValue: field.value.value })
+        });
+        
+        
+        if(dataIsValid){
+            console.log('taskid',taskId);
+            console.log(returnValue);
+
+            axios.post(`${defaultUrl}/api/reviews/save-review/${taskId}/${writer}`, returnValue).then(
+            (resp) => {
+                console.log(resp);
+                alert('You left review successfully!')
+                history.push('/');
+            },
+            (resp) => { 
+                alert("Something went wrong."); 
+            }
+        );
+    }
+    }
+
     return (     
         <div className="contentDiv">
             <h3>You can download PDF files and rate writer based on them.</h3>
@@ -88,7 +126,7 @@ const BookReview = ({ history , setLoggedIn, tId}) => {
                 <Card.Body>               
                     <CamundaForm
                     formFields={formFields}
-                    onSubmit={(e) => { renderBooks(e) }} 
+                    onSubmit={(e) => { submitReview(e) }} 
                     shouldSubmit={shouldSubmit} 
                     setShouldSubmit={setShouldSubmit}
                     setValidationMessage={setValidationMessage}

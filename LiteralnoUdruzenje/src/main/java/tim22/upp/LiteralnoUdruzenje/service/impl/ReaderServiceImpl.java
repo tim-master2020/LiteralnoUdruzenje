@@ -7,7 +7,7 @@ import tim22.upp.LiteralnoUdruzenje.repository.ReaderRepository;
 import tim22.upp.LiteralnoUdruzenje.service.IReaderService;
 
 @Service
-public class IReaderServiceImpl implements IReaderService {
+public class ReaderServiceImpl implements IReaderService {
 
     @Autowired
     private ReaderRepository readerRepository;

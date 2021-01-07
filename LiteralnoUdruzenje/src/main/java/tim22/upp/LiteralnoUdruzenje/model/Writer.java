@@ -17,6 +17,9 @@ public class Writer extends User implements Serializable {
     @ManyToMany(mappedBy = "writers")
     private Set<Book> books = new HashSet<Book>();
 
+    @OneToMany(mappedBy = "writer")
+    private Set<Review> reviews = new HashSet<>();
+
     public Writer() {}
 
     public boolean isVerified() {

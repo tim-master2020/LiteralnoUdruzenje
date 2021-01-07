@@ -5,16 +5,23 @@ import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.form.FormField;
 import org.camunda.bpm.engine.form.TaskFormData;
+import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 import tim22.upp.LiteralnoUdruzenje.dto.*;
 import tim22.upp.LiteralnoUdruzenje.model.Genre;
+import tim22.upp.LiteralnoUdruzenje.model.Writer;
 import tim22.upp.LiteralnoUdruzenje.service.IBookService;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.security.Principal;
@@ -92,10 +99,14 @@ public class BookController {
         return new ReviewFormFieldsDTO(task.getId(), task.getProcessInstanceId(), properties, bookNames, writer);
     }
 
-    @GetMapping(path = "/download/{name}")
-    public @ResponseBody
-    Stream<Path> downloadBook(@PathVariable String name) throws IOException {
-        return bookService.downloadPDF(name);
+    @GetMapping(path = "/download/{name:.+}")
+    public ResponseEntity<StreamingResponseBody> downloadBook(@PathVariable String name) throws IOException {
+        StreamingResponseBody response = bookService.downloadPDF(name);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=generic_file_name.bin")
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(response);
     }
 
     private HashMap<String, Object> mapListToDto(List<FormSubmissionDTO> list)

@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 import getUser from '../../functions/UserFunctions.js';
 import './BookReview.css';
 import CamundaForm from '../CamundaForm.js';
+import streamSaver from 'streamsaver';
 
 const BookReview = ({ history , setLoggedIn, tId}) => {
     const [formFields, setformFields] = React.useState([]);
@@ -32,15 +33,33 @@ const BookReview = ({ history , setLoggedIn, tId}) => {
 
     function downloadBook(e, book) {
         e.preventDefault();
-        var name = book.split(".");
-        console.log(book);
-        console.log(name);
-        axios.get(`${defaultUrl}/api/books/download/${name[0]}`,).then(
-            (resp) => {
-                console.log(resp.data);
-            },
-            (resp) => { alert("Cannot download this book."); }
-        );
+        var url = `${defaultUrl}/api/books/download/${book}`;
+        fetch(url, {
+            method: 'GET',
+        })
+        .then(response => {  
+        
+            const fileStream = streamSaver.createWriteStream(book);   
+            const readableStream = response.body;
+
+            // More optimized
+            if (readableStream.pipeTo) {
+                return readableStream.pipeTo(fileStream);
+            }   
+        
+            window.writer = fileStream.getWriter();
+        
+            const reader = response.body.getReader();
+            const pump = () => reader.read()
+                .then(res => res.done
+                    ? writer.close()
+                    : writer.write(res.value).then(pump));
+        
+            pump();
+        })
+        .catch(error => {
+            console.log(error);
+        });
     }
 
     function renderBooks(b) {

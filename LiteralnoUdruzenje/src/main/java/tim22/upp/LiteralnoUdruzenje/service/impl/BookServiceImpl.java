@@ -3,6 +3,7 @@ package tim22.upp.LiteralnoUdruzenje.service.impl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 import tim22.upp.LiteralnoUdruzenje.dto.BookDTO;
 import tim22.upp.LiteralnoUdruzenje.model.Book;
 import tim22.upp.LiteralnoUdruzenje.model.Genre;
@@ -15,10 +16,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Stream;
 
 @Service
 public class BookServiceImpl implements IBookService {
@@ -92,11 +90,13 @@ public class BookServiceImpl implements IBookService {
     }
 
     @Override
-    public Stream<Path> downloadPDF(String name) throws IOException {
-        try (Stream<Path> files = Files.walk(Paths.get("src/main/resources/pdfs"))) {
-            return files
-                    .filter(f -> f.getFileName().toString().contains(name));
-        }
+    public StreamingResponseBody downloadPDF(String name) throws IOException {
+        File file = new File("src/main/resources/pdfs/".concat(name));
+
+        StreamingResponseBody responseBody = outputStream -> {
+            Files.copy(file.toPath(), outputStream);
+        };
+        return responseBody;
     }
 
     private void convertToPdf(String bytes, Book book) {

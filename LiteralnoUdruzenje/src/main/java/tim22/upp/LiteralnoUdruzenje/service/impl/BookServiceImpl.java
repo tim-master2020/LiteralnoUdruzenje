@@ -51,6 +51,16 @@ public class BookServiceImpl implements IBookService {
         }
     }
 
+    @Override
+    public Book findById(Long id) {
+        return bookRepository.findById(id).get();
+    }
+
+    @Override
+    public boolean removeBookFromDB(Long id) {
+        return bookRepository.removeById(id);
+    }
+
     /*public List<Book> findAllByWriter(Writer writer) {
         return bookRepository.findBooskByWriter(writer);
     }*/

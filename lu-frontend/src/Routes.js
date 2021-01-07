@@ -24,6 +24,12 @@ const Routes = ({loggedInUser,setLoggedIn}) => {
              <Route exact path='/bookGeneralData' render={props =>
                     <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} publishBookGeneralData={true}/>
                 } />
+             <Route exact path='/reviewBookGeneral/:taskId' render={props =>
+                <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} reviewBookGeneral={true}/>
+                } />
+            <Route exact path='/giveExplanation/:taskId' render={props =>
+                <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} giveExplanation={true}/>
+                } />
         </Switch>
         );
 }

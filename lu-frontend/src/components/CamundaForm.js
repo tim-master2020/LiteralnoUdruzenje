@@ -63,7 +63,16 @@ const CamundaForm = ({ formFields,
                         </div>
                        
                     )
+                }if(field.type.name.includes('label')){
+                    return(
+                        <Form.Group key={field.id} as={Col} className="singleInputField">
+                            <Form.Label id={field.id} name={field.id}><b>{field.label}:</b> {field.value.value}</Form.Label>
+                         </Form.Group>
+                    // <label id={field.id} name={field.id}>{field.value.value}</label>
+                       
+                    )
                 }
+
                 if (field.type.name.includes('password')) {
                     return (
                         <Form.Group key={field.id} as={Col} className="singleInputField">
@@ -94,6 +103,19 @@ const CamundaForm = ({ formFields,
                             {isValid.hasOwnProperty(`${field.id}`) &&
                                 showValidationErrors(field)
                             }
+                         </Form.Group>
+                    );
+                }
+                if (field.type.name.includes('enum')) {
+                    console.log(initializeOptions(field.type.values));
+                    return (
+                        <Form.Group key={field.id} as={Col} className="singleInputField">
+                            <Form.Label>{field.label}</Form.Label>
+                            <Select
+                            value={selected}
+                            onChange={setSelected}
+                            options={initializeOptions(field.type.values)}
+                            />
                          </Form.Group>
                     );
                 }

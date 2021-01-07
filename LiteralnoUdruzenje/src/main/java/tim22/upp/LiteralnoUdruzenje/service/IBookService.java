@@ -16,4 +16,6 @@ public interface IBookService {
     List<Book> findAllByGenre(Genre genre);
     //List<Book> findAllByWriter(Writer writer);
     boolean saveBook(Book book);
+    Book findById(Long id);
+    boolean removeBookFromDB(Long id);
 }

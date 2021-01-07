@@ -54,8 +54,9 @@ const PublishBookGeneralData = ({ taskId, history }) => {
                   history.push('/');
             },
             (resp) => {
-                var frm = document.getElementsByName('camundaForm')[0];
-                frm.reset();
+                alert.fire({
+                    text:'Error occured please try again',
+                });
             }
         );
     }

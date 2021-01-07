@@ -16,8 +16,10 @@ import { AppBar, Toolbar } from "@material-ui/core";
 import { defaultUrl } from '../../backendConfig';
 import axios from 'axios';
 import PublishBookGeneralData from "../../components/publish-book/PublishBookGeneralData";
+import ReviewBookGeneral from "../../components/publish-book/ReviewBookGeneral";
+import DeclineExplanation from "../../components/publish-book/DeclineExplanation";
 
-const LoggedInHomepage = ({ loggedInUser, setLoggedIn, history,publishBookGeneralData}) => {
+const LoggedInHomepage = ({ loggedInUser, setLoggedIn, history,publishBookGeneralData,reviewBookGeneral,giveExplanation}) => {
     const [isOpen, setOpen] = useState(false);
 
     const handleDrawerToggle = () => {
@@ -82,13 +84,17 @@ const LoggedInHomepage = ({ loggedInUser, setLoggedIn, history,publishBookGenera
                     </IconButton>
                 </div>
                 <Divider />
-                {SidebarList(loggedInUser.role)}
+                {SidebarList(history,loggedInUser)}
             </Drawer>
             <main className={clsx(classes.content, { [classes.contentShift]: isOpen })}>
                 <div className={classes.drawerHeader} />
                 <div>
                     { publishBookGeneralData &&
                         <PublishBookGeneralData/>
+                    }{ reviewBookGeneral &&
+                        <ReviewBookGeneral/>
+                    }{ giveExplanation &&
+                        <DeclineExplanation/>
                     }
                 </div>
             </main>

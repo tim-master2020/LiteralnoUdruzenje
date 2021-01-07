@@ -20,6 +20,7 @@ import tim22.upp.LiteralnoUdruzenje.model.Writer;
 import tim22.upp.LiteralnoUdruzenje.service.IBookService;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Controller
@@ -58,6 +59,33 @@ public class BookController {
         String processInstanceId = task.getProcessInstanceId();
 
         runtimeService.setVariable(processInstanceId, "generalBookData", map);
+        formService.submitTaskForm(taskId,map);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/save-general-book-data-review/{taskId}")
+    public ResponseEntity<?> submitGeneralBookDataReview(@RequestBody List<FormSubmissionDTO> reviewDTO, @PathVariable String taskId) {
+        HashMap<String, Object> map = this.mapListToDto(reviewDTO);
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+        String processInstanceId = task.getProcessInstanceId();
+        LinkedHashMap decision = (LinkedHashMap) map.get("decision");
+        runtimeService.setVariable(processInstanceId, "result", decision.get("value"));
+        formService.submitTaskForm(taskId,decision);
+
+        Task nextTask = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
+        if(nextTask !=  null){
+            List<FormField> properties = formService.getTaskFormData(nextTask.getId()).getFormFields();
+            return new ResponseEntity<>(new FormFieldsDTO(nextTask.getId(), processInstanceId, properties,nextTask.getName()),HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/submit-explanation/{taskId}")
+    public ResponseEntity<?> submitExplanation(@RequestBody List<FormSubmissionDTO> explanationDTO, @PathVariable String taskId) {
+        HashMap<String, Object> map = this.mapListToDto(explanationDTO);
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+        runtimeService.setVariable(task.getProcessInstanceId(),"explanation",map);
         formService.submitTaskForm(taskId,map);
         return new ResponseEntity<>(HttpStatus.OK);
     }

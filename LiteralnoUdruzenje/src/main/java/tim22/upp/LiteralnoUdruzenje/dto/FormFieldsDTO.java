@@ -9,12 +9,14 @@ public class FormFieldsDTO {
     String taskId;
     List<FormField> formFields;
     String processInstanceId;
+    String taskName;
 
-    public FormFieldsDTO(String taskId, String processInstanceId, List<FormField> formFields) {
+    public FormFieldsDTO(String taskId, String processInstanceId, List<FormField> formFields,String name) {
         super();
         this.taskId = taskId;
         this.formFields = formFields;
         this.processInstanceId = processInstanceId;
+        this.taskName = name;
     }
 
     public FormFieldsDTO() {
@@ -46,4 +48,11 @@ public class FormFieldsDTO {
         this.processInstanceId = processInstanceId;
     }
 
+    public String getTaskName() {
+        return taskName;
+    }
+
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
 }

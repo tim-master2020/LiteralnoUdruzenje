@@ -35,9 +35,9 @@ public class EmailService implements JavaDelegate {
                 + "<br>"
                 + "Yours, <br><br>"
                 + "<i>EBook app</i>";
-        final String poruka = "Hello " + reader.getUsername() + ",\n\nYour request for registration has been accepted. Click the following link to verify your account:\n\n" + "http://localhost:8081/api/users/confirm-account/" + delegateExecution.getProcessInstanceId()+"/"+reader.getUsername()+ "\n\n\neBook Team";
+        final String message1 = "Hello " + reader.getUsername() + ",\n\nYour request for registration has been accepted. Click the following link to verify your account:\n\n" + "http://localhost:8081/api/users/confirm-account/" + delegateExecution.getProcessInstanceId()+"/"+reader.getUsername()+ "\n\n\neBook Team";
 
-        emailService.sendCustomerEmail(reader, poruka);
+        emailService.sendMail(reader, message1);
         this.runtimeService.setVariable(delegateExecution.getProcessInstanceId(), "verifed", false);
     }
 

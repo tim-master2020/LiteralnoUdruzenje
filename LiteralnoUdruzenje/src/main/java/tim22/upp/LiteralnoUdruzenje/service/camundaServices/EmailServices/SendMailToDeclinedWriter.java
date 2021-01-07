@@ -9,7 +9,7 @@ import tim22.upp.LiteralnoUdruzenje.service.IEmailService;
 import tim22.upp.LiteralnoUdruzenje.service.IUserService;
 
 @Service
-public class SendEditorEmailForReview implements JavaDelegate {
+public class SendMailToDeclinedWriter implements JavaDelegate {
 
     @Autowired
     private IEmailService emailService;
@@ -19,9 +19,11 @@ public class SendEditorEmailForReview implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
-        System.out.println("Sending mail to random editor");
-        User editor = userService.findByUsername(delegateExecution.getVariable("editorsUsername").toString());
-        final String message = "Hello " + editor.getUsername() + ",\n\nYou have new books to review. Please login to eBook to continue:\n\n" + "http://localhost:3000/" + "\n\n\neBook Team";
+        System.out.println("Sending mail to declined writer");
+        String explanation = delegateExecution.getVariable("explanation").toString();
+        User editor = userService.findByUsername(delegateExecution.getVariable("loggedInWriter").toString());
+        final String message = "Hello " + editor.getUsername() + ",\n\nYour request to publish book has been declined." +
+                "Explanation from our editor:"+explanation+"\n\n\neBook Team";
         emailService.sendMail(editor,message);
     }
 }

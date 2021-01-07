@@ -4,21 +4,23 @@ import org.camunda.bpm.engine.FormService;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.form.FormField;
+import org.camunda.bpm.engine.form.TaskFormData;
 import org.camunda.bpm.engine.task.Task;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import tim22.upp.LiteralnoUdruzenje.dto.*;
 import tim22.upp.LiteralnoUdruzenje.model.Genre;
-import tim22.upp.LiteralnoUdruzenje.model.Writer;
 import tim22.upp.LiteralnoUdruzenje.service.IBookService;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Stream;
 
 @CrossOrigin("http://localhost:3000")
 @RestController
@@ -78,6 +80,22 @@ public class BookController {
         }
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/book-review/{taskId}", produces = "application/json")
+    public @ResponseBody FormFieldsDTO getFormFieldsBookReview(@PathVariable String taskId) {
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+        List<String> bookNames = (List<String>) taskService.getVariables(taskId).get("booksSaved");
+        String writer = (String) taskService.getVariables(taskId).get("writer");
+        TaskFormData taskFormData = formService.getTaskFormData(task.getId());
+        List<FormField> properties = taskFormData.getFormFields();
+        return new ReviewFormFieldsDTO(task.getId(), task.getProcessInstanceId(), properties, bookNames, writer);
+    }
+
+    @GetMapping(path = "/download/{name}")
+    public @ResponseBody
+    Stream<Path> downloadBook(@PathVariable String name) throws IOException {
+        return bookService.downloadPDF(name);
     }
 
     private HashMap<String, Object> mapListToDto(List<FormSubmissionDTO> list)

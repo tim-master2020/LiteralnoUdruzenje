@@ -10,6 +10,9 @@ export function TaskNameRoutes(name) {
         case 'UploadPDFForm':
             route = '/upload';
             break;
+        case 'ReviewNewWriter':
+            route = '/review';
+            break;
     
         default:
             route = '/';

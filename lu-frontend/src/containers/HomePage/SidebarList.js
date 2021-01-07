@@ -6,14 +6,23 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { TaskNameRoutes } from '../../functions/TaskNameRoutes';
 
 export function SidebarList(history, user) {
+
+    function renderTasks(tasks) {
+        return tasks.map((task) => {
+            return (
+                <ListItem  onClick={() => {history.push(`${TaskNameRoutes(task.name)}/${task.taskId}`)}} button>
+                <ListItemText primary={task.name} />
+                </ListItem>
+            );
+        })
+    }
+
     return (
         <List>
             {
                 user.tasks.length > 0 &&
                 <div>
-                    <ListItem  onClick={() => {history.push(`${TaskNameRoutes(user.tasks[0].name)}/${user.tasks[0].taskId}`)}} button>
-                    <ListItemText primary={user.tasks[0].name} />
-                    </ListItem>
+                    {renderTasks(user.tasks)}
                 </div>
             }
         </List>

@@ -1,5 +1,5 @@
-
 import MultiSelect from "react-multi-select-component";
+import Select from 'react-select';
 import maintenance from '../icons/maintenance.svg';
 import reading from '../icons/readingbook.svg';
 import { React, useImperativeHandle, forwardRef } from 'react';
@@ -82,6 +82,19 @@ const CamundaForm = ({ formFields,
                             <Form.Label>{field.label}</Form.Label>
                             <br/>
                             <input multiple type="file" id={field.id} name={field.id} onChange={fileSelectedHandler}/>
+                         </Form.Group>
+                    );
+                }
+                if (field.type.name.includes('enum')) {
+                    console.log(initializeOptions(field.type.values));
+                    return (
+                        <Form.Group key={field.id} as={Col} className="singleInputField">
+                            <Form.Label>{field.label}</Form.Label>
+                            <Select
+                            value={selected}
+                            onChange={setSelected}
+                            options={initializeOptions(field.type.values)}
+                            />
                          </Form.Group>
                     );
                 }

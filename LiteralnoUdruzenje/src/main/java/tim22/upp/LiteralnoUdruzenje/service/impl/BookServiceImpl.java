@@ -4,7 +4,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tim22.upp.LiteralnoUdruzenje.dto.BookDTO;
-import tim22.upp.LiteralnoUdruzenje.dto.FormSubmissionDTO;
 import tim22.upp.LiteralnoUdruzenje.model.Book;
 import tim22.upp.LiteralnoUdruzenje.model.Genre;
 import tim22.upp.LiteralnoUdruzenje.model.Writer;
@@ -14,12 +13,12 @@ import tim22.upp.LiteralnoUdruzenje.service.IWriterService;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.stream.Stream;
 
 @Service
 public class BookServiceImpl implements IBookService {
@@ -90,6 +89,14 @@ public class BookServiceImpl implements IBookService {
             return  bookRepository.save(book);
         }
         return null;
+    }
+
+    @Override
+    public Stream<Path> downloadPDF(String name) throws IOException {
+        try (Stream<Path> files = Files.walk(Paths.get("src/main/resources/pdfs"))) {
+            return files
+                    .filter(f -> f.getFileName().toString().contains(name));
+        }
     }
 
     private void convertToPdf(String bytes, Book book) {

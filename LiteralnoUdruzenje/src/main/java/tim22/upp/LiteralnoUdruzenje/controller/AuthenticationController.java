@@ -1,6 +1,5 @@
 package tim22.upp.LiteralnoUdruzenje.controller;
 
-import org.camunda.bpm.engine.FormService;
 import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.task.Task;
 import org.modelmapper.ModelMapper;
@@ -19,6 +18,7 @@ import tim22.upp.LiteralnoUdruzenje.dto.TaskDTO;
 import tim22.upp.LiteralnoUdruzenje.dto.UserDTO;
 import tim22.upp.LiteralnoUdruzenje.dto.WriterDTO;
 import tim22.upp.LiteralnoUdruzenje.model.*;
+import tim22.upp.LiteralnoUdruzenje.model.enums.Role;
 import tim22.upp.LiteralnoUdruzenje.security.TokenUtils;
 import tim22.upp.LiteralnoUdruzenje.security.auth.JwtAuthenticationRequest;
 import tim22.upp.LiteralnoUdruzenje.service.IReaderService;

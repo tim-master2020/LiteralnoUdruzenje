@@ -1,6 +1,7 @@
 package tim22.upp.LiteralnoUdruzenje.model;
 
 import org.springframework.security.core.userdetails.UserDetails;
+import tim22.upp.LiteralnoUdruzenje.model.enums.Role;
 
 import javax.persistence.*;
 import java.sql.Timestamp;

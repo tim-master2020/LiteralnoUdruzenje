@@ -1,6 +1,6 @@
 package tim22.upp.LiteralnoUdruzenje.dto;
 
-import tim22.upp.LiteralnoUdruzenje.model.Role;
+import tim22.upp.LiteralnoUdruzenje.model.enums.Role;
 import tim22.upp.LiteralnoUdruzenje.model.User;
 
 import java.util.ArrayList;

@@ -3,7 +3,7 @@ package tim22.upp.LiteralnoUdruzenje.service.camundaServices;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.stereotype.Service;
-import tim22.upp.LiteralnoUdruzenje.model.Vote;
+import tim22.upp.LiteralnoUdruzenje.model.enums.Vote;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -14,7 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tim22.upp.LiteralnoUdruzenje.dto.FormFieldsDTO;
-import tim22.upp.LiteralnoUdruzenje.model.Role;
+import tim22.upp.LiteralnoUdruzenje.model.enums.Role;
 import tim22.upp.LiteralnoUdruzenje.model.User;
 import tim22.upp.LiteralnoUdruzenje.service.IUserService;
 

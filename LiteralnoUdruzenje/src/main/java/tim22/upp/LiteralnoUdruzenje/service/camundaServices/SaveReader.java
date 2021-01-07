@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import tim22.upp.LiteralnoUdruzenje.model.Authority;
 import tim22.upp.LiteralnoUdruzenje.model.Genre;
 import tim22.upp.LiteralnoUdruzenje.model.Reader;
-import tim22.upp.LiteralnoUdruzenje.model.Role;
+import tim22.upp.LiteralnoUdruzenje.model.enums.Role;
 import tim22.upp.LiteralnoUdruzenje.service.IAuthorityService;
 import tim22.upp.LiteralnoUdruzenje.service.IGenreService;
 import tim22.upp.LiteralnoUdruzenje.service.IReaderService;

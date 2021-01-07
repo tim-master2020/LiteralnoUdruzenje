@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import tim22.upp.LiteralnoUdruzenje.model.*;
+import tim22.upp.LiteralnoUdruzenje.model.enums.Role;
 import tim22.upp.LiteralnoUdruzenje.service.IAuthorityService;
 import tim22.upp.LiteralnoUdruzenje.service.IGenreService;
-import tim22.upp.LiteralnoUdruzenje.service.IReaderService;
 import tim22.upp.LiteralnoUdruzenje.service.IWriterService;
 
 import java.util.*;

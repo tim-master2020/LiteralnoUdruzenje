@@ -112,15 +112,16 @@ public class BookServiceImpl implements IBookService {
 
         for (String name : existingFileNames) {
             if(name.equals(book.getName()) && oneAlreadyExists == false)
-                book.setName(book.getName() + "(1)");
+                book.setName(book.getName() + "(1)" + ".pdf");
             else if (name.contains(book.getName()) && name.contains("(") && name.contains(")")) {
                 int fileNumber = Integer.parseInt(name.split("[\\(\\)]")[1]);
                 fileNumber++;
                 book.setName(name.replace(name.split("[\\(\\)]")[1], String.valueOf(fileNumber)));
+                book.setName(book.getName().concat(".pdf"));
             }
         }
 
-        File file = new File("src/main/resources/pdfs/" + book.getName() + ".pdf");
+        File file = new File("src/main/resources/pdfs/" + book.getName());
 
         try (FileOutputStream fos = new FileOutputStream(file);) {
             String realPart = bytes.split(";")[1].split(",")[1];

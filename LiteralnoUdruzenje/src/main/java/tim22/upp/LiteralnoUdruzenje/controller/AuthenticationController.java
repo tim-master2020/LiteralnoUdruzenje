@@ -101,20 +101,23 @@ public class AuthenticationController {
         Authentication a = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) a.getPrincipal();
 
+        List<Task> tasks = taskService.createTaskQuery().taskAssignee(user.getUsername()).list();
+
         if(user.getRole().equals(Role.READER)) {
             Reader reader = readerService.findByEmail(user.getEmail());
             ReaderDTO readerDTO = modelMapper.map(reader, ReaderDTO.class);
+            readerDTO.setTasks(mapTasks(tasks));
             return new ResponseEntity<>(readerDTO, HttpStatus.OK);
 
         } else if ( user.getRole().equals(Role.WRITER)){
             Writer writer = writerService.findByEmail(user.getEmail());
             WriterDTO writerDTO = modelMapper.map(writer, WriterDTO.class);
-            List<Task> tasks = taskService.createTaskQuery().taskAssignee(user.getUsername()).list();
             writerDTO.setTasks(mapTasks(tasks));
             return new ResponseEntity<>(writerDTO, HttpStatus.OK);
 
         } else if (user.getRole().equals(Role.COMMITTEE)) {
             UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+            userDTO.setTasks(mapTasks(tasks));
             return new ResponseEntity<>(userDTO, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

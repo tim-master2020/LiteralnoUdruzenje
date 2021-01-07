@@ -9,3 +9,35 @@
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 24;
 }
+.contentDiv{
+    display: flex;
+    flex-direction: column;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: rgb(77, 80, 99);
+    margin: 2%;
+}
+.reviewDiv{
+    display: inline-block;
+}
+.reviewWriter{
+    font-size: 22px;
+    margin-top: 2%;
+    margin-bottom: -1px;
+}
+.reviewWriterName{
+    font-size: 25px;
+    color: rgb(105, 118, 194);
+}
+
+.bookNameDiv{
+    font-size: 19px;
+    margin: 1px;
+    color:rgb(66, 72, 107);
+    text-decoration: underline;
+}
+.bookNameDiv:hover{
+    font-size: 19px;
+    margin: 1px;
+    color: rgb(109, 152, 218);
+    cursor: pointer;
+}

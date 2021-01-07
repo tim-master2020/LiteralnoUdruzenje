@@ -3,8 +3,8 @@ package tim22.upp.LiteralnoUdruzenje.service.impl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 import tim22.upp.LiteralnoUdruzenje.dto.BookDTO;
-import tim22.upp.LiteralnoUdruzenje.dto.FormSubmissionDTO;
 import tim22.upp.LiteralnoUdruzenje.model.Book;
 import tim22.upp.LiteralnoUdruzenje.model.Genre;
 import tim22.upp.LiteralnoUdruzenje.model.Writer;
@@ -14,12 +14,9 @@ import tim22.upp.LiteralnoUdruzenje.service.IWriterService;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.*;
 
 @Service
 public class BookServiceImpl implements IBookService {
@@ -90,6 +87,16 @@ public class BookServiceImpl implements IBookService {
             return  bookRepository.save(book);
         }
         return null;
+    }
+
+    @Override
+    public StreamingResponseBody downloadPDF(String name) throws IOException {
+        File file = new File("src/main/resources/pdfs/".concat(name));
+
+        StreamingResponseBody responseBody = outputStream -> {
+            Files.copy(file.toPath(), outputStream);
+        };
+        return responseBody;
     }
 
     private void convertToPdf(String bytes, Book book) {

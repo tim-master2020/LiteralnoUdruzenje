@@ -81,7 +81,7 @@ const LoggedInHomepage = ({ loggedInUser, setLoggedIn,history, isInitialUpload, 
                     <InitialUpload processId={id}/>
                 }
                 { isReview &&
-                    <BookReview />
+                    <BookReview tId={id} />
                 }
             </main>
         </div>

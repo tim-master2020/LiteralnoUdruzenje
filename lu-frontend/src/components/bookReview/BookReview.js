@@ -5,45 +5,101 @@ import { Form, Button, FormGroup, FormControl, ControlLabel, Col, Card } from "r
 import { withRouter } from 'react-router-dom';
 import getUser from '../../functions/UserFunctions.js';
 import './BookReview.css';
+import CamundaForm from '../CamundaForm.js';
+import streamSaver from 'streamsaver';
 
-const BookReview = ({ history , setLoggedIn}) => {
+const BookReview = ({ history , setLoggedIn, tId}) => {
+    const [formFields, setformFields] = React.useState([]);
+    const [ writer, setWriter ] = useState('');
     const [ books, setBooks ] = useState([]);
+    const [taskId, setTaskId] = React.useState('');
+    const [selected,setSelected] =  React.useState([]);
+    const [isValid, setIsValid] = React.useState({});
+    const [shouldSubmit,setShouldSubmit] = React.useState(true);
+    const [validationMessage, setValidationMessage] = React.useState({});
 
     React.useEffect(() => {
-        axios.get(`${defaultUrl}/api/books/all`,).then(
+        axios.get(`${defaultUrl}/api/books/book-review/${tId}`,).then(
             (resp) => {
-                setBooks(resp.data);
+                setBooks(resp.data.names);
+                setWriter(resp.data.writer);
+                setformFields(resp.data.formFields);
+                setTaskId(resp.data.taskId);
+                console.log(resp.data);
             },
             (resp) => { alert("Cannot load books."); }
         );
     }, []);
-    console.log(books);
+
+    function downloadBook(e, book) {
+        e.preventDefault();
+        var url = `${defaultUrl}/api/books/download/${book}`;
+        fetch(url, {
+            method: 'GET',
+        })
+        .then(response => {  
+        
+            const fileStream = streamSaver.createWriteStream(book);   
+            const readableStream = response.body;
+
+            // More optimized
+            if (readableStream.pipeTo) {
+                return readableStream.pipeTo(fileStream);
+            }   
+        
+            window.writer = fileStream.getWriter();
+        
+            const reader = response.body.getReader();
+            const pump = () => reader.read()
+                .then(res => res.done
+                    ? writer.close()
+                    : writer.write(res.value).then(pump));
+        
+            pump();
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }
 
     function renderBooks(b) {
         return b.map((book) => {
             return (
-            <Card>
-                <Card.Title>
-                    {book.name}
-                </Card.Title>
-                <Card.Body>
-                    {book.genre}
-                    <br />
-                    {book.authorNames}
-                </Card.Body>
-            </Card>
+                <div onClick={(e) => {downloadBook(e, book)}} className="bookNameDiv">{book}</div>
             );
         })
     }
 
     return (     
-        <div>
-            <h2>You can review books here.</h2>
-            { books.length &&
-            <div className='booksDiv'>
-                {renderBooks(books)}
+        <div className="contentDiv">
+            <h3>You can download PDF files and rate writer based on them.</h3>
+            <div className="reviewDiv">
+               <p className="reviewWriter">Writer's username: </p> 
+               <p className="reviewWriterName">{writer}</p>
+               <p className="reviewWriter">PDFs: </p>
+               { books && 
+                <a>
+                    {renderBooks(books)}
+                </a>
+               }
             </div>
-            }
+            <Card className="registrationCard" id="registrationCard">
+                <Card.Title></Card.Title>
+                <Card.Body>               
+                    <CamundaForm
+                    formFields={formFields}
+                    onSubmit={(e) => { renderBooks(e) }} 
+                    shouldSubmit={shouldSubmit} 
+                    setShouldSubmit={setShouldSubmit}
+                    setValidationMessage={setValidationMessage}
+                    selected={selected}
+                    setSelected={setSelected}
+                    setformFields={setformFields}
+                    isValid={isValid}
+                    setIsValid={setIsValid}
+                    />              
+                </Card.Body>
+            </Card>
         </div>
        
     );

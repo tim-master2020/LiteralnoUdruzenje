@@ -61,11 +61,11 @@
       <bpmn:startEvent id="Event_0olytnp" name="Start review">
         <bpmn:outgoing>Flow_0j082ih</bpmn:outgoing>
       </bpmn:startEvent>
-      <bpmn:userTask id="Activity_0syu3uz" name="ReviewFormAndRate" camunda:assignee="${reviewer}">
+      <bpmn:userTask id="ReviewNewWriter" name="ReviewNewWriter" camunda:assignee="${reviewer}">
         <bpmn:extensionElements>
           <camunda:formData>
             <camunda:formField id="reviewComment" label="Comment" type="string" />
-            <camunda:formField id="reviewRate" label="Rate this review" type="enum">
+            <camunda:formField id="reviewRate" label="Rate this writer" type="enum">
               <camunda:value id="APPROVE" name="Approve" />
               <camunda:value id="DECLINE" name="Decline" />
               <camunda:value id="MOREMATERIAL" name="More Material" />
@@ -84,7 +84,7 @@
         <bpmn:outgoing>Flow_000l6w3</bpmn:outgoing>
         <bpmn:outgoing>Flow_1tkjsro</bpmn:outgoing>
       </bpmn:exclusiveGateway>
-      <bpmn:sequenceFlow id="Flow_15g0nk9" sourceRef="Activity_0syu3uz" targetRef="Activity_0cx28uj" />
+      <bpmn:sequenceFlow id="Flow_15g0nk9" sourceRef="ReviewNewWriter" targetRef="Activity_0cx28uj" />
       <bpmn:endEvent id="SuccessAllAproved" name="Success">
         <bpmn:incoming>Flow_1553lhg</bpmn:incoming>
         <bpmn:escalationEventDefinition id="EscalationEventDefinition_1f42j8e" escalationRef="Escalation_1bei0vi" />
@@ -133,10 +133,10 @@
       <bpmn:intermediateThrowEvent id="Event_0xxh0vz" name="Notify reviewers">
         <bpmn:incoming>Flow_1g2sp9i</bpmn:incoming>
         <bpmn:outgoing>Flow_1cy8e6k</bpmn:outgoing>
-        <bpmn:messageEventDefinition id="MessageEventDefinition_0chc8np" />
+        <bpmn:messageEventDefinition id="MessageEventDefinition_0chc8np" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.EmailServices.NotifyCommittee" />
       </bpmn:intermediateThrowEvent>
       <bpmn:sequenceFlow id="Flow_1g2sp9i" sourceRef="getReviewers" targetRef="Event_0xxh0vz" />
-      <bpmn:sequenceFlow id="Flow_1cy8e6k" sourceRef="Event_0xxh0vz" targetRef="Activity_0syu3uz" />
+      <bpmn:sequenceFlow id="Flow_1cy8e6k" sourceRef="Event_0xxh0vz" targetRef="ReviewNewWriter" />
       <bpmn:sequenceFlow id="Flow_0l1slzj" name="Vote again" sourceRef="Gateway_1oo7ffr" targetRef="Gateway_15x2yfg">
         <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${result == 'voteAgain'}</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
@@ -273,11 +273,7 @@
     <bpmn:userTask id="UploadPDFForm" name="UploadPDFForm" camunda:assignee="${writer}">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="uploadPDFs" label="Upload PDF" type="string_input_file">
-            <camunda:validation>
-              <camunda:constraint name="required" />
-            </camunda:validation>
-          </camunda:formField>
+          <camunda:formField id="uploadPDFs" label="Upload PDF" type="string_input_file" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0zyj4mc</bpmn:incoming>
@@ -351,45 +347,14 @@
       <bpmndi:BPMNShape id="Activity_13z0dv0_di" bpmnElement="RegisterWriterForm">
         <dc:Bounds x="1620" y="170" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_15ioj7u_di" bpmnElement="Event_13looj1">
-        <dc:Bounds x="2072" y="292" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1xow8sn_di" bpmnElement="NotRegistered">
-        <dc:Bounds x="3282" y="932" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="3265" y="975" width="71" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1kicapy_di" bpmnElement="Gateway_1kicapy" isMarkerVisible="true">
-        <dc:Bounds x="1535" y="185" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0h6iy8e_di" bpmnElement="Gateway_0h6iy8e" isMarkerVisible="true">
-        <dc:Bounds x="1945" y="185" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_17tqnoe_di" bpmnElement="Activity_17tqnoe">
-        <dc:Bounds x="3110" y="910" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1dbixl4_di" bpmnElement="SaveUserId">
-        <dc:Bounds x="1810" y="170" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_124uzwu_di" bpmnElement="Activity_0550sgo">
-        <dc:Bounds x="2040" y="170" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0toem5p_di" bpmnElement="UploadPDFForm">
-        <dc:Bounds x="2040" y="410" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0uxaryi_di" bpmnElement="Activity_0uxaryi">
-        <dc:Bounds x="2160" y="1500" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1wlobqe_di" bpmnElement="Registered">
-        <dc:Bounds x="2342" y="1522" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2333" y="1583" width="54" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_123k06n_di" bpmnElement="Activity_123k06n" isExpanded="true">
         <dc:Bounds x="160" y="570" width="2880" height="900" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_11rid21_di" bpmnElement="Flow_11rid21">
+        <di:waypoint x="1680" y="680" />
+        <di:waypoint x="450" y="680" />
+        <di:waypoint x="450" y="925" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_12mx4pj_di" bpmnElement="Flow_12mx4pj">
         <di:waypoint x="610" y="950" />
         <di:waypoint x="665" y="950" />
@@ -503,18 +468,13 @@
         <di:waypoint x="238" y="950" />
         <di:waypoint x="280" y="950" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_11rid21_di" bpmnElement="Flow_11rid21">
-        <di:waypoint x="1680" y="680" />
-        <di:waypoint x="450" y="680" />
-        <di:waypoint x="450" y="925" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_0olytnp_di" bpmnElement="Event_0olytnp">
         <dc:Bounds x="202" y="932" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="190" y="908" width="59" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1fy8rdp_di" bpmnElement="Activity_0syu3uz">
+      <bpmndi:BPMNShape id="Activity_1fy8rdp_di" bpmnElement="ReviewNewWriter">
         <dc:Bounds x="1280" y="910" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1oo7ffr_di" bpmnElement="Gateway_1oo7ffr" isMarkerVisible="true">
@@ -565,6 +525,9 @@
           <dc:Bounds x="709" y="888" width="82" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0phkuhz_di" bpmnElement="Activity_0phkuhz">
+        <dc:Bounds x="1680" y="640" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_15x2yfg_di" bpmnElement="Gateway_15x2yfg" isMarkerVisible="true">
         <dc:Bounds x="425" y="925" width="50" height="50" />
       </bpmndi:BPMNShape>
@@ -598,11 +561,44 @@
       <bpmndi:BPMNShape id="Activity_0xjnym1_di" bpmnElement="getReviewers">
         <dc:Bounds x="980" y="910" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0phkuhz_di" bpmnElement="Activity_0phkuhz">
-        <dc:Bounds x="1680" y="640" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_07l3m1n_di" bpmnElement="Event_09biqvi">
         <dc:Bounds x="2472" y="842" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_15ioj7u_di" bpmnElement="Event_13looj1">
+        <dc:Bounds x="2072" y="292" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0uxaryi_di" bpmnElement="Activity_0uxaryi">
+        <dc:Bounds x="2160" y="1500" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1xow8sn_di" bpmnElement="NotRegistered">
+        <dc:Bounds x="3282" y="932" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3265" y="975" width="71" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1wlobqe_di" bpmnElement="Registered">
+        <dc:Bounds x="2342" y="1522" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2333" y="1583" width="54" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1kicapy_di" bpmnElement="Gateway_1kicapy" isMarkerVisible="true">
+        <dc:Bounds x="1535" y="185" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0h6iy8e_di" bpmnElement="Gateway_0h6iy8e" isMarkerVisible="true">
+        <dc:Bounds x="1945" y="185" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_17tqnoe_di" bpmnElement="Activity_17tqnoe">
+        <dc:Bounds x="3110" y="910" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1dbixl4_di" bpmnElement="SaveUserId">
+        <dc:Bounds x="1810" y="170" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_124uzwu_di" bpmnElement="Activity_0550sgo">
+        <dc:Bounds x="2040" y="170" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0toem5p_di" bpmnElement="UploadPDFForm">
+        <dc:Bounds x="2040" y="410" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1xsokmq_di" bpmnElement="Event_0fkdar0">
         <dc:Bounds x="3022" y="972" width="36" height="36" />

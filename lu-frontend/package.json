@@ -16,7 +16,9 @@
     "react-multi-select-component": "^3.0.7",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
+    "react-select": "^3.1.1",
     "simple-react-validator": "^1.6.0",
+    "streamsaver": "^2.0.5",
     "web-vitals": "^0.2.4"
   },
   "scripts": {

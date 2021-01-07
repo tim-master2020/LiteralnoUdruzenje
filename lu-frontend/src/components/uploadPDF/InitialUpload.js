@@ -51,6 +51,7 @@ const InitialUpload = ({ history, type, processId }) => {
         axios.post(`${defaultUrl}/api/books/save-pdfs/${taskId}`, returnValue, options).then(
             (resp) => {
                 alert('Your documents are uploaded successfully.')
+                history.push('/');
             },
             (resp) => {
                 alert("Uploading failed, try again.");

@@ -20,6 +20,7 @@ import tim22.upp.LiteralnoUdruzenje.service.IReviewService;
 import tim22.upp.LiteralnoUdruzenje.service.IUserService;
 import tim22.upp.LiteralnoUdruzenje.service.IWriterService;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -63,6 +64,24 @@ public class ReviewServiceImpl implements IReviewService {
 //        }
 
         return reviews;
+    }
+
+    @Override
+    public List<ReviewDTO> getAll(Principal principal) {
+        Writer writer = writerService.findByUsername(principal.getName());
+        if(writer == null){
+            return null;
+        }
+
+        List<Review> reviews = reviewRepository.findByWriter(writer);
+        List<ReviewDTO> reviewDTOS = new ArrayList<>();
+        for(Review review : reviews){
+            ReviewDTO reviewDTO = modelMapper.map(review, ReviewDTO.class);
+            reviewDTO.setWriter(writer.getUsername());
+            reviewDTOS.add(reviewDTO);
+        }
+
+        return reviewDTOS;
     }
 
     @Override
@@ -110,13 +129,4 @@ public class ReviewServiceImpl implements IReviewService {
         return reviewSaved;
     }
 
-    private HashMap<String, Object> mapListToDto(List<FormSubmissionDTO> list)
-    {
-        HashMap<String, Object> map = new HashMap<String, Object>();
-        for(FormSubmissionDTO temp : list){
-            map.put(temp.getFieldId(), temp.getFieldValue());
-        }
-
-        return map;
-    }
 }

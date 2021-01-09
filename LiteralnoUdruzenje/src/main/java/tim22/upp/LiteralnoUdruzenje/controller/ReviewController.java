@@ -61,11 +61,11 @@ public class ReviewController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//    @GetMapping(path = "/{writer}", produces = "application/json")
-//    public ResponseEntity<List<ReviewDTO>> getAllByWriter(@PathVariable String writer) {
-//        List<ReviewDTO> reviews = reviewService.findByWriter(writer);
-//        return new ResponseEntity<>(reviews, HttpStatus.OK);
-//    }
+    @GetMapping(path = "/all", produces = "application/json")
+    public ResponseEntity<List<ReviewDTO>> getAllByWriter(Principal principal) {
+        List<ReviewDTO> reviews = reviewService.getAll(principal);
+        return new ResponseEntity<>(reviews, HttpStatus.OK);
+    }
 
     private HashMap<String, Object> mapListToDto(List<FormSubmissionDTO> list)
     {

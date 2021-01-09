@@ -195,13 +195,13 @@
       <bpmn:userTask id="ReviewNewWriter" name="ReviewNewWriter" camunda:assignee="${reviewer}">
         <bpmn:extensionElements>
           <camunda:formData>
+            <camunda:formField id="pdfs" type="string_pdfs" defaultValue="${booksSaved}" />
             <camunda:formField id="reviewComment" label="Comment" type="string" />
             <camunda:formField id="reviewRate" label="Rate this writer" type="enum">
               <camunda:value id="APPROVE" name="Approve" />
               <camunda:value id="DECLINE" name="Decline" />
-              <camunda:value id="MOREMATERIAL" name="More Material" />
+              <camunda:value id="MOREMATERIAL" name="More material" />
             </camunda:formField>
-            <camunda:formField id="pdfs" type="string_pdfs" defaultValue="${booksSaved}" />
           </camunda:formData>
         </bpmn:extensionElements>
         <bpmn:incoming>Flow_1cy8e6k</bpmn:incoming>
@@ -353,6 +353,10 @@
       <bpmndi:BPMNShape id="Activity_123k06n_di" bpmnElement="Activity_123k06n" isExpanded="true">
         <dc:Bounds x="160" y="570" width="2880" height="900" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_15g0nk9_di" bpmnElement="Flow_15g0nk9">
+        <di:waypoint x="1380" y="950" />
+        <di:waypoint x="1540" y="950" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0roo2kk_di" bpmnElement="Flow_0roo2kk">
         <di:waypoint x="2460" y="922" />
         <di:waypoint x="2460" y="860" />
@@ -459,10 +463,6 @@
         <di:waypoint x="1640" y="950" />
         <di:waypoint x="1975" y="950" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_15g0nk9_di" bpmnElement="Flow_15g0nk9">
-        <di:waypoint x="1380" y="950" />
-        <di:waypoint x="1540" y="950" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0j082ih_di" bpmnElement="Flow_0j082ih">
         <di:waypoint x="238" y="950" />
         <di:waypoint x="280" y="950" />
@@ -472,9 +472,6 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds x="190" y="908" width="59" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1fy8rdp_di" bpmnElement="ReviewNewWriter">
-        <dc:Bounds x="1280" y="910" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1oo7ffr_di" bpmnElement="Gateway_1oo7ffr" isMarkerVisible="true">
         <dc:Bounds x="1975" y="925" width="50" height="50" />
@@ -562,6 +559,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_158hxsj_di" bpmnElement="UploadExtraMaterial">
         <dc:Bounds x="2410" y="780" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1fy8rdp_di" bpmnElement="ReviewNewWriter">
+        <dc:Bounds x="1280" y="910" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_07l3m1n_di" bpmnElement="Event_09biqvi">
         <dc:Bounds x="2472" y="842" width="36" height="36" />

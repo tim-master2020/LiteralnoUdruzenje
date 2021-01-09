@@ -5,7 +5,7 @@ import reading from '../icons/readingbook.svg';
 import { React, useImperativeHandle, forwardRef } from 'react';
 import { Form, Button, Col } from "react-bootstrap";
 import {validate} from '../functions/FormFunctions.js';
-
+import './bookReview/BookReview.css';
 
 const CamundaForm = ({ formFields,
     onSubmit,
@@ -18,6 +18,7 @@ const CamundaForm = ({ formFields,
     setIsValid,
     uploadedFiles,
     setUploadedFiles,
+    downloadBook,
     setformFields}) => {
 
     return (
@@ -96,6 +97,22 @@ const CamundaForm = ({ formFields,
                             options={initializeOptions(field.type.values)}
                             />
                          </Form.Group>
+                    );
+                }
+                if (field.type.name.includes('pdfs')) {
+                    console.log(initializeOptions(field.type.values));
+                    var names = field.defaultValue.replace('[', '').replace(']', '').split(', ');
+                    //var namesArr = names.split(', ');
+                    console.log(names);
+                    return (
+                        names.map(name => {
+                            return(
+                                <div>
+                                    <Form.Label onClick={(e) => {downloadBook(e, name)}} className="bookNameDiv">{name}</Form.Label>
+                                    <br/>
+                                </div>
+                            )
+                        })
                     );
                 }
                 else {

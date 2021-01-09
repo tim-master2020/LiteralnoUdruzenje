@@ -91,7 +91,7 @@ public class BookServiceImpl implements IBookService {
 
     @Override
     public StreamingResponseBody downloadPDF(String name) throws IOException {
-        File file = new File("src/main/resources/pdfs/".concat(name));
+        File file = new File("src/main/resources/pdfs/".concat(name).concat(".pdf"));
 
         StreamingResponseBody responseBody = outputStream -> {
             Files.copy(file.toPath(), outputStream);

@@ -92,11 +92,10 @@ public class BookController {
     @GetMapping(path = "/book-review/{taskId}", produces = "application/json")
     public @ResponseBody FormFieldsDTO getFormFieldsBookReview(@PathVariable String taskId) {
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
-        List<String> bookNames = (List<String>) taskService.getVariables(taskId).get("booksSaved");
         String writer = (String) taskService.getVariables(taskId).get("writer");
         TaskFormData taskFormData = formService.getTaskFormData(task.getId());
         List<FormField> properties = taskFormData.getFormFields();
-        return new ReviewFormFieldsDTO(task.getId(), task.getProcessInstanceId(), properties, bookNames, writer);
+        return new ReviewFormFieldsDTO(task.getId(), task.getProcessInstanceId(), properties, writer);
     }
 
     @GetMapping(path = "/download/{name:.+}")

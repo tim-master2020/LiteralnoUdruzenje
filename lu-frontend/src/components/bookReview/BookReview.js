@@ -12,7 +12,6 @@ import {validate} from '../../functions/FormFunctions';
 const BookReview = ({ history , setLoggedIn, tId}) => {
     const [formFields, setformFields] = React.useState([]);
     const [ writer, setWriter ] = useState('');
-    const [ books, setBooks ] = useState([]);
     const [taskId, setTaskId] = React.useState('');
     const [selected,setSelected] =  React.useState([]);
     const [isValid, setIsValid] = React.useState({});
@@ -22,7 +21,7 @@ const BookReview = ({ history , setLoggedIn, tId}) => {
     React.useEffect(() => {
         axios.get(`${defaultUrl}/api/books/book-review/${tId}`).then(
             (resp) => {
-                setBooks(resp.data.names);
+                console.log(resp.data);
                 setWriter(resp.data.writer);
                 setformFields(resp.data.formFields);
                 setTaskId(resp.data.taskId);
@@ -40,7 +39,7 @@ const BookReview = ({ history , setLoggedIn, tId}) => {
         })
         .then(response => {  
         
-            const fileStream = streamSaver.createWriteStream(book);   
+            const fileStream = streamSaver.createWriteStream(book.concat('.pdf'));   
             const readableStream = response.body;
 
             // More optimized
@@ -61,14 +60,6 @@ const BookReview = ({ history , setLoggedIn, tId}) => {
         .catch(error => {
             console.log(error);
         });
-    }
-
-    function renderBooks(b) {
-        return b.map((book) => {
-            return (
-                <div onClick={(e) => {downloadBook(e, book)}} className="bookNameDiv">{book}</div>
-            );
-        })
     }
 
     function submitReview(e) {
@@ -114,12 +105,6 @@ const BookReview = ({ history , setLoggedIn, tId}) => {
             <div className="reviewDiv">
                <p className="reviewWriter">Writer's username: </p> 
                <p className="reviewWriterName">{writer}</p>
-               <p className="reviewWriter">PDFs: </p>
-               { books && 
-                <a>
-                    {renderBooks(books)}
-                </a>
-               }
             </div>
             <Card className="registrationCard" id="registrationCard">
                 <Card.Title></Card.Title>
@@ -135,6 +120,7 @@ const BookReview = ({ history , setLoggedIn, tId}) => {
                     setformFields={setformFields}
                     isValid={isValid}
                     setIsValid={setIsValid}
+                    downloadBook={downloadBook}
                     />              
                 </Card.Body>
             </Card>

@@ -61,21 +61,6 @@
       <bpmn:startEvent id="Event_0olytnp" name="Start review">
         <bpmn:outgoing>Flow_0j082ih</bpmn:outgoing>
       </bpmn:startEvent>
-      <bpmn:userTask id="ReviewNewWriter" name="ReviewNewWriter" camunda:assignee="${reviewer}">
-        <bpmn:extensionElements>
-          <camunda:formData>
-            <camunda:formField id="reviewComment" label="Comment" type="string" />
-            <camunda:formField id="reviewRate" label="Rate this writer" type="enum">
-              <camunda:value id="APPROVE" name="Approve" />
-              <camunda:value id="DECLINE" name="Decline" />
-              <camunda:value id="MOREMATERIAL" name="More Material" />
-            </camunda:formField>
-          </camunda:formData>
-        </bpmn:extensionElements>
-        <bpmn:incoming>Flow_1cy8e6k</bpmn:incoming>
-        <bpmn:outgoing>Flow_15g0nk9</bpmn:outgoing>
-        <bpmn:multiInstanceLoopCharacteristics camunda:collection="${reviewers}" camunda:elementVariable="reviewer" />
-      </bpmn:userTask>
       <bpmn:sequenceFlow id="Flow_0j082ih" sourceRef="Event_0olytnp" targetRef="Activity_1ic951a" />
       <bpmn:exclusiveGateway id="Gateway_1oo7ffr">
         <bpmn:incoming>Flow_1u7frnc</bpmn:incoming>
@@ -84,7 +69,6 @@
         <bpmn:outgoing>Flow_000l6w3</bpmn:outgoing>
         <bpmn:outgoing>Flow_1tkjsro</bpmn:outgoing>
       </bpmn:exclusiveGateway>
-      <bpmn:sequenceFlow id="Flow_15g0nk9" sourceRef="ReviewNewWriter" targetRef="Activity_0cx28uj" />
       <bpmn:endEvent id="SuccessAllAproved" name="Success">
         <bpmn:incoming>Flow_1553lhg</bpmn:incoming>
         <bpmn:escalationEventDefinition id="EscalationEventDefinition_1f42j8e" escalationRef="Escalation_1bei0vi" />
@@ -203,6 +187,23 @@
         <bpmn:incoming>Flow_0roo2kk</bpmn:incoming>
         <bpmn:outgoing>Flow_0yr3gs0</bpmn:outgoing>
       </bpmn:userTask>
+      <bpmn:userTask id="ReviewNewWriter" name="ReviewNewWriter" camunda:assignee="${reviewer}">
+        <bpmn:extensionElements>
+          <camunda:formData>
+            <camunda:formField id="reviewComment" label="Comment" type="string" />
+            <camunda:formField id="reviewRate" label="Rate this writer" type="enum">
+              <camunda:value id="APPROVE" name="Approve" />
+              <camunda:value id="DECLINE" name="Decline" />
+              <camunda:value id="MOREMATERIAL" name="More Material" />
+            </camunda:formField>
+            <camunda:formField id="pdfs" type="string_pdfs" defaultValue="${booksSaved}" />
+          </camunda:formData>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_1cy8e6k</bpmn:incoming>
+        <bpmn:outgoing>Flow_15g0nk9</bpmn:outgoing>
+        <bpmn:multiInstanceLoopCharacteristics camunda:collection="${reviewers}" camunda:elementVariable="reviewer" />
+      </bpmn:userTask>
+      <bpmn:sequenceFlow id="Flow_15g0nk9" sourceRef="ReviewNewWriter" targetRef="Activity_0cx28uj" />
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_02aw76r" sourceRef="UploadPDFForm" targetRef="Activity_123k06n" />
     <bpmn:intermediateCatchEvent id="Event_13looj1">
@@ -347,6 +348,14 @@
       <bpmndi:BPMNShape id="Activity_123k06n_di" bpmnElement="Activity_123k06n" isExpanded="true">
         <dc:Bounds x="160" y="570" width="2880" height="900" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0roo2kk_di" bpmnElement="Flow_0roo2kk">
+        <di:waypoint x="2460" y="922" />
+        <di:waypoint x="2460" y="860" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0t61gjk_di" bpmnElement="Flow_0t61gjk">
+        <di:waypoint x="2138" y="850" />
+        <di:waypoint x="2242" y="850" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_12mx4pj_di" bpmnElement="Flow_12mx4pj">
         <di:waypoint x="610" y="950" />
         <di:waypoint x="665" y="950" />
@@ -452,14 +461,6 @@
       <bpmndi:BPMNEdge id="Flow_0j082ih_di" bpmnElement="Flow_0j082ih">
         <di:waypoint x="238" y="950" />
         <di:waypoint x="280" y="950" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0t61gjk_di" bpmnElement="Flow_0t61gjk">
-        <di:waypoint x="2138" y="850" />
-        <di:waypoint x="2242" y="850" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0roo2kk_di" bpmnElement="Flow_0roo2kk">
-        <di:waypoint x="2460" y="922" />
-        <di:waypoint x="2460" y="860" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_0olytnp_di" bpmnElement="Event_0olytnp">
         <dc:Bounds x="202" y="932" width="36" height="36" />

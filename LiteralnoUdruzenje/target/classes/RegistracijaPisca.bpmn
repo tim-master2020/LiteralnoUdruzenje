@@ -61,21 +61,6 @@
       <bpmn:startEvent id="Event_0olytnp" name="Start review">
         <bpmn:outgoing>Flow_0j082ih</bpmn:outgoing>
       </bpmn:startEvent>
-      <bpmn:userTask id="ReviewNewWriter" name="ReviewNewWriter" camunda:assignee="${reviewer}">
-        <bpmn:extensionElements>
-          <camunda:formData>
-            <camunda:formField id="reviewComment" label="Comment" type="string" />
-            <camunda:formField id="reviewRate" label="Rate this writer" type="enum">
-              <camunda:value id="APPROVE" name="Approve" />
-              <camunda:value id="DECLINE" name="Decline" />
-              <camunda:value id="MOREMATERIAL" name="More Material" />
-            </camunda:formField>
-          </camunda:formData>
-        </bpmn:extensionElements>
-        <bpmn:incoming>Flow_1cy8e6k</bpmn:incoming>
-        <bpmn:outgoing>Flow_15g0nk9</bpmn:outgoing>
-        <bpmn:multiInstanceLoopCharacteristics camunda:collection="${reviewers}" camunda:elementVariable="reviewer" />
-      </bpmn:userTask>
       <bpmn:sequenceFlow id="Flow_0j082ih" sourceRef="Event_0olytnp" targetRef="Activity_1ic951a" />
       <bpmn:exclusiveGateway id="Gateway_1oo7ffr">
         <bpmn:incoming>Flow_1u7frnc</bpmn:incoming>
@@ -84,7 +69,6 @@
         <bpmn:outgoing>Flow_000l6w3</bpmn:outgoing>
         <bpmn:outgoing>Flow_1tkjsro</bpmn:outgoing>
       </bpmn:exclusiveGateway>
-      <bpmn:sequenceFlow id="Flow_15g0nk9" sourceRef="ReviewNewWriter" targetRef="Activity_0cx28uj" />
       <bpmn:endEvent id="SuccessAllAproved" name="Success">
         <bpmn:incoming>Flow_1553lhg</bpmn:incoming>
         <bpmn:escalationEventDefinition id="EscalationEventDefinition_1f42j8e" escalationRef="Escalation_1bei0vi" />
@@ -104,17 +88,13 @@
       <bpmn:sequenceFlow id="Flow_0k0kt8y" name="Yes" sourceRef="Gateway_15p4y16" targetRef="Activity_0ft0gk2">
         <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${reviewCount  &gt; 3}</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
-      <bpmn:task id="Activity_1mhslla" name="uploadExtraMaterial">
-        <bpmn:incoming>Flow_0roo2kk</bpmn:incoming>
-        <bpmn:outgoing>Flow_0yr3gs0</bpmn:outgoing>
-      </bpmn:task>
       <bpmn:boundaryEvent id="Event_09biqvi" cancelActivity="false" attachedToRef="Activity_1mhslla">
         <bpmn:outgoing>Flow_0wia36z</bpmn:outgoing>
         <bpmn:timerEventDefinition id="TimerEventDefinition_0moiwiz">
           <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT${deadlineForExtaWorkUpload}H</bpmn:timeDuration>
         </bpmn:timerEventDefinition>
       </bpmn:boundaryEvent>
-      <bpmn:sequenceFlow id="Flow_0yr3gs0" sourceRef="Activity_1mhslla" targetRef="Activity_0phkuhz" />
+      <bpmn:sequenceFlow id="Flow_0yr3gs0" sourceRef="Activity_1mhslla" targetRef="Gateway_15x2yfg" />
       <bpmn:endEvent id="FailedReview" name="Fail">
         <bpmn:incoming>Flow_08fu4ek</bpmn:incoming>
         <bpmn:escalationEventDefinition id="EscalationEventDefinition_1x5qzev" escalationRef="Escalation_1bei0vi" />
@@ -146,15 +126,11 @@
         <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${result == 'moreMaterial'}</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
       <bpmn:sequenceFlow id="Flow_0mix94c" sourceRef="Activity_1ic951a" targetRef="Gateway_15x2yfg" />
-      <bpmn:task id="Activity_0phkuhz" name="Save pdfs">
-        <bpmn:incoming>Flow_0yr3gs0</bpmn:incoming>
-        <bpmn:outgoing>Flow_11rid21</bpmn:outgoing>
-      </bpmn:task>
       <bpmn:sequenceFlow id="Flow_1m350qv" sourceRef="Activity_1ks73vf" targetRef="getReviewers" />
       <bpmn:exclusiveGateway id="Gateway_15x2yfg">
         <bpmn:incoming>Flow_0mix94c</bpmn:incoming>
         <bpmn:incoming>Flow_0l1slzj</bpmn:incoming>
-        <bpmn:incoming>Flow_11rid21</bpmn:incoming>
+        <bpmn:incoming>Flow_0yr3gs0</bpmn:incoming>
         <bpmn:outgoing>Flow_1kph791</bpmn:outgoing>
       </bpmn:exclusiveGateway>
       <bpmn:sequenceFlow id="Flow_1kph791" sourceRef="Gateway_15x2yfg" targetRef="Activity_1qjf84k" />
@@ -191,7 +167,6 @@
         <bpmn:incoming>Flow_1m350qv</bpmn:incoming>
         <bpmn:outgoing>Flow_1g2sp9i</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:sequenceFlow id="Flow_11rid21" sourceRef="Activity_0phkuhz" targetRef="Gateway_15x2yfg" />
       <bpmn:serviceTask id="Activity_0cx28uj" name="CheckRates" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.CheckRates">
         <bpmn:incoming>Flow_15g0nk9</bpmn:incoming>
         <bpmn:outgoing>Flow_1u7frnc</bpmn:outgoing>
@@ -208,6 +183,27 @@
         <bpmn:messageEventDefinition id="MessageEventDefinition_194oc4x" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.EmailServices.MailAboutVoteResult" />
       </bpmn:intermediateThrowEvent>
       <bpmn:sequenceFlow id="Flow_0roo2kk" sourceRef="MailAboutMoreWork" targetRef="Activity_1mhslla" />
+      <bpmn:userTask id="Activity_1mhslla" name="uploadExtraMaterial" camunda:assignee="${writer}">
+        <bpmn:incoming>Flow_0roo2kk</bpmn:incoming>
+        <bpmn:outgoing>Flow_0yr3gs0</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="ReviewNewWriter" name="ReviewNewWriter" camunda:assignee="${reviewer}">
+        <bpmn:extensionElements>
+          <camunda:formData>
+            <camunda:formField id="reviewComment" label="Comment" type="string" />
+            <camunda:formField id="reviewRate" label="Rate this writer" type="enum">
+              <camunda:value id="APPROVE" name="Approve" />
+              <camunda:value id="DECLINE" name="Decline" />
+              <camunda:value id="MOREMATERIAL" name="More Material" />
+            </camunda:formField>
+            <camunda:formField id="pdfs" type="string_pdfs" defaultValue="${booksSaved}" />
+          </camunda:formData>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_1cy8e6k</bpmn:incoming>
+        <bpmn:outgoing>Flow_15g0nk9</bpmn:outgoing>
+        <bpmn:multiInstanceLoopCharacteristics camunda:collection="${reviewers}" camunda:elementVariable="reviewer" />
+      </bpmn:userTask>
+      <bpmn:sequenceFlow id="Flow_15g0nk9" sourceRef="ReviewNewWriter" targetRef="Activity_0cx28uj" />
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_02aw76r" sourceRef="UploadPDFForm" targetRef="Activity_123k06n" />
     <bpmn:intermediateCatchEvent id="Event_13looj1">
@@ -352,10 +348,13 @@
       <bpmndi:BPMNShape id="Activity_123k06n_di" bpmnElement="Activity_123k06n" isExpanded="true">
         <dc:Bounds x="160" y="570" width="2880" height="900" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_11rid21_di" bpmnElement="Flow_11rid21">
-        <di:waypoint x="1680" y="680" />
-        <di:waypoint x="450" y="680" />
-        <di:waypoint x="450" y="925" />
+      <bpmndi:BPMNEdge id="Flow_0roo2kk_di" bpmnElement="Flow_0roo2kk">
+        <di:waypoint x="2460" y="922" />
+        <di:waypoint x="2460" y="860" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0t61gjk_di" bpmnElement="Flow_0t61gjk">
+        <di:waypoint x="2138" y="850" />
+        <di:waypoint x="2242" y="850" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_12mx4pj_di" bpmnElement="Flow_12mx4pj">
         <di:waypoint x="610" y="950" />
@@ -370,7 +369,7 @@
         <di:waypoint x="2080" y="1085" />
         <di:waypoint x="2202" y="1085" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2095" y="1028" width="72" height="14" />
+          <dc:Bounds x="2104" y="1053" width="72" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_08fu4ek_di" bpmnElement="Flow_08fu4ek">
@@ -414,7 +413,7 @@
         <di:waypoint x="450" y="1220" />
         <di:waypoint x="450" y="975" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1914" y="1053" width="52" height="14" />
+          <dc:Bounds x="1934" y="1053" width="52" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1cy8e6k_di" bpmnElement="Flow_1cy8e6k">
@@ -431,8 +430,9 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0yr3gs0_di" bpmnElement="Flow_0yr3gs0">
         <di:waypoint x="2460" y="780" />
-        <di:waypoint x="2460" y="680" />
-        <di:waypoint x="1780" y="680" />
+        <di:waypoint x="2460" y="700" />
+        <di:waypoint x="450" y="700" />
+        <di:waypoint x="450" y="925" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0k0kt8y_di" bpmnElement="Flow_0k0kt8y">
         <di:waypoint x="690" y="975" />
@@ -447,7 +447,7 @@
         <di:waypoint x="2000" y="850" />
         <di:waypoint x="2102" y="850" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1966" y="723" width="86" height="27" />
+          <dc:Bounds x="1997" y="816" width="86" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1u7frnc_di" bpmnElement="Flow_1u7frnc">
@@ -461,14 +461,6 @@
       <bpmndi:BPMNEdge id="Flow_0j082ih_di" bpmnElement="Flow_0j082ih">
         <di:waypoint x="238" y="950" />
         <di:waypoint x="280" y="950" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0t61gjk_di" bpmnElement="Flow_0t61gjk">
-        <di:waypoint x="2138" y="850" />
-        <di:waypoint x="2242" y="850" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0roo2kk_di" bpmnElement="Flow_0roo2kk">
-        <di:waypoint x="2460" y="922" />
-        <di:waypoint x="2460" y="860" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_0olytnp_di" bpmnElement="Event_0olytnp">
         <dc:Bounds x="202" y="932" width="36" height="36" />
@@ -497,9 +489,6 @@
       <bpmndi:BPMNShape id="Activity_0ft0gk2_di" bpmnElement="Activity_0ft0gk2">
         <dc:Bounds x="950" y="1060" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1mhslla_di" bpmnElement="Activity_1mhslla">
-        <dc:Bounds x="2410" y="780" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1cynn8o_di" bpmnElement="FailedReview">
         <dc:Bounds x="2782" y="802" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -523,9 +512,6 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds x="709" y="888" width="82" height="27" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0phkuhz_di" bpmnElement="Activity_0phkuhz">
-        <dc:Bounds x="1680" y="640" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_15x2yfg_di" bpmnElement="Gateway_15x2yfg" isMarkerVisible="true">
         <dc:Bounds x="425" y="925" width="50" height="50" />
@@ -568,6 +554,9 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds x="2420" y="965" width="86" height="27" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_158hxsj_di" bpmnElement="Activity_1mhslla">
+        <dc:Bounds x="2410" y="780" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_07l3m1n_di" bpmnElement="Event_09biqvi">
         <dc:Bounds x="2472" y="842" width="36" height="36" />

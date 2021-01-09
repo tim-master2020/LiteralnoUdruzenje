@@ -21,7 +21,6 @@ const InitialUpload = ({ history, type, processId }) => {
     React.useEffect(() => {
         axios.get(`${defaultUrl}/api/writers/upload-pdf-task/${processId}`,).then(
             (resp) => {
-                console.log(resp.data.formFields);
                 setformFields(resp.data.formFields);
                 setTaskId(resp.data.taskId);
             },

@@ -20,7 +20,7 @@ const BookReview = ({ history , setLoggedIn, tId}) => {
     const [validationMessage, setValidationMessage] = React.useState({});
 
     React.useEffect(() => {
-        axios.get(`${defaultUrl}/api/books/book-review/${tId}`,).then(
+        axios.get(`${defaultUrl}/api/books/book-review/${tId}`).then(
             (resp) => {
                 setBooks(resp.data.names);
                 setWriter(resp.data.writer);

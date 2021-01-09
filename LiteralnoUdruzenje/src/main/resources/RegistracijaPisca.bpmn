@@ -104,13 +104,13 @@
       <bpmn:sequenceFlow id="Flow_0k0kt8y" name="Yes" sourceRef="Gateway_15p4y16" targetRef="Activity_0ft0gk2">
         <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${reviewCount  &gt; 3}</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
-      <bpmn:boundaryEvent id="Event_09biqvi" cancelActivity="false" attachedToRef="Activity_1mhslla">
+      <bpmn:boundaryEvent id="Event_09biqvi" cancelActivity="false" attachedToRef="UploadExtraMaterial">
         <bpmn:outgoing>Flow_0wia36z</bpmn:outgoing>
         <bpmn:timerEventDefinition id="TimerEventDefinition_0moiwiz">
-          <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT${deadlineForExtaWorkUpload}H</bpmn:timeDuration>
+          <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1M</bpmn:timeDuration>
         </bpmn:timerEventDefinition>
       </bpmn:boundaryEvent>
-      <bpmn:sequenceFlow id="Flow_0yr3gs0" sourceRef="Activity_1mhslla" targetRef="Gateway_15x2yfg" />
+      <bpmn:sequenceFlow id="Flow_0yr3gs0" sourceRef="UploadExtraMaterial" targetRef="Gateway_15x2yfg" />
       <bpmn:endEvent id="FailedReview" name="Fail">
         <bpmn:incoming>Flow_08fu4ek</bpmn:incoming>
         <bpmn:escalationEventDefinition id="EscalationEventDefinition_1x5qzev" escalationRef="Escalation_1bei0vi" />
@@ -150,13 +150,13 @@
         <bpmn:outgoing>Flow_1kph791</bpmn:outgoing>
       </bpmn:exclusiveGateway>
       <bpmn:sequenceFlow id="Flow_1kph791" sourceRef="Gateway_15x2yfg" targetRef="Activity_1qjf84k" />
-      <bpmn:intermediateThrowEvent id="Event_066r7ds" name="sendEmailOfExpiration">
+      <bpmn:intermediateThrowEvent id="MailOfExpiration" name="MailOfExpiration">
         <bpmn:incoming>Flow_0wia36z</bpmn:incoming>
         <bpmn:outgoing>Flow_08fu4ek</bpmn:outgoing>
-        <bpmn:messageEventDefinition id="MessageEventDefinition_080qcge" />
+        <bpmn:messageEventDefinition id="MessageEventDefinition_080qcge" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.EmailServices.MailOfExpiration" />
       </bpmn:intermediateThrowEvent>
-      <bpmn:sequenceFlow id="Flow_0wia36z" sourceRef="Event_09biqvi" targetRef="Event_066r7ds" />
-      <bpmn:sequenceFlow id="Flow_08fu4ek" sourceRef="Event_066r7ds" targetRef="FailedReview" />
+      <bpmn:sequenceFlow id="Flow_0wia36z" sourceRef="Event_09biqvi" targetRef="MailOfExpiration" />
+      <bpmn:sequenceFlow id="Flow_08fu4ek" sourceRef="MailOfExpiration" targetRef="FailedReview" />
       <bpmn:intermediateThrowEvent id="MailAboutApproval" name="MailAboutApproval">
         <bpmn:incoming>Flow_1tkjsro</bpmn:incoming>
         <bpmn:outgoing>Flow_1553lhg</bpmn:outgoing>
@@ -198,8 +198,13 @@
         <bpmn:outgoing>Flow_0roo2kk</bpmn:outgoing>
         <bpmn:messageEventDefinition id="MessageEventDefinition_194oc4x" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.EmailServices.MailAboutVoteResult" />
       </bpmn:intermediateThrowEvent>
-      <bpmn:sequenceFlow id="Flow_0roo2kk" sourceRef="MailAboutMoreWork" targetRef="Activity_1mhslla" />
-      <bpmn:userTask id="Activity_1mhslla" name="uploadExtraMaterial" camunda:assignee="${writer}">
+      <bpmn:sequenceFlow id="Flow_0roo2kk" sourceRef="MailAboutMoreWork" targetRef="UploadExtraMaterial" />
+      <bpmn:userTask id="UploadExtraMaterial" name="uploadExtraMaterial" camunda:assignee="${writer}">
+        <bpmn:extensionElements>
+          <camunda:formData>
+            <camunda:formField id="uploadExtraMaterial" label="Upload Extra Material" type="string_input_file" />
+          </camunda:formData>
+        </bpmn:extensionElements>
         <bpmn:incoming>Flow_0roo2kk</bpmn:incoming>
         <bpmn:outgoing>Flow_0yr3gs0</bpmn:outgoing>
       </bpmn:userTask>
@@ -347,6 +352,14 @@
       <bpmndi:BPMNShape id="Activity_123k06n_di" bpmnElement="Activity_123k06n" isExpanded="true">
         <dc:Bounds x="160" y="570" width="2880" height="900" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0roo2kk_di" bpmnElement="Flow_0roo2kk">
+        <di:waypoint x="2460" y="922" />
+        <di:waypoint x="2460" y="860" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0t61gjk_di" bpmnElement="Flow_0t61gjk">
+        <di:waypoint x="2138" y="850" />
+        <di:waypoint x="2242" y="850" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_12mx4pj_di" bpmnElement="Flow_12mx4pj">
         <di:waypoint x="610" y="950" />
         <di:waypoint x="665" y="950" />
@@ -453,14 +466,6 @@
         <di:waypoint x="238" y="950" />
         <di:waypoint x="280" y="950" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0t61gjk_di" bpmnElement="Flow_0t61gjk">
-        <di:waypoint x="2138" y="850" />
-        <di:waypoint x="2242" y="850" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0roo2kk_di" bpmnElement="Flow_0roo2kk">
-        <di:waypoint x="2460" y="922" />
-        <di:waypoint x="2460" y="860" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_0olytnp_di" bpmnElement="Event_0olytnp">
         <dc:Bounds x="202" y="932" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -515,10 +520,10 @@
       <bpmndi:BPMNShape id="Gateway_15x2yfg_di" bpmnElement="Gateway_15x2yfg" isMarkerVisible="true">
         <dc:Bounds x="425" y="925" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0xk531h_di" bpmnElement="Event_066r7ds">
+      <bpmndi:BPMNShape id="Event_0xk531h_di" bpmnElement="MailOfExpiration">
         <dc:Bounds x="2632" y="802" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2605" y="765" width="90" height="27" />
+          <dc:Bounds x="2610" y="845" width="81" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0j0aqlw_di" bpmnElement="MailAboutApproval">
@@ -554,7 +559,7 @@
           <dc:Bounds x="2420" y="965" width="86" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_158hxsj_di" bpmnElement="Activity_1mhslla">
+      <bpmndi:BPMNShape id="Activity_158hxsj_di" bpmnElement="UploadExtraMaterial">
         <dc:Bounds x="2410" y="780" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_07l3m1n_di" bpmnElement="Event_09biqvi">

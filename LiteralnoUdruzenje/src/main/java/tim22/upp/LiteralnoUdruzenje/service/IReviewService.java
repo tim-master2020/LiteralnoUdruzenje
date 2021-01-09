@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface IReviewService {
     List<Review> findByWriter(String username);
-    Review saveReview(List<FormSubmissionDTO> formDTO, String username, String committee);
+    Review saveReview(List<FormSubmissionDTO> formDTO, String username, String committee, String taskId);
     Review save(Review review);
 }

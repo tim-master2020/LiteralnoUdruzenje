@@ -51,7 +51,7 @@ const InitialUpload = ({ history, type, processId }) => {
 
         var numOfPdfs = 0;
 
-        returnValue[0].fieldValue.forEach(numOfPdfs++);
+        returnValue[0].fieldValue.forEach(item => {numOfPdfs++});
         if(numOfPdfs < 4) {
             alert("You have to upload minimum of 2 PDF files!");
             return;

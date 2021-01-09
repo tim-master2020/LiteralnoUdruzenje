@@ -8,12 +8,12 @@ export function TaskNameRoutes(name) {
     var route = '';
     switch (name) {
         case 'UploadPDFForm':
+        case 'uploadExtraMaterial':
             route = '/upload';
             break;
         case 'ReviewNewWriter':
             route = '/review';
             break;
-    
         default:
             route = '/';
             break;

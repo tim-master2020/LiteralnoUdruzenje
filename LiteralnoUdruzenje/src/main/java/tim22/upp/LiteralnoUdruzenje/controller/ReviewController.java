@@ -47,7 +47,7 @@ public class ReviewController {
         String committee = task.getAssignee();
         String processInstanceId = task.getProcessInstanceId();
 
-        Review review = reviewService.saveReview(formDTO, username, committee);
+        Review review = reviewService.saveReview(formDTO, username, committee, taskId);
         runtimeService.setVariable(processInstanceId, "review", review);
 
         HashMap<String, Object> map = this.mapListToDto(formDTO);

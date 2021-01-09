@@ -66,8 +66,10 @@ public class ReviewServiceImpl implements IReviewService {
     }
 
     @Override
-    public Review saveReview(List<FormSubmissionDTO> formDTO, String username, String committee) {
+    public Review saveReview(List<FormSubmissionDTO> formDTO, String username, String committee, String taskId) {
         Review review = new Review();
+        List<Vote> votes = (List<Vote>) taskService.getVariables(taskId).get("votes");
+        List<String> comments = (List<String>) taskService.getVariables(taskId).get("comments");
 
         Writer writer = writerService.findByUsername(username);
         review.setWriter(writer);
@@ -88,6 +90,15 @@ public class ReviewServiceImpl implements IReviewService {
                     review.setVote(Vote.MOREMATERIAL);
                 }
             }
+
+            votes.add(review.getVote());
+            comments.add(review.getComment());
+
+            Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+            String processInstanceId = task.getProcessInstanceId();
+
+            runtimeService.setVariable(processInstanceId, "votes", votes);
+            runtimeService.setVariable(processInstanceId, "comments", comments);
         }
 
         return save(review);

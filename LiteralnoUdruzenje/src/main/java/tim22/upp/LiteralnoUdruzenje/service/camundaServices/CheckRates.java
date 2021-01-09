@@ -29,15 +29,15 @@ public class CheckRates implements JavaDelegate {
         //Writer writer = writerService.findByUsername(writerUsername.toString());
         List<Review> reviews = reviewService.findByWriter(writerUsername);
         String result = "";
-        List<Vote> votes = reviews.stream().map(Review::getVote).collect(Collectors.toList());
+        List<Vote> votesFromProcess = (List<Vote>) delegateExecution.getVariable("votes");
 
-        if(votes.contains(Vote.MOREMATERIAL)){
+        if(votesFromProcess.contains(Vote.MOREMATERIAL)){
             result = "moreMaterial";
-        } else if (!votes.contains(Vote.DECLINE)) {
+        } else if (!votesFromProcess.contains(Vote.DECLINE)) {
             result = "approved";
         } else {
-            int sum = votes.size();
-            int declined = (int) votes.stream().filter(v -> v.equals(Vote.DECLINE)).count();
+            int sum = votesFromProcess.size();
+            int declined = (int) votesFromProcess.stream().filter(v -> v.equals(Vote.DECLINE)).count();
 
             if ((float)declined/sum > 0.5){
                 result = "declined";

@@ -22,6 +22,10 @@ values (-7,'mina', 'maras','mina', 'jelena.bojanic97@gmail.com', '$2a$10$En99NVA
 INSERT INTO user_authority (user_id,authority_id) values (-7,1);
 
 insert into users (id,firstname, lastname,username, email, password,last_password_reset_date,city,country,is_active_account,role)
+values (-10,'svetlana', 'svetlanic','svetlana', 'svetlana@gmail.com', '$2a$10$En99NVAv.YrTtVxJ1fssBeVO4AFnfl1OMwzFbPeaDdSBm1KLUzp12','2012-09-17 18:47:52.69','Novi Sad','Srbija',true,'WRITER');
+INSERT INTO user_authority (user_id,authority_id) values (-10,1);
+
+insert into users (id,firstname, lastname,username, email, password,last_password_reset_date,city,country,is_active_account,role)
 values (-8,'pera', 'peric','pera', 'reservetableapp@gmail.com', '$2a$10$En99NVAv.YrTtVxJ1fssBeVO4AFnfl1OMwzFbPeaDdSBm1KLUzp12','2012-09-17 18:47:52.69','Novi Sad','Srbija',true,'EDITOR');
 INSERT INTO user_authority (user_id,authority_id) values (-8,3);
 
@@ -29,4 +33,15 @@ INSERT INTO user_authority (user_id,authority_id) values (-8,3);
 insert into reader(id,beta_reader) values (-6,false);
 
 --Writers
-insert into writer(id,is_verified) values (-7,true );
+insert into writer(id,is_verified) values (-7,true);
+insert into writer(id,is_verified) values (-10,true );
+
+--Books
+insert into book(id,name,number_of_pages,publisher,isbn,year,synopsis,place,genre_id)
+values(-10,'JeleninaKnjiga',120,'Jelena books','abc',1997,'Jelenina autobiografija','NOVI SAD',-1);
+
+insert into book(id,name,number_of_pages,publisher,isbn,year,synopsis,place,genre_id)
+values(-11,'TamarinaKnjiga',120,'Tamara books','abcd',1997,'Tamarina autobiografija','NOVI SAD',-2);
+
+insert into book(id,name,number_of_pages,publisher,isbn,year,synopsis,place,genre_id)
+values(-12,'MininaKnjiga',120,'Mina books','abcde',1997,'Minina autobiografija','NOVI SAD',-3);

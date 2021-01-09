@@ -4,11 +4,13 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { TaskNameRoutes } from '../../functions/TaskNameRoutes';
+import { withRouter } from 'react-router-dom';
 
 
-export function SidebarList(history, user) {
+const SidebarList = ({history, user}) => {
     function renderTasks(tasks) {
         return tasks.map((task) => {
+            console.log(`url: ${TaskNameRoutes(task.name)}/${task.taskId}`);
             return (
                 <ListItem  onClick={() => {
                    //history.push(`${TaskNameRoutes(task.name)}/${task.taskId}`)
@@ -19,7 +21,7 @@ export function SidebarList(history, user) {
                         }
                       });                  
                     }} button>
-                <ListItemText primary={task.name} />
+                <ListItemText primary={(task.name.replace(/([A-Z])/g, ' $1').trim()).toUpperCase()} />
                 </ListItem>
             );
         })
@@ -35,6 +37,7 @@ export function SidebarList(history, user) {
             }
         </List>
     );
-};
+}
+export default withRouter(SidebarList);
 
 

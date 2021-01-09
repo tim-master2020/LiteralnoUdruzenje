@@ -6,6 +6,7 @@ import { React, useImperativeHandle, forwardRef } from 'react';
 import { Form, Button, Col } from "react-bootstrap";
 import {validate} from '../functions/FormFunctions.js';
 import Select from 'react-select';
+import { Link } from "@material-ui/core";
 
 
 const CamundaForm = ({ formFields,
@@ -17,7 +18,9 @@ const CamundaForm = ({ formFields,
     setSelected,
     isValid,
     setIsValid,
-    setformFields}) => {
+    setformFields,
+    uploadedFiles,
+    setUploadedFiles}) => {
 
     return (
         <Form id="camundaForm" onSubmit={onSubmit}>
@@ -119,10 +122,39 @@ const CamundaForm = ({ formFields,
                          </Form.Group>
                     );
                 }
-                else {
+                if (field.type.name.includes('input_file')) {
+                    return (
+                        <Form.Group key={field.id} as={Col} className="singleInputField">
+                            <Form.Label><b>{field.label}</b></Form.Label>
+                            <br/>
+                            <input multiple type="file" id={field.id} name={field.id} onChange={fileSelectedHandler}/>
+                         </Form.Group>
+                    );
+                }
+                if (field.type.name.includes('input_single')) {
                     return (
                         <Form.Group key={field.id} as={Col} className="singleInputField">
                             <Form.Label>{field.label}</Form.Label>
+                            <br/>
+                            <input type="file" id={field.id} name={field.id} onChange={fileSelectedHandler}/>
+                         </Form.Group>
+                    );
+                }
+                if (field.type.name.includes('multiFilesDownload')) {
+                    return (
+                        Object.keys(field.type.values).map((val, k) => {
+                            return (
+                                <div>
+                            <a key={k} href="localhost:3000/">{val}</a>
+                            </div>)
+                            // console.log('value',val);
+                            })
+                    );
+                }
+                else {
+                    return (
+                        <Form.Group key={field.id} as={Col} className="singleInputField">
+                            <Form.Label><b>{field.label}</b></Form.Label>
                             <Form.Control type={field.type.name} id={field.id} name={field.id} onChange={handleChange} />
                             {isValid.hasOwnProperty(`${field.id}`) &&
                                 showValidationErrors(field)
@@ -133,6 +165,51 @@ const CamundaForm = ({ formFields,
             }
             )
         }
+    }
+
+    // const renderFiles =(files) => {
+    //     Object.keys(files).map((val, k) => {
+    //         //return (<h4 k={k}>nesto {val}</h4>)
+    //         console.log('value',val);
+    //         })
+                
+    // }     
+    
+
+    function fileSelectedHandler(e) {
+        var field = formFields;
+
+        var fileBytes = [];
+        var fileNames = [];
+        var all = [];
+        var array = e.target.files;
+        var i;
+
+        for (i = 0; i < array.length; i++) {
+
+            var fileName = "Filename" + array[i].name;
+            var reader = new FileReader();
+
+            reader.onload = (em) => {
+                all.push(em.target.result);
+                
+            }
+
+            all.push(fileName);
+
+            reader.readAsDataURL(e.target.files[i]);
+        }
+        console.log(fileBytes);
+
+        setUploadedFiles(fileBytes);
+        var temp = formFields;
+        temp.forEach(field => {
+            if (e.target.name === field.id) {
+                    field.value.value = all;
+            }
+        });
+        setformFields(temp);
+        setShouldSubmit(true);
     }
 
     function handleChange(e) {
@@ -168,6 +245,7 @@ const CamundaForm = ({ formFields,
         }
     }
 
+    
 
     function initializeOptions(fields) {
         let options = [];

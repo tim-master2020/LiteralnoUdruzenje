@@ -37,11 +37,16 @@ public class SaveGeneralBookData  implements JavaDelegate {
         //genreService.findByName(genres.get("value"));
         book.setGenre(genreService.findByName(genres.get("value")));
 
-        Set<Writer> writers = book.getAuthors();
+        Writer writer = writerService.findByUsername(delegateExecution.getVariable("loggedInWriter").toString());
+        Set<Writer> writers = book.getWriters();
         writers.add(writerService.findByUsername(delegateExecution.getVariable("loggedInWriter").toString()));
-        book.setAuthors(writers);
+        book.setWriters(writers);
 
-        if(bookService.saveBook(book)){
+        Set<Book> books = writer.getBooks();
+        books.add(book);
+        writer.setBooks(books);
+
+        if(bookService.save(book) != null){
             delegateExecution.setVariable("bookSaved",true);
             delegateExecution.setVariable("bookId",book.getId());
         }else{

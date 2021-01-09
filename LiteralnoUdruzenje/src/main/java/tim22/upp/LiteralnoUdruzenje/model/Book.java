@@ -15,13 +15,14 @@ public class Book implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @Column
     private String name;
 
-    @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
-    private Set<Writer> authors = new HashSet<Writer>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "book_writers", joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "writer_id", referencedColumnName = "id"))
+    private Set<Writer> writers = new HashSet<Writer>();
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
@@ -52,11 +53,11 @@ public class Book implements Serializable {
     public Book() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -68,12 +69,12 @@ public class Book implements Serializable {
         this.name = name;
     }
 
-    public Set<Writer> getAuthors() {
-        return authors;
+    public Set<Writer> getWriters() {
+        return writers;
     }
 
-    public void setAuthors(Set<Writer> authors) {
-        this.authors = authors;
+    public void setWriters(Set<Writer> writers) {
+        this.writers = writers;
     }
 
     public Genre getGenre() {

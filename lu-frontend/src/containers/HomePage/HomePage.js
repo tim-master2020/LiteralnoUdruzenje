@@ -3,7 +3,7 @@ import React from 'react';
 import LoggedInHomePage from './LoggedInHomePage';
 import LoggedOutHomepage from './LoggedOutHomepage';
 
-const HomePage = ({loggedInUser,setLoggedIn,publishBookGeneralData,reviewBookGeneral,giveExplanation}) => {
+const HomePage = ({loggedInUser,setLoggedIn,publishBookGeneralData,reviewBookGeneral,giveExplanation,uploadRestWork,comparePlagiats}) => {
     if(loggedInUser === undefined){
     return (
         <LoggedOutHomepage/>
@@ -15,6 +15,8 @@ const HomePage = ({loggedInUser,setLoggedIn,publishBookGeneralData,reviewBookGen
             publishBookGeneralData={publishBookGeneralData}
             reviewBookGeneral={reviewBookGeneral}
             giveExplanation={giveExplanation}
+            uploadRestWork={uploadRestWork}
+            comparePlagiats={comparePlagiats}
             />);
     }
 

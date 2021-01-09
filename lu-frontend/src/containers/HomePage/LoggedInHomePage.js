@@ -10,7 +10,7 @@ import clsx from 'clsx';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { SidebarList } from './SidebarList';
+import SidebarList  from './SidebarList';
 import { styling } from './SidebarStyling';
 import { AppBar, Toolbar } from "@material-ui/core";
 import { defaultUrl } from '../../backendConfig';
@@ -18,8 +18,11 @@ import axios from 'axios';
 import PublishBookGeneralData from "../../components/publish-book/PublishBookGeneralData";
 import ReviewBookGeneral from "../../components/publish-book/ReviewBookGeneral";
 import DeclineExplanation from "../../components/publish-book/DeclineExplanation";
+import UploadRestOfTheWork from "../../components/publish-book/UploadRestOfTheWork";
+import getUser from "../../functions/UserFunctions";
+import ComparePlagiats from "../../components/publish-book/ComparePlagiats";
 
-const LoggedInHomepage = ({ loggedInUser, setLoggedIn, history,publishBookGeneralData,reviewBookGeneral,giveExplanation}) => {
+const LoggedInHomepage = ({ loggedInUser, setLoggedIn, history,publishBookGeneralData,reviewBookGeneral,giveExplanation,uploadRestWork,comparePlagiats}) => {
     const [isOpen, setOpen] = useState(false);
 
     const handleDrawerToggle = () => {
@@ -49,6 +52,10 @@ const LoggedInHomepage = ({ loggedInUser, setLoggedIn, history,publishBookGenera
                 alert('fail start of process');
             }
         );
+    }
+
+    const updateUser = () => {
+        getUser(setLoggedIn);
     }
 
     return (
@@ -84,7 +91,7 @@ const LoggedInHomepage = ({ loggedInUser, setLoggedIn, history,publishBookGenera
                     </IconButton>
                 </div>
                 <Divider />
-                {SidebarList(history,loggedInUser)}
+                {SidebarList({user: loggedInUser})}
             </Drawer>
             <main className={clsx(classes.content, { [classes.contentShift]: isOpen })}>
                 <div className={classes.drawerHeader} />
@@ -92,9 +99,13 @@ const LoggedInHomepage = ({ loggedInUser, setLoggedIn, history,publishBookGenera
                     { publishBookGeneralData &&
                         <PublishBookGeneralData/>
                     }{ reviewBookGeneral &&
-                        <ReviewBookGeneral/>
+                        <ReviewBookGeneral updateUser={()=>updateUser()}/>
                     }{ giveExplanation &&
-                        <DeclineExplanation/>
+                        <DeclineExplanation updateUser={()=>updateUser()}/>
+                    }{ uploadRestWork &&
+                        <UploadRestOfTheWork updateUser={()=>updateUser()}/>
+                    }{ comparePlagiats &&
+                        <ComparePlagiats updateUser={()=>updateUser()}/>
                     }
                 </div>
             </main>

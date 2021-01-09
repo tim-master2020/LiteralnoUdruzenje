@@ -10,7 +10,7 @@ import { TaskNameRoutes } from '../../functions/TaskNameRoutes.js';
 
 const alert = withReactContent(Swal)
 
-const ReviewBookGeneral = ({history}) => {
+const ReviewBookGeneral = ({history,updateUser}) => {
 
     const [formFields, setformFields] = React.useState([]);
     const [isValid, setIsValid] = React.useState({});
@@ -32,7 +32,7 @@ const ReviewBookGeneral = ({history}) => {
         );
     }, []);
 
-    const submitReview = (e) =>{
+    const submitReview = (e) => {
 
             e.preventDefault();
             const returnArray = [];
@@ -46,22 +46,24 @@ const ReviewBookGeneral = ({history}) => {
     
             axios.post(`${defaultUrl}/api/books/save-general-book-data-review/${history.location.state.taskId}`, returnArray, options).then(
                 (resp) => {
-    
+                    updateUser();
                     alert.fire({
                         title: "Success",
                         text: 'Your review has been submited',
                         type: "success",
                         button: true
-                      }).then(
+                      });
 
+                      if(resp.data !== ""){
                         history.push({
                             pathname:`${TaskNameRoutes(resp.data.taskName)}/${resp.data.taskId}`,
                             state: {
                               taskId: resp.data.taskId
                             }
-                          }) 
-                      );
-   
+                          }); 
+                    }else{
+                        history.push('/');
+                    }
                 },
                 (resp) => {
                     alert.fire({

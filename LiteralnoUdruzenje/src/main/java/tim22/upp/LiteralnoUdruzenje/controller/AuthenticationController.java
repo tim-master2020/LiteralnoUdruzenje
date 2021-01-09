@@ -13,10 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-import tim22.upp.LiteralnoUdruzenje.dto.ReaderDTO;
-import tim22.upp.LiteralnoUdruzenje.dto.TaskDTO;
-import tim22.upp.LiteralnoUdruzenje.dto.UserDTO;
-import tim22.upp.LiteralnoUdruzenje.dto.WriterDTO;
+import tim22.upp.LiteralnoUdruzenje.dto.*;
 import tim22.upp.LiteralnoUdruzenje.model.*;
 import tim22.upp.LiteralnoUdruzenje.security.TokenUtils;
 import tim22.upp.LiteralnoUdruzenje.security.auth.JwtAuthenticationRequest;
@@ -99,6 +96,10 @@ public class AuthenticationController {
             Writer writer = writerService.findByEmail(user.getEmail());
             WriterDTO writerDTO = modelMapper.map(writer, WriterDTO.class);
             writerDTO.setTasks(mapTasks(tasks));
+            for(Book book : writer.getBooks()){
+                BookDTO bookDTO = modelMapper.map(book,BookDTO.class);
+                writerDTO.getBooks().add(bookDTO);
+            }
             return new ResponseEntity<>(writerDTO, HttpStatus.OK);
         }else if(!user.getRole().equals((Role.WRITER)) && !user.getRole().equals(Role.READER)){
             UserDTO userDTO = modelMapper.map(user, UserDTO.class);

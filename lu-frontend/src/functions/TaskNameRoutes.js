@@ -19,6 +19,12 @@ export function TaskNameRoutes(name) {
         case 'GiveExplanation':
             route = '/giveExplanation';
             break;
+        case 'UploadRestOfWork':
+            route = '/uploadRestWork';
+            break;
+        case 'ComparePlagiats':
+            route = '/comparePlagiats';
+            break;
         default:
             route = '/';
             break;

@@ -14,8 +14,7 @@ public class Writer extends User implements Serializable {
     @Column
     private boolean isVerified;
 
-    @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
-    @JoinTable(name = "writer_books", joinColumns = @JoinColumn(name = "writer_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"))
+    @ManyToMany(mappedBy = "writers")
     private Set<Book> books = new HashSet<Book>();
 
     public Writer() {}

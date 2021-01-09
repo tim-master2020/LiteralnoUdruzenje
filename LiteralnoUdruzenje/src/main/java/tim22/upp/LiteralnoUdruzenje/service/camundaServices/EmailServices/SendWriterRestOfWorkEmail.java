@@ -9,7 +9,7 @@ import tim22.upp.LiteralnoUdruzenje.service.IEmailService;
 import tim22.upp.LiteralnoUdruzenje.service.IUserService;
 
 @Service
-public class SendMailToDeclinedWriter implements JavaDelegate {
+public class SendWriterRestOfWorkEmail implements JavaDelegate {
 
     @Autowired
     private IEmailService emailService;
@@ -19,16 +19,11 @@ public class SendMailToDeclinedWriter implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
-        System.out.println("Sending mail to declined writer");
-        delegateExecution.setVariable("timeExceeded",true);
-
-        Object explanation = delegateExecution.getVariable("explanation");
-        if(explanation == "" || explanation == null){
-            explanation = "You failed to upload your work in given time";
-        }
+        System.out.println("Sending mail to writer about more work");
         User writer = userService.findByUsername(delegateExecution.getVariable("loggedInWriter").toString());
-        final String message = "Hello " + writer.getUsername() + ",\n\nYour request to publish book has been declined." +
-                "Explanation from our editor:"+explanation+"\n\n\neBook Team";
+        final String message = "Hello " + writer.getUsername() + ",\n\nOur editor has requested that you upload rest of your book.Please" +
+                " login in our app and proceed with uploading.You have a period of 7 days to upload your work." +
+                "\n\n\neBook Team";
         emailService.sendMail(writer,message);
     }
 }

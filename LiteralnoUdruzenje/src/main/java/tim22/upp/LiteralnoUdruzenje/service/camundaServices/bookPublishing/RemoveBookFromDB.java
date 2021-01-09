@@ -15,6 +15,6 @@ public class RemoveBookFromDB implements JavaDelegate {
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
         String bookId = delegateExecution.getVariable("bookId").toString();
-        boolean isremoved = bookService.removeBookFromDB(Long.parseLong(bookId));
+        bookService.removeBookFromDB(Long.parseLong(bookId));
     }
 }

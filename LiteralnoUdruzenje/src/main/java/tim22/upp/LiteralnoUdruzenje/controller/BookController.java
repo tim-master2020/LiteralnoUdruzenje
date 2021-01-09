@@ -73,12 +73,14 @@ public class BookController {
         formService.submitTaskForm(taskId,decision);
 
         Task nextTask = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
-        if(nextTask !=  null){
-            List<FormField> properties = formService.getTaskFormData(nextTask.getId()).getFormFields();
-            return new ResponseEntity<>(new FormFieldsDTO(nextTask.getId(), processInstanceId, properties,nextTask.getName()),HttpStatus.OK);
-        }else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        String taskName = nextTask.getName().toString();
+        if(nextTask != null && taskName.equals("GiveExplanation")) {
+            if(formService.getTaskFormData(nextTask.getId()) != null) {
+                List<FormField> properties = formService.getTaskFormData(nextTask.getId()).getFormFields();
+                return new ResponseEntity<>(new FormFieldsDTO(nextTask.getId(), processInstanceId, properties, nextTask.getName()), HttpStatus.OK);
+            }
         }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/submit-explanation/{taskId}")
@@ -87,6 +89,34 @@ public class BookController {
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
         runtimeService.setVariable(task.getProcessInstanceId(),"explanation",map);
         formService.submitTaskForm(taskId,map);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/submit-rest-of-work/{taskId}")
+    public ResponseEntity<?> submitRestOfBook(@RequestBody List<FormSubmissionDTO> bookDTO, @PathVariable String taskId) {
+
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+
+        if(task == null){
+            return new ResponseEntity<>( new  ExplanationDTO("You failed to upload your book in given time. Your data will not be submitted."),HttpStatus.OK);
+        }
+
+        String username = task.getAssignee();
+        String processInstanceId = task.getProcessInstanceId();
+        List<String> booksSaved = bookService.savePdf((List<String>) bookDTO.get(0).getFieldValue(), username);
+        runtimeService.setVariable(processInstanceId, "booksSaved", booksSaved);
+
+        HashMap<String, Object> map = new HashMap<>();
+        for (String name : booksSaved){
+            map.put("name", name);
+        }
+
+        try {
+            formService.submitTaskForm(taskId, map);
+        }catch (Exception e){
+            return new ResponseEntity<>(new ExplanationDTO("Uploading book failed."),HttpStatus.BAD_REQUEST);
+        }
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

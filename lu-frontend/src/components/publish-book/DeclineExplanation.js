@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 const alert = withReactContent(Swal)
 
-const DeclineExplanation = ({history}) => {
+const DeclineExplanation = ({history,updateUser}) => {
 
     const [formFields, setformFields] = React.useState([]);
     const [isValid, setIsValid] = React.useState({});
@@ -43,8 +43,9 @@ const DeclineExplanation = ({history}) => {
 
         axios.post(`${defaultUrl}/api/books/submit-explanation/${history.location.state.taskId}`, returnArray, options).then(
             (resp) => {
-
-                alert.fire({text:'super'});
+                updateUser();
+                alert.fire({text:'Explanation submited'});
+                history.push('/');
             },
             (resp) => {
                 alert.fire({

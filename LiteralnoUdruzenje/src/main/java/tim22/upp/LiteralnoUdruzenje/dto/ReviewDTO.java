@@ -7,19 +7,21 @@ public class ReviewDTO {
     private String comment;
     private Vote vote;
     private String writer;
+    private String committee;
 
     public ReviewDTO(){
 
     }
 
-    public ReviewDTO(String comment, Vote vote, String writer){
+    public ReviewDTO(String comment, Vote vote, String writer, String committee){
         this.comment = comment;
         this.vote = vote;
         this.writer = writer;
+        this.committee = committee;
     }
 
     public ReviewDTO(Review review){
-        this(review.getComment(), review.getVote(), review.getWriter().getUsername());
+        this(review.getComment(), review.getVote(), review.getWriter().getUsername(), review.getCommittee().getUsername());
     }
 
     public String getComment() {
@@ -44,5 +46,13 @@ public class ReviewDTO {
 
     public void setWriter(String writer) {
         this.writer = writer;
+    }
+
+    public String getCommittee() {
+        return committee;
+    }
+
+    public void setCommittee(String committee) {
+        this.committee = committee;
     }
 }

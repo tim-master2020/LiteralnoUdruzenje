@@ -17,8 +17,9 @@ import { defaultUrl } from '../../backendConfig';
 import InitialUpload from "../../components/uploadPDF/InitialUpload";
 import BookReview from '../../components/bookReview/BookReview'
 import Payment from '../../components/payment/Payment';
+import ReviewPage from '../../components/bookReview/ReviewPage';
 
-const LoggedInHomepage = ({ loggedInUser, setLoggedIn,history, isInitialUpload, isReview, isPayment }) => {
+const LoggedInHomepage = ({ loggedInUser, setLoggedIn,history, isInitialUpload, isReview, isPayment, isReviewPreview }) => {
     const [isOpen, setOpen] = useState(false);
 
     const handleDrawerToggle = () => {
@@ -52,15 +53,16 @@ const LoggedInHomepage = ({ loggedInUser, setLoggedIn,history, isInitialUpload, 
                         <MenuIcon style={{ color: 'black' }} />
                     </IconButton>
                     <div style={{ width: '100%' }}></div>
-                    <Button onClick={() => history.push('/')}>Home</Button>
-                    <Button>My account</Button>
+                    <Button className={classes.button} onClick={() => history.push('/')}>Home</Button>
                     { loggedInUser.role === 'WRITER' &&
-                        <Button>Book publishing</Button>
+                        <Button className={classes.button} onClick={() => history.push('/reviews')}>Reviews</Button>
                     }
+                    <Button className={classes.button} >My account</Button>
                     { loggedInUser.role === 'COMMITTEE' &&
-                        <Button onClick={() => history.push('/review')}>Book review</Button>
+                        <Button className={classes.button} onClick={() => history.push('/review')}>Book review</Button>
                     }
-                    <Button onClick={() => { 
+                    <Button className={classes.button}
+                     onClick={() => { 
                             localStorage.clear(); 
                             history.push('/')
                             setLoggedIn(undefined)}}>Logout</Button>
@@ -86,6 +88,9 @@ const LoggedInHomepage = ({ loggedInUser, setLoggedIn,history, isInitialUpload, 
                 }
                 { isPayment &&
                     <Payment tId={id}></Payment>
+                }
+                { isReviewPreview &&
+                    <ReviewPage />
                 }
             </main>
         </div>

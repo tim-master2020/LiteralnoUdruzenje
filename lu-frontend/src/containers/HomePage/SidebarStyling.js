@@ -70,6 +70,9 @@ export  function styling (theme) {
             boxShadow:0,
             backgroundColor:'white',
         },
+        button: {
+            marginRight: '0.5%'
+        }
     }
     return stylingObject;
 };

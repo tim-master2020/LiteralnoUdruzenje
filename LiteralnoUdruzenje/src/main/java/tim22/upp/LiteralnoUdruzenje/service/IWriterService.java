@@ -6,5 +6,4 @@ public interface IWriterService {
     Writer findByEmail(String email);
     Writer findByUsername(String username);
     Writer updateWriter(Writer writer);
-    void deleteWriter(Writer writer);
 }

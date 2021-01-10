@@ -10,5 +10,4 @@ public interface WriterRepository extends JpaRepository<Writer, Long> {
     Writer findByUsername(String name);
     Writer findWriterByEmail(String email);
     List<Writer> findAll();
-    void deleteByUsername(String username);
 }

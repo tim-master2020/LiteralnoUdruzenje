@@ -18,6 +18,7 @@ import tim22.upp.LiteralnoUdruzenje.model.Writer;
 import tim22.upp.LiteralnoUdruzenje.service.IWriterService;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 
 @CrossOrigin("http://localhost:3000")
@@ -64,6 +65,16 @@ public class WriterController {
 
         Writer writer = writerService.findByUsername(username);
         writer.setActiveAccount(true);
+        writerService.updateWriter(writer);
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("name", username);
+
+        try {
+            formService.submitTaskForm(taskId, map);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

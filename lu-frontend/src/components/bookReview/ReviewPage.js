@@ -19,7 +19,7 @@ const ReviewPage = ({ history}) => {
         const options = {
             headers: { 'Authorization': 'Bearer ' + token}
         };
-        console.log(options);
+
         axios.get(`${defaultUrl}/api/reviews/all`, options).then(
             (resp) => {
                 console.log(resp.data);
@@ -29,17 +29,36 @@ const ReviewPage = ({ history}) => {
         );
     }, []);
 
+    function renderReviews() {
+        return(
+            reviews.map(review => {
+                return(
+                    <Card className="reviewCard">
+                        <Card.Body className="cardBodyReview"> 
+                            <div className="cardLeft">           
+                                <p>Vote: </p>
+                                <p>Comment: </p>
+                            </div>
+                            <div className="cardRight">
+                                <p>{review.vote}</p>
+                                <p>{review.comment}</p>
+                            </div> 
+                        </Card.Body>
+                    </Card>
+                )
+            })
+        )
+    }
     
 
     return (     
         <div className="contentDiv">
             <h3>Reviews</h3>
-            <Card className="registrationCard" id="registrationCard">
-                <Card.Title></Card.Title>
-                <Card.Body>               
-            
-                </Card.Body>
-            </Card>
+            { reviews.length > 0 &&
+                <div className="reviewsDiv">
+                    {renderReviews()}
+                </div>
+            }
         </div>
        
     );

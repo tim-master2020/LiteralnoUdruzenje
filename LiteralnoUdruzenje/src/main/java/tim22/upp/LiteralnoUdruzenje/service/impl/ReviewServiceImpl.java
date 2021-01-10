@@ -78,6 +78,7 @@ public class ReviewServiceImpl implements IReviewService {
         for(Review review : reviews){
             ReviewDTO reviewDTO = modelMapper.map(review, ReviewDTO.class);
             reviewDTO.setWriter(writer.getUsername());
+            reviewDTO.setCommittee(review.getCommittee().getUsername());
             reviewDTOS.add(reviewDTO);
         }
 

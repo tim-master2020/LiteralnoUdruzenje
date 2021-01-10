@@ -4,8 +4,6 @@ import HomePage from './containers/HomePage/HomePage';
 import LoginPage from './containers/LoginReg/LoginPage';
 import RegistrationPage from './containers/LoginReg/RegistrationPage';
 import BetaReader from './components/registration/BetaReader.js'
-import InitialUploadPage from './containers/UploadPDF/InitialUploadPage.js'
-import ReviewPage from './components/bookReview/ReviewPage';
 
 const Routes = ({loggedInUser,setLoggedIn}) => {
 
@@ -36,7 +34,7 @@ const Routes = ({loggedInUser,setLoggedIn}) => {
                     <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} isPayment={true}/>
                 } />
             <Route exact path='/reviews' render={props =>
-                    <ReviewPage />
+                    <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} isReviewPreview={true}/>
                 } />
         </Switch>
         );

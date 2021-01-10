@@ -14,10 +14,10 @@ public class Writer extends User implements Serializable {
     @Column
     private boolean isVerified;
 
-    @ManyToMany(mappedBy = "writers")
+    @ManyToMany(mappedBy = "writers", cascade = CascadeType.ALL)
     private Set<Book> books = new HashSet<Book>();
 
-    @OneToMany(mappedBy = "writer")
+    @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL)
     private Set<Review> reviews = new HashSet<>();
 
     public Writer() {}

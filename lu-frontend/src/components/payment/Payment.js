@@ -18,7 +18,6 @@ const Payment = ({ history, tId }) => {
     React.useEffect(() => {
         axios.get(`${defaultUrl}/api/writers/pay/${tId}`,).then(
             (resp) => {
-                console.log(resp.data.formFields);
                 setformFields(resp.data.formFields);
                 setTaskId(resp.data.taskId);
                 
@@ -27,6 +26,11 @@ const Payment = ({ history, tId }) => {
         );
     }, []);
 
+    const mystyle = {
+        fontFamily: 'Calibri',
+        fontSize: '21px',
+        color: ' rgb(93, 106, 117)'
+      };
 
     function pay(e) {
 
@@ -43,14 +47,14 @@ const Payment = ({ history, tId }) => {
                 history.push('/');
             },
             (resp) => {
-                alert("Error occurd. Couldn't activate the account");
+                alert("Error occurd. Couldn't activate the account.");
             }
         );
     }
 
-
     return (
         <div className="contentDiv">
+            <p style={mystyle}>By clicking on submit button, you are confirming to pay for your registration on this website.</p>
             <Card className="registrationCard" id="registrationCard">
                 <Card.Title></Card.Title>
                 <Card.Body>

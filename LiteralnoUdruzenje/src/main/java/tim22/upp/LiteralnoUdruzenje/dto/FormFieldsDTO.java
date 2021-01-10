@@ -9,6 +9,7 @@ public class FormFieldsDTO {
     String taskId;
     List<FormField> formFields;
     String processInstanceId;
+    String taskName;
 
     public FormFieldsDTO(String taskId, String processInstanceId, List<FormField> formFields) {
         super();
@@ -46,4 +47,11 @@ public class FormFieldsDTO {
         this.processInstanceId = processInstanceId;
     }
 
+    public String getTaskName() {
+        return taskName;
+    }
+
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
 }

@@ -102,7 +102,7 @@ const CamundaForm = ({ formFields,
                 if (field.type.name.includes('button_type')) {
                     return (
                         <Form.Group key={field.id} as={Col} className="singleInputField">
-                            <Form.Label>{field.label}</Form.Label>
+                            <Form.Label className="buttonType">{field.label}</Form.Label>
                             <br/>
                          </Form.Group>
                     )

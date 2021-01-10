@@ -16,13 +16,15 @@ const InitialUpload = ({ history, type, processId }) => {
     const [taskId, setTaskId] = React.useState('');
     const [shouldSubmit, setShouldSubmit] = React.useState(true);
     const [uploadedFiles, setUploadedFiles] = React.useState([]);
-    console.log(processId);
+    const [taskName, setTaskName] = React.useState('');
 
     React.useEffect(() => {
         axios.get(`${defaultUrl}/api/writers/upload-pdf-task/${processId}`,).then(
             (resp) => {
                 setformFields(resp.data.formFields);
                 setTaskId(resp.data.taskId);
+                setTaskName(resp.data.taskName);
+                console.log(resp.data)
             },
             (resp) => { alert("error getting form fields,try again"); }
         );
@@ -43,17 +45,16 @@ const InitialUpload = ({ history, type, processId }) => {
             returnValue.push({ fieldId: field.id, fieldValue: field.value.value })
         });
 
-
-        console.log('taskid', taskId);
         console.log(returnValue);
-        console.log(options);
 
         var numOfPdfs = 0;
 
-        returnValue[0].fieldValue.forEach(item => {numOfPdfs++});
-        if(numOfPdfs < 4) {
-            alert("You have to upload minimum of 2 PDF files!");
-            return;
+        if(taskName === 'UploadPDFForm'){
+            returnValue[0].fieldValue.forEach(item => {numOfPdfs++});
+            if(numOfPdfs < 4) {
+                alert("You have to upload minimum of 2 PDF files!");
+                return;
+            }
         }
 
         axios.post(`${defaultUrl}/api/books/save-pdfs/${taskId}`, returnValue, options).then(

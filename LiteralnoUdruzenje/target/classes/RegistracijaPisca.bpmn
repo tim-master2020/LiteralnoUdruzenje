@@ -66,8 +66,8 @@
         <bpmn:incoming>Flow_1u7frnc</bpmn:incoming>
         <bpmn:outgoing>Flow_12g5wjz</bpmn:outgoing>
         <bpmn:outgoing>Flow_0l1slzj</bpmn:outgoing>
-        <bpmn:outgoing>Flow_000l6w3</bpmn:outgoing>
         <bpmn:outgoing>Flow_1tkjsro</bpmn:outgoing>
+        <bpmn:outgoing>Flow_000l6w3</bpmn:outgoing>
       </bpmn:exclusiveGateway>
       <bpmn:endEvent id="SuccessAllAproved" name="Success">
         <bpmn:incoming>Flow_0fd7nel</bpmn:incoming>
@@ -81,23 +81,15 @@
         <bpmn:incoming>Flow_0t61gjk</bpmn:incoming>
         <bpmn:escalationEventDefinition id="EscalationEventDefinition_07zghzn" escalationRef="Escalation_1bei0vi" />
       </bpmn:endEvent>
-      <bpmn:sequenceFlow id="Flow_0k0kt8y" name="Yes" sourceRef="Gateway_15p4y16" targetRef="EmailAboutDenial">
-        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${reviewCount  &gt; 3}</bpmn:conditionExpression>
-      </bpmn:sequenceFlow>
       <bpmn:boundaryEvent id="Event_09biqvi" cancelActivity="false" attachedToRef="UploadExtraMaterial">
         <bpmn:outgoing>Flow_0wia36z</bpmn:outgoing>
         <bpmn:timerEventDefinition id="TimerEventDefinition_0moiwiz">
           <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1M</bpmn:timeDuration>
         </bpmn:timerEventDefinition>
       </bpmn:boundaryEvent>
-      <bpmn:sequenceFlow id="Flow_0yr3gs0" sourceRef="UploadExtraMaterial" targetRef="Gateway_15x2yfg" />
       <bpmn:endEvent id="FailedReview" name="Fail">
         <bpmn:incoming>Flow_08fu4ek</bpmn:incoming>
         <bpmn:escalationEventDefinition id="EscalationEventDefinition_1x5qzev" escalationRef="Escalation_1bei0vi" />
-      </bpmn:endEvent>
-      <bpmn:endEvent id="Event_1bqmjch" name="Fail">
-        <bpmn:incoming>Flow_0lzjbtu</bpmn:incoming>
-        <bpmn:escalationEventDefinition id="EscalationEventDefinition_1u9585y" escalationRef="Escalation_1bei0vi" />
       </bpmn:endEvent>
       <bpmn:intermediateThrowEvent id="NotifyReviewers" name="Notify reviewers">
         <bpmn:incoming>Flow_1g2sp9i</bpmn:incoming>
@@ -109,26 +101,15 @@
       <bpmn:sequenceFlow id="Flow_0l1slzj" name="Vote again" sourceRef="Gateway_1oo7ffr" targetRef="Gateway_15x2yfg">
         <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${result == 'voteAgain'}</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
-      <bpmn:exclusiveGateway id="Gateway_15p4y16" name="reviewCountMoreThan4">
-        <bpmn:incoming>Flow_12mx4pj</bpmn:incoming>
-        <bpmn:outgoing>Flow_1piijem</bpmn:outgoing>
-        <bpmn:outgoing>Flow_0k0kt8y</bpmn:outgoing>
-      </bpmn:exclusiveGateway>
-      <bpmn:sequenceFlow id="Flow_1piijem" name="No" sourceRef="Gateway_15p4y16" targetRef="Activity_1ks73vf">
-        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${reviewCount  &lt;= 3}</bpmn:conditionExpression>
-      </bpmn:sequenceFlow>
-      <bpmn:sequenceFlow id="Flow_000l6w3" name="Need more work" sourceRef="Gateway_1oo7ffr" targetRef="MailAboutMoreWork">
-        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${result == 'moreMaterial'}</bpmn:conditionExpression>
-      </bpmn:sequenceFlow>
       <bpmn:sequenceFlow id="Flow_0mix94c" sourceRef="Activity_1ic951a" targetRef="Gateway_15x2yfg" />
       <bpmn:sequenceFlow id="Flow_1m350qv" sourceRef="Activity_1ks73vf" targetRef="getReviewers" />
       <bpmn:exclusiveGateway id="Gateway_15x2yfg">
         <bpmn:incoming>Flow_0mix94c</bpmn:incoming>
         <bpmn:incoming>Flow_0l1slzj</bpmn:incoming>
-        <bpmn:incoming>Flow_0yr3gs0</bpmn:incoming>
+        <bpmn:incoming>Flow_1b57ji9</bpmn:incoming>
         <bpmn:outgoing>Flow_1kph791</bpmn:outgoing>
       </bpmn:exclusiveGateway>
-      <bpmn:sequenceFlow id="Flow_1kph791" sourceRef="Gateway_15x2yfg" targetRef="Activity_1qjf84k" />
+      <bpmn:sequenceFlow id="Flow_1kph791" sourceRef="Gateway_15x2yfg" targetRef="Activity_1ks73vf" />
       <bpmn:intermediateThrowEvent id="MailAboutUploadExpiration" name="MailAboutUploadExpiration">
         <bpmn:incoming>Flow_0wia36z</bpmn:incoming>
         <bpmn:outgoing>Flow_08fu4ek</bpmn:outgoing>
@@ -144,17 +125,12 @@
       <bpmn:sequenceFlow id="Flow_1tkjsro" name="ApprovedByAll" sourceRef="Gateway_1oo7ffr" targetRef="MailAboutApproval">
         <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${result== 'approved'}</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
-      <bpmn:sequenceFlow id="Flow_12mx4pj" sourceRef="Activity_1qjf84k" targetRef="Gateway_15p4y16" />
       <bpmn:serviceTask id="Activity_1ic951a" name="Initialized counter to zero" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.InitializeReviewCount">
         <bpmn:incoming>Flow_0j082ih</bpmn:incoming>
         <bpmn:outgoing>Flow_0mix94c</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:serviceTask id="Activity_1qjf84k" name="Increment count" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.IncrementReviewCounter">
-        <bpmn:incoming>Flow_1kph791</bpmn:incoming>
-        <bpmn:outgoing>Flow_12mx4pj</bpmn:outgoing>
-      </bpmn:serviceTask>
       <bpmn:serviceTask id="Activity_1ks73vf" name="Reset votes and commnets" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.ResetVotesAndComments">
-        <bpmn:incoming>Flow_1piijem</bpmn:incoming>
+        <bpmn:incoming>Flow_1kph791</bpmn:incoming>
         <bpmn:outgoing>Flow_1m350qv</bpmn:outgoing>
       </bpmn:serviceTask>
       <bpmn:serviceTask id="getReviewers" name="getReviewers" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.GetReviewers">
@@ -171,20 +147,14 @@
         <bpmn:messageEventDefinition id="MessageEventDefinition_1krhpth" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.EmailServices.EmailNotification" />
       </bpmn:intermediateThrowEvent>
       <bpmn:sequenceFlow id="Flow_0t61gjk" sourceRef="MailAboutDenial" targetRef="Fail" />
-      <bpmn:intermediateThrowEvent id="MailAboutMoreWork" name="MailAboutMoreWork">
-        <bpmn:incoming>Flow_000l6w3</bpmn:incoming>
-        <bpmn:outgoing>Flow_0roo2kk</bpmn:outgoing>
-        <bpmn:messageEventDefinition id="MessageEventDefinition_194oc4x" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.EmailServices.EmailNotification" />
-      </bpmn:intermediateThrowEvent>
-      <bpmn:sequenceFlow id="Flow_0roo2kk" sourceRef="MailAboutMoreWork" targetRef="UploadExtraMaterial" />
       <bpmn:userTask id="UploadExtraMaterial" name="uploadExtraMaterial" camunda:assignee="${writer}">
         <bpmn:extensionElements>
           <camunda:formData>
             <camunda:formField id="uploadExtraMaterial" label="Upload Extra Material" type="string_input_file" />
           </camunda:formData>
         </bpmn:extensionElements>
-        <bpmn:incoming>Flow_0roo2kk</bpmn:incoming>
-        <bpmn:outgoing>Flow_0yr3gs0</bpmn:outgoing>
+        <bpmn:incoming>Flow_1nlk92r</bpmn:incoming>
+        <bpmn:outgoing>Flow_1b57ji9</bpmn:outgoing>
       </bpmn:userTask>
       <bpmn:userTask id="ReviewNewWriter" name="ReviewNewWriter" camunda:assignee="${reviewer}">
         <bpmn:extensionElements>
@@ -231,12 +201,42 @@
       <bpmn:sequenceFlow id="Flow_002kzf3" sourceRef="MailAboutApproval" targetRef="Payment" />
       <bpmn:sequenceFlow id="Flow_0fd7nel" sourceRef="Payment" targetRef="SuccessAllAproved" />
       <bpmn:sequenceFlow id="Flow_1qo6x0f" sourceRef="Event_0oem82m" targetRef="MailAboutPaymentExpiration" />
-      <bpmn:intermediateThrowEvent id="EmailAboutDenial" name="EmailAboutDenial">
-        <bpmn:incoming>Flow_0k0kt8y</bpmn:incoming>
-        <bpmn:outgoing>Flow_0lzjbtu</bpmn:outgoing>
-        <bpmn:messageEventDefinition id="MessageEventDefinition_10dkusj" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.EmailServices.EmailNotification" />
+      <bpmn:serviceTask id="Activity_1ehb5g5" name="Increment count" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.IncrementReviewCounter">
+        <bpmn:incoming>Flow_000l6w3</bpmn:incoming>
+        <bpmn:outgoing>Flow_0891m8i</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:intermediateThrowEvent id="MailAboutMoreWork" name="MailAboutMoreWork">
+        <bpmn:incoming>Flow_0yfzpya</bpmn:incoming>
+        <bpmn:outgoing>Flow_1nlk92r</bpmn:outgoing>
+        <bpmn:messageEventDefinition id="MessageEventDefinition_0or9hfo" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.EmailServices.EmailNotification" />
       </bpmn:intermediateThrowEvent>
-      <bpmn:sequenceFlow id="Flow_0lzjbtu" sourceRef="EmailAboutDenial" targetRef="Event_1bqmjch" />
+      <bpmn:sequenceFlow id="Flow_000l6w3" name="Need more work" sourceRef="Gateway_1oo7ffr" targetRef="Activity_1ehb5g5">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${result == 'moreMaterial'}</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="Flow_0891m8i" sourceRef="Activity_1ehb5g5" targetRef="Gateway_02xkjt6" />
+      <bpmn:exclusiveGateway id="Gateway_02xkjt6" name="reviewCountMoreThan3">
+        <bpmn:incoming>Flow_0891m8i</bpmn:incoming>
+        <bpmn:outgoing>Flow_0yfzpya</bpmn:outgoing>
+        <bpmn:outgoing>Flow_0tnbqa2</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:sequenceFlow id="Flow_0yfzpya" name="No" sourceRef="Gateway_02xkjt6" targetRef="MailAboutMoreWork">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${reviewCount  &lt; 4}</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:intermediateThrowEvent id="EmailAboutDenial" name="EmailAboutDenial">
+        <bpmn:incoming>Flow_0tnbqa2</bpmn:incoming>
+        <bpmn:outgoing>Flow_0wmevl7</bpmn:outgoing>
+        <bpmn:messageEventDefinition id="MessageEventDefinition_1wdetox" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.EmailServices.EmailNotification" />
+      </bpmn:intermediateThrowEvent>
+      <bpmn:endEvent id="Event_10d3g28" name="Fail">
+        <bpmn:incoming>Flow_0wmevl7</bpmn:incoming>
+        <bpmn:escalationEventDefinition id="EscalationEventDefinition_1bmddjy" escalationRef="Escalation_1bei0vi" />
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_0tnbqa2" name="Yes" sourceRef="Gateway_02xkjt6" targetRef="EmailAboutDenial">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${reviewCount  &gt; 3}</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="Flow_0wmevl7" sourceRef="EmailAboutDenial" targetRef="Event_10d3g28" />
+      <bpmn:sequenceFlow id="Flow_1nlk92r" sourceRef="MailAboutMoreWork" targetRef="UploadExtraMaterial" />
+      <bpmn:sequenceFlow id="Flow_1b57ji9" sourceRef="UploadExtraMaterial" targetRef="Gateway_15x2yfg" />
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_02aw76r" sourceRef="UploadPDFForm" targetRef="Activity_123k06n" />
     <bpmn:intermediateCatchEvent id="Event_13looj1">
@@ -317,6 +317,10 @@
   <bpmn:escalation id="Escalation_1bei0vi" name="Fail" escalationCode="fail" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="WriterRegistration">
+      <bpmndi:BPMNEdge id="Flow_1acndvj_di" bpmnElement="Flow_1acndvj">
+        <di:waypoint x="2090" y="228" />
+        <di:waypoint x="2090" y="292" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0avuqzp_di" bpmnElement="Flow_0avuqzp">
         <di:waypoint x="2198" y="1550" />
         <di:waypoint x="2342" y="1550" />
@@ -368,149 +372,139 @@
         <di:waypoint x="1508" y="210" />
         <di:waypoint x="1535" y="210" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1acndvj_di" bpmnElement="Flow_1acndvj">
-        <di:waypoint x="2090" y="228" />
-        <di:waypoint x="2090" y="292" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="1472" y="192" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_13z0dv0_di" bpmnElement="RegisterWriterForm">
         <dc:Bounds x="1620" y="170" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1e12in9_di" bpmnElement="EmailRegistrationValidation">
-        <dc:Bounds x="2072" y="192" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2047" y="162" width="87" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_123k06n_di" bpmnElement="Activity_123k06n" isExpanded="true">
         <dc:Bounds x="160" y="570" width="2880" height="900" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1qo6x0f_di" bpmnElement="Flow_1qo6x0f">
-        <di:waypoint x="2490" y="1143" />
-        <di:waypoint x="2490" y="1202" />
+        <di:waypoint x="2370" y="1143" />
+        <di:waypoint x="2370" y="1220" />
+        <di:waypoint x="2432" y="1220" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0fd7nel_di" bpmnElement="Flow_0fd7nel">
-        <di:waypoint x="2490" y="1085" />
-        <di:waypoint x="2662" y="1085" />
+        <di:waypoint x="2370" y="1085" />
+        <di:waypoint x="2552" y="1085" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_002kzf3_di" bpmnElement="Flow_002kzf3">
-        <di:waypoint x="2268" y="1085" />
-        <di:waypoint x="2390" y="1085" />
+        <di:waypoint x="2098" y="1085" />
+        <di:waypoint x="2270" y="1085" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_19r7z5i_di" bpmnElement="Flow_19r7z5i">
-        <di:waypoint x="2508" y="1220" />
-        <di:waypoint x="2662" y="1220" />
+        <di:waypoint x="2468" y="1220" />
+        <di:waypoint x="2552" y="1220" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_15g0nk9_di" bpmnElement="Flow_15g0nk9">
-        <di:waypoint x="1380" y="950" />
-        <di:waypoint x="1540" y="950" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0roo2kk_di" bpmnElement="Flow_0roo2kk">
-        <di:waypoint x="2460" y="922" />
-        <di:waypoint x="2460" y="760" />
+        <di:waypoint x="1350" y="950" />
+        <di:waypoint x="1490" y="950" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0t61gjk_di" bpmnElement="Flow_0t61gjk">
-        <di:waypoint x="2138" y="850" />
-        <di:waypoint x="2242" y="850" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_12mx4pj_di" bpmnElement="Flow_12mx4pj">
-        <di:waypoint x="610" y="950" />
-        <di:waypoint x="665" y="950" />
+        <di:waypoint x="2028" y="850" />
+        <di:waypoint x="2112" y="850" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1tkjsro_di" bpmnElement="Flow_1tkjsro">
-        <di:waypoint x="2011" y="964" />
-        <di:waypoint x="2080" y="1085" />
-        <di:waypoint x="2232" y="1085" />
+        <di:waypoint x="1848" y="957" />
+        <di:waypoint x="2064" y="1076" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2119" y="1053" width="72" height="14" />
+          <dc:Bounds x="1931" y="987" width="72" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_08fu4ek_di" bpmnElement="Flow_08fu4ek">
-        <di:waypoint x="2588" y="848" />
-        <di:waypoint x="2662" y="848" />
+        <di:waypoint x="1762" y="760" />
+        <di:waypoint x="1638" y="760" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0wia36z_di" bpmnElement="Flow_0wia36z">
-        <di:waypoint x="2490" y="778" />
-        <di:waypoint x="2490" y="848" />
-        <di:waypoint x="2552" y="848" />
+        <di:waypoint x="1940" y="728" />
+        <di:waypoint x="1940" y="760" />
+        <di:waypoint x="1798" y="760" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1kph791_di" bpmnElement="Flow_1kph791">
-        <di:waypoint x="475" y="950" />
-        <di:waypoint x="510" y="950" />
+        <di:waypoint x="515" y="950" />
+        <di:waypoint x="620" y="950" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1m350qv_di" bpmnElement="Flow_1m350qv">
-        <di:waypoint x="920" y="950" />
-        <di:waypoint x="980" y="950" />
+        <di:waypoint x="720" y="950" />
+        <di:waypoint x="870" y="950" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0mix94c_di" bpmnElement="Flow_0mix94c">
         <di:waypoint x="380" y="950" />
-        <di:waypoint x="425" y="950" />
+        <di:waypoint x="465" y="950" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_000l6w3_di" bpmnElement="Flow_000l6w3">
-        <di:waypoint x="2015" y="940" />
-        <di:waypoint x="2442" y="940" />
+        <di:waypoint x="1845" y="940" />
+        <di:waypoint x="2230" y="940" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2169" y="922" width="82" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1piijem_di" bpmnElement="Flow_1piijem">
-        <di:waypoint x="715" y="950" />
-        <di:waypoint x="820" y="950" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="786" y="932" width="15" height="14" />
+          <dc:Bounds x="2051" y="922" width="82" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0l1slzj_di" bpmnElement="Flow_0l1slzj">
-        <di:waypoint x="2000" y="975" />
-        <di:waypoint x="2000" y="1220" />
-        <di:waypoint x="450" y="1220" />
-        <di:waypoint x="450" y="975" />
+        <di:waypoint x="1830" y="975" />
+        <di:waypoint x="1830" y="1220" />
+        <di:waypoint x="490" y="1220" />
+        <di:waypoint x="490" y="975" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1934" y="1053" width="52" height="14" />
+          <dc:Bounds x="1764" y="1053" width="52" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1cy8e6k_di" bpmnElement="Flow_1cy8e6k">
-        <di:waypoint x="1198" y="950" />
-        <di:waypoint x="1280" y="950" />
+        <di:waypoint x="1118" y="950" />
+        <di:waypoint x="1250" y="950" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1g2sp9i_di" bpmnElement="Flow_1g2sp9i">
-        <di:waypoint x="1080" y="950" />
-        <di:waypoint x="1162" y="950" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0yr3gs0_di" bpmnElement="Flow_0yr3gs0">
-        <di:waypoint x="2410" y="720" />
-        <di:waypoint x="450" y="720" />
-        <di:waypoint x="450" y="925" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0k0kt8y_di" bpmnElement="Flow_0k0kt8y">
-        <di:waypoint x="690" y="975" />
-        <di:waypoint x="690" y="1100" />
-        <di:waypoint x="1022" y="1100" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="696" y="1003" width="18" height="14" />
-        </bpmndi:BPMNLabel>
+        <di:waypoint x="970" y="950" />
+        <di:waypoint x="1082" y="950" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_12g5wjz_di" bpmnElement="Flow_12g5wjz">
-        <di:waypoint x="2000" y="925" />
-        <di:waypoint x="2000" y="850" />
-        <di:waypoint x="2102" y="850" />
+        <di:waypoint x="1830" y="925" />
+        <di:waypoint x="1830" y="850" />
+        <di:waypoint x="1992" y="850" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1997" y="816" width="86" height="27" />
+          <dc:Bounds x="1851" y="816" width="86" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1u7frnc_di" bpmnElement="Flow_1u7frnc">
-        <di:waypoint x="1640" y="950" />
-        <di:waypoint x="1975" y="950" />
+        <di:waypoint x="1590" y="950" />
+        <di:waypoint x="1805" y="950" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0j082ih_di" bpmnElement="Flow_0j082ih">
         <di:waypoint x="238" y="950" />
         <di:waypoint x="280" y="950" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0lzjbtu_di" bpmnElement="Flow_0lzjbtu">
-        <di:waypoint x="1058" y="1100" />
-        <di:waypoint x="1233" y="1100" />
+      <bpmndi:BPMNEdge id="Flow_0891m8i_di" bpmnElement="Flow_0891m8i">
+        <di:waypoint x="2330" y="940" />
+        <di:waypoint x="2470" y="940" />
+        <di:waypoint x="2470" y="865" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0yfzpya_di" bpmnElement="Flow_0yfzpya">
+        <di:waypoint x="2470" y="815" />
+        <di:waypoint x="2470" y="688" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2478" y="744" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0tnbqa2_di" bpmnElement="Flow_0tnbqa2">
+        <di:waypoint x="2495" y="840" />
+        <di:waypoint x="2652" y="840" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2565" y="822" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wmevl7_di" bpmnElement="Flow_0wmevl7">
+        <di:waypoint x="2688" y="840" />
+        <di:waypoint x="2812" y="840" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1nlk92r_di" bpmnElement="Flow_1nlk92r">
+        <di:waypoint x="2452" y="670" />
+        <di:waypoint x="1970" y="670" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1b57ji9_di" bpmnElement="Flow_1b57ji9">
+        <di:waypoint x="1870" y="670" />
+        <di:waypoint x="490" y="670" />
+        <di:waypoint x="490" y="925" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_0olytnp_di" bpmnElement="Event_0olytnp">
         <dc:Bounds x="202" y="932" width="36" height="36" />
@@ -518,119 +512,119 @@
           <dc:Bounds x="190" y="908" width="59" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1oo7ffr_di" bpmnElement="Gateway_1oo7ffr" isMarkerVisible="true">
-        <dc:Bounds x="1975" y="925" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0g5jk44_di" bpmnElement="SuccessAllAproved">
-        <dc:Bounds x="2662" y="1067" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2659" y="1110" width="42" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_08nlrsi_di" bpmnElement="Fail">
-        <dc:Bounds x="2242" y="832" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2251" y="875" width="18" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1cynn8o_di" bpmnElement="FailedReview">
-        <dc:Bounds x="2662" y="830" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2671" y="806" width="18" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_073g55h_di" bpmnElement="NotifyReviewers">
-        <dc:Bounds x="1162" y="932" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1142" y="975" width="79" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_15p4y16_di" bpmnElement="Gateway_15p4y16" isMarkerVisible="true">
-        <dc:Bounds x="665" y="925" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="709" y="888" width="82" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_15x2yfg_di" bpmnElement="Gateway_15x2yfg" isMarkerVisible="true">
-        <dc:Bounds x="425" y="925" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0xk531h_di" bpmnElement="MailAboutUploadExpiration">
-        <dc:Bounds x="2552" y="830" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2528" y="873" width="85" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0j0aqlw_di" bpmnElement="MailAboutApproval">
-        <dc:Bounds x="2232" y="1067" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2208" y="1110" width="85" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_157kzmy_di" bpmnElement="Activity_1ic951a">
         <dc:Bounds x="280" y="910" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_15f8viz_di" bpmnElement="Activity_1qjf84k">
-        <dc:Bounds x="510" y="910" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_158hxsj_di" bpmnElement="UploadExtraMaterial">
+        <dc:Bounds x="1870" y="630" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_17w60s5_di" bpmnElement="Activity_1ks73vf">
-        <dc:Bounds x="820" y="910" width="100" height="80" />
+        <dc:Bounds x="620" y="910" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0xjnym1_di" bpmnElement="getReviewers">
-        <dc:Bounds x="980" y="910" width="100" height="80" />
+        <dc:Bounds x="870" y="910" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0m7x1a9_di" bpmnElement="Activity_0cx28uj">
-        <dc:Bounds x="1540" y="910" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1jjkrn3_di" bpmnElement="MailAboutDenial">
-        <dc:Bounds x="2102" y="832" width="36" height="36" />
+      <bpmndi:BPMNShape id="Event_073g55h_di" bpmnElement="NotifyReviewers">
+        <dc:Bounds x="1082" y="932" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2077" y="875" width="88" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1gnu5o5_di" bpmnElement="MailAboutMoreWork">
-        <dc:Bounds x="2442" y="922" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2420" y="965" width="86" height="27" />
+          <dc:Bounds x="1062" y="975" width="79" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1fy8rdp_di" bpmnElement="ReviewNewWriter">
-        <dc:Bounds x="1280" y="910" width="100" height="80" />
+        <dc:Bounds x="1250" y="910" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_18z2s5r_di" bpmnElement="MailAboutPaymentExpiration">
-        <dc:Bounds x="2472" y="1202" width="36" height="36" />
+      <bpmndi:BPMNShape id="Activity_0m7x1a9_di" bpmnElement="Activity_0cx28uj">
+        <dc:Bounds x="1490" y="910" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1oo7ffr_di" bpmnElement="Gateway_1oo7ffr" isMarkerVisible="true">
+        <dc:Bounds x="1805" y="925" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ehb5g5_di" bpmnElement="Activity_1ehb5g5">
+        <dc:Bounds x="2230" y="900" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1jjkrn3_di" bpmnElement="MailAboutDenial">
+        <dc:Bounds x="1992" y="832" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2449" y="1245" width="84" height="27" />
+          <dc:Bounds x="1967" y="875" width="88" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1in87l1_di" bpmnElement="FailPaymentExpiration">
-        <dc:Bounds x="2662" y="1202" width="36" height="36" />
+      <bpmndi:BPMNShape id="Event_08nlrsi_di" bpmnElement="Fail">
+        <dc:Bounds x="2112" y="832" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2671" y="1245" width="18" height="14" />
+          <dc:Bounds x="2121" y="875" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0j0aqlw_di" bpmnElement="MailAboutApproval">
+        <dc:Bounds x="2062" y="1067" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2038" y="1110" width="85" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1pcqdqg_di" bpmnElement="Payment">
-        <dc:Bounds x="2390" y="1045" width="100" height="80" />
+        <dc:Bounds x="2270" y="1045" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_17oqf83_di" bpmnElement="EmailAboutDenial">
-        <dc:Bounds x="1022" y="1082" width="36" height="36" />
+      <bpmndi:BPMNShape id="Event_0g5jk44_di" bpmnElement="SuccessAllAproved">
+        <dc:Bounds x="2552" y="1067" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1001" y="1125" width="88" height="14" />
+          <dc:Bounds x="2549" y="1110" width="42" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1vdrqdo_di" bpmnElement="Event_1bqmjch">
-        <dc:Bounds x="1233" y="1082" width="36" height="36" />
+      <bpmndi:BPMNShape id="Event_18z2s5r_di" bpmnElement="MailAboutPaymentExpiration">
+        <dc:Bounds x="2432" y="1202" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1242" y="1125" width="18" height="14" />
+          <dc:Bounds x="2409" y="1245" width="84" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_158hxsj_di" bpmnElement="UploadExtraMaterial">
-        <dc:Bounds x="2410" y="680" width="100" height="80" />
+      <bpmndi:BPMNShape id="Event_1in87l1_di" bpmnElement="FailPaymentExpiration">
+        <dc:Bounds x="2552" y="1202" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2561" y="1245" width="18" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0oem82m_di" bpmnElement="Event_0oem82m">
-        <dc:Bounds x="2472" y="1107" width="36" height="36" />
+      <bpmndi:BPMNShape id="Gateway_02xkjt6_di" bpmnElement="Gateway_02xkjt6" isMarkerVisible="true">
+        <dc:Bounds x="2445" y="815" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2460" y="778" width="82" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_021ugzi_di" bpmnElement="MailAboutMoreWork">
+        <dc:Bounds x="2452" y="652" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2427" y="615" width="86" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0wg55qu_di" bpmnElement="EmailAboutDenial">
+        <dc:Bounds x="2652" y="822" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2631" y="865" width="88" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_10d3g28_di" bpmnElement="Event_10d3g28">
+        <dc:Bounds x="2812" y="822" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2821" y="798" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0xk531h_di" bpmnElement="MailAboutUploadExpiration">
+        <dc:Bounds x="1762" y="742" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1738" y="785" width="85" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1cynn8o_di" bpmnElement="FailedReview">
+        <dc:Bounds x="1602" y="742" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1611" y="718" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_15x2yfg_di" bpmnElement="Gateway_15x2yfg" isMarkerVisible="true">
+        <dc:Bounds x="465" y="925" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_07l3m1n_di" bpmnElement="Event_09biqvi">
-        <dc:Bounds x="2472" y="742" width="36" height="36" />
+        <dc:Bounds x="1922" y="692" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0oem82m_di" bpmnElement="Event_0oem82m">
+        <dc:Bounds x="2352" y="1107" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_15ioj7u_di" bpmnElement="Event_13looj1">
         <dc:Bounds x="2072" y="292" width="36" height="36" />
@@ -666,6 +660,12 @@
         <dc:Bounds x="2162" y="1532" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="2139" y="1575" width="83" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1e12in9_di" bpmnElement="EmailRegistrationValidation">
+        <dc:Bounds x="2072" y="192" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2047" y="162" width="87" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1xsokmq_di" bpmnElement="Event_0fkdar0">

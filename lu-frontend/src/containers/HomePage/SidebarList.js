@@ -8,6 +8,7 @@ import { TaskNameRoutes } from '../../functions/TaskNameRoutes';
 export function SidebarList(history, user) {
 
     function renderTasks(tasks) {
+        console.log(tasks);
         return tasks.map((task) => {
             return (
                 <ListItem  onClick={() => {history.push(`${TaskNameRoutes(task.name)}/${task.taskId}`)}} button>

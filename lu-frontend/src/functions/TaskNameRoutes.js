@@ -14,6 +14,9 @@ export function TaskNameRoutes(name) {
         case 'ReviewNewWriter':
             route = '/review';
             break;
+        case 'Payment':
+            route = '/pay';
+            break;
         default:
             route = '/';
             break;

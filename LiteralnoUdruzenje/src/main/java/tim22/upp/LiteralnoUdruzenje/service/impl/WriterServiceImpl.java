@@ -31,4 +31,11 @@ public class WriterServiceImpl implements IWriterService {
     public Writer updateWriter(Writer writer) {
         return writerRepository.save(writer);
     }
+
+    @Override
+    public void deleteWriter(Writer writer) {
+        if (writer != null) {
+            writerRepository.delete(writer);
+        }
+    }
 }

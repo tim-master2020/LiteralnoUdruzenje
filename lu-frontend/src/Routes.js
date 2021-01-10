@@ -32,6 +32,9 @@ const Routes = ({loggedInUser,setLoggedIn}) => {
                  <Route exact path='/upload/:id' render={props =>
                     <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} isInitialUpload={true}/>
                 } />
+                <Route exact path='/pay/:id' render={props =>
+                    <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} isPayment={true}/>
+                } />
             <Route exact path='/reviews' render={props =>
                     <ReviewPage />
                 } />

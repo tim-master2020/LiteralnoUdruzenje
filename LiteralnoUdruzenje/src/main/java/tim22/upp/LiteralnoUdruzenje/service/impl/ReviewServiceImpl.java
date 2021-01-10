@@ -99,6 +99,7 @@ public class ReviewServiceImpl implements IReviewService {
         for(FormSubmissionDTO formSubmissionDTO : formDTO){
             if(formSubmissionDTO.getFieldId().equals("reviewComment")){
                 review.setComment((String) formSubmissionDTO.getFieldValue());
+                comments.add(review.getComment());
             }
             if(formSubmissionDTO.getFieldId().equals("reviewRate")) {
                 if (formSubmissionDTO.getFieldValue().equals(Vote.DECLINE.name())) {
@@ -108,10 +109,9 @@ public class ReviewServiceImpl implements IReviewService {
                 } else if (formSubmissionDTO.getFieldValue().equals(Vote.MOREMATERIAL.name())) {
                     review.setVote(Vote.MOREMATERIAL);
                 }
-            }
 
-            votes.add(review.getVote());
-            comments.add(review.getComment());
+                votes.add(review.getVote());
+            }
 
             Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
             String processInstanceId = task.getProcessInstanceId();

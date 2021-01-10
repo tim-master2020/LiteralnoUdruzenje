@@ -99,6 +99,14 @@ const CamundaForm = ({ formFields,
                          </Form.Group>
                     );
                 }
+                if (field.type.name.includes('button_type')) {
+                    return (
+                        <Form.Group key={field.id} as={Col} className="singleInputField">
+                            <Form.Label>{field.label}</Form.Label>
+                            <br/>
+                         </Form.Group>
+                    )
+                }
                 if (field.type.name.includes('pdfs')) {
                     console.log(initializeOptions(field.type.values));
                     var names = field.defaultValue.replace('[', '').replace(']', '').split(', ');

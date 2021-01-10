@@ -16,8 +16,9 @@ import { AppBar, Toolbar } from "@material-ui/core";
 import { defaultUrl } from '../../backendConfig';
 import InitialUpload from "../../components/uploadPDF/InitialUpload";
 import BookReview from '../../components/bookReview/BookReview'
+import Payment from '../../components/payment/Payment';
 
-const LoggedInHomepage = ({ loggedInUser, setLoggedIn,history, isInitialUpload, isReview }) => {
+const LoggedInHomepage = ({ loggedInUser, setLoggedIn,history, isInitialUpload, isReview, isPayment }) => {
     const [isOpen, setOpen] = useState(false);
 
     const handleDrawerToggle = () => {
@@ -82,6 +83,9 @@ const LoggedInHomepage = ({ loggedInUser, setLoggedIn,history, isInitialUpload, 
                 }
                 { isReview &&
                     <BookReview tId={id} />
+                }
+                { isPayment &&
+                    <Payment tId={id}></Payment>
                 }
             </main>
         </div>

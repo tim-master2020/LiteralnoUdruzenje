@@ -7,6 +7,7 @@ import { Card } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { TaskNameRoutes } from '../../functions/TaskNameRoutes.js';
+import './Global.css'
 
 const alert = withReactContent(Swal)
 
@@ -74,7 +75,7 @@ const ReviewBookGeneral = ({history,updateUser}) => {
         }
 
     return(
-        <Card style={{padding:'15px'}}>
+        <Card className="cardHolder">
         <CamundaForm
         formFields={formFields}
         setformFields={setformFields}

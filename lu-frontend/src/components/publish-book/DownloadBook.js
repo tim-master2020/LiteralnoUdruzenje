@@ -11,11 +11,10 @@ import { TaskNameRoutes } from '../../functions/TaskNameRoutes';
 
 const alert = withReactContent(Swal)
 
-const ComparePlagiats = ({history,updateUser}) => {
+const DownloadBook = ({history,updateUser}) => {
 
     const [formFields, setformFields] = React.useState([]);
     const [isValid, setIsValid] = React.useState({});
-    //const [ writer, setWriter ] = useState('');
     const [shouldSubmit,setShouldSubmit] = React.useState(true);
     const [validationMessage, setValidationMessage] = React.useState({});
     const [selected,setSelected] =  React.useState([]);
@@ -42,17 +41,16 @@ const ComparePlagiats = ({history,updateUser}) => {
 
             if (field.type.name.includes('enum')) {
                 field.value.value = selected.value;
-                returnArray.push({ fieldId: field.id, fieldValue: field.value.value });
             }
-            if (field.type.name.includes('multiFilesDownload')){
-                returnArray.push({ fieldId: field.id, fieldValue: field.type.values });
-            }
+            returnArray.push({ fieldId: field.id, fieldValue: field.value.value });
         });
-        
-        axios.post(`${defaultUrl}/api/books/submit-plagiarism-decision/${history.location.state.taskId}`, returnArray, options).then(
+        console.log(returnArray)
+        axios.post(`${defaultUrl}/api/books/submit-approval/${history.location.state.taskId}`, returnArray, options).then(
             (resp) => {
                 updateUser();
                 console.log(resp.data);
+                alert.fire({text:'Your decision about this book has been submitted.'});
+
                 if(resp.data !== ""){
                     history.push({
                         pathname:`${TaskNameRoutes(resp.data.taskName)}/${resp.data.taskId}`,
@@ -66,26 +64,29 @@ const ComparePlagiats = ({history,updateUser}) => {
             },
             (resp) => {
                 alert.fire({
-                    text:'Error occured please try again',
+                    text:'Error occured, please try again.',
                 });
             }
         );
     }
 
     return(
+        <div>
+            <p className="title">You can download the book and decide do you aprove it or not.</p>
             <Card className='cardHolder'>
-            <CamundaForm
-            formFields={formFields}
-            setformFields={setformFields}
-            setShouldSubmit={setShouldSubmit}
-            setValidationMessage={setValidationMessage}
-            isValid={isValid}
-            setIsValid={setIsValid}
-            selected={selected}
-            setSelected={setSelected}
-            onSubmit={(e) => { handleSubmit(e) }}
-            />
-        </Card>
+                <CamundaForm
+                formFields={formFields}
+                setformFields={setformFields}
+                setShouldSubmit={setShouldSubmit}
+                setValidationMessage={setValidationMessage}
+                isValid={isValid}
+                setIsValid={setIsValid}
+                selected={selected}
+                onSubmit={(e) => { handleSubmit(e) }}
+                setSelected={setSelected}
+                />
+            </Card>
+        </div>
     )
 }
-export default withRouter(ComparePlagiats);
+export default withRouter(DownloadBook);

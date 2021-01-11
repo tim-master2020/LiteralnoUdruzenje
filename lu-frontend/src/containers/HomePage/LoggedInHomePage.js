@@ -21,8 +21,9 @@ import DeclineExplanation from "../../components/publish-book/DeclineExplanation
 import UploadRestOfTheWork from "../../components/publish-book/UploadRestOfTheWork";
 import getUser from "../../functions/UserFunctions";
 import ComparePlagiats from "../../components/publish-book/ComparePlagiats";
-
-const LoggedInHomepage = ({ loggedInUser, setLoggedIn, history,publishBookGeneralData,reviewBookGeneral,giveExplanation,uploadRestWork,comparePlagiats}) => {
+import DownloadBook from "../../components/publish-book/DownloadBook"
+import DecideSendingToBeta from "../../components/publish-book/DecideSendingToBeta"
+const LoggedInHomepage = ({ loggedInUser, setLoggedIn, history,publishBookGeneralData,reviewBookGeneral,giveExplanation,uploadRestWork,comparePlagiats,downloadBook,decideBeta}) => {
     const [isOpen, setOpen] = useState(false);
 
     const handleDrawerToggle = () => {
@@ -106,6 +107,10 @@ const LoggedInHomepage = ({ loggedInUser, setLoggedIn, history,publishBookGenera
                         <UploadRestOfTheWork updateUser={()=>updateUser()}/>
                     }{ comparePlagiats &&
                         <ComparePlagiats updateUser={()=>updateUser()}/>
+                    }{ downloadBook &&
+                        <DownloadBook updateUser={()=>updateUser()}/>
+                    }{ decideBeta &&
+                        <DecideSendingToBeta updateUser={()=>updateUser()}/>
                     }
                 </div>
             </main>

@@ -20,6 +20,9 @@ public class Book implements Serializable {
     @Column
     private String name;
 
+    @Column
+    private String pdfName;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "book_writers", joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "writer_id", referencedColumnName = "id"))
     private Set<Writer> writers = new HashSet<Writer>();
@@ -139,5 +142,13 @@ public class Book implements Serializable {
 
     public void setKeywords(Set<Keyword> keywords) {
         this.keywords = keywords;
+    }
+
+    public String getPdfName() {
+        return pdfName;
+    }
+
+    public void setPdfName(String pdfName) {
+        this.pdfName = pdfName;
     }
 }

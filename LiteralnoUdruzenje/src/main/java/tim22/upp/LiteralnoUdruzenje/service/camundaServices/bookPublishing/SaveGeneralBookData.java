@@ -48,6 +48,7 @@ public class SaveGeneralBookData  implements JavaDelegate {
 
         if(bookService.save(book) != null){
             delegateExecution.setVariable("bookSaved",true);
+            delegateExecution.setVariable("bookName", book.getName());
             delegateExecution.setVariable("bookId",book.getId());
         }else{
             delegateExecution.setVariable("bookSaved",false);

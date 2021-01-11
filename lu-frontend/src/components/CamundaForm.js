@@ -7,7 +7,7 @@ import { Form, Button, Col } from "react-bootstrap";
 import {validate} from '../functions/FormFunctions.js';
 import Select from 'react-select';
 import { Link } from "@material-ui/core";
-
+import { downloadBook } from '../functions/downloadBook'
 
 const CamundaForm = ({ formFields,
     onSubmit,
@@ -110,7 +110,6 @@ const CamundaForm = ({ formFields,
                     );
                 }
                 if (field.type.name.includes('enum')) {
-                    console.log(initializeOptions(field.type.values));
                     return (
                         <Form.Group key={field.id} as={Col} className="singleInputField">
                             <Form.Label>{field.label}</Form.Label>
@@ -141,16 +140,33 @@ const CamundaForm = ({ formFields,
                     );
                 }
                 if (field.type.name.includes('multiFilesDownload')) {
+                    console.log(names);
                     return (
                         Object.keys(field.type.values).map((val, k) => {
                             return (
                                 <div>
-                            <a key={k} href="localhost:3000/">{val}</a>
-                            </div>)
-                            // console.log('value',val);
-                            })
+                                    <a onClick={(e) => {downloadBook(e, val)}} className="bookNameDiv">{val}</a>
+                                    <br/>
+                                </div>
+                            )
+                        })
                     );
                 }
+                if (field.type.name.includes('pdfs')) {
+                    console.log(initializeOptions(field.type.values));
+                    var names = field.defaultValue.replace('[', '').replace(']', '').split(', ');
+                    return (
+                        names.map(name => {
+                            return(
+                                <div>
+                                    <Form.Label onClick={(e) => {downloadBook(e, name)}} className="bookNameDiv">{name}</Form.Label>
+                                    <br/>
+                                </div>
+                            )
+                        })
+                    );
+                }
+                
                 else {
                     return (
                         <Form.Group key={field.id} as={Col} className="singleInputField">
@@ -251,11 +267,10 @@ const CamundaForm = ({ formFields,
         let options = [];
         if (fields !== null && fields !== undefined) {
             for (const [key, value] of Object.entries(fields)) {
-                options.push({ value: `${value}`, label: `${value}` })
+                options.push({ value: `${key}`, label: `${value}` })
             }
 
         }
-        console.log('options',options);
         return options;
     }
 }

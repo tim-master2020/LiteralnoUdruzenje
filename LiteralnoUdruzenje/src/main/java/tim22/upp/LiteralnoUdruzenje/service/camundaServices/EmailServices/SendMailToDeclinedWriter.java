@@ -24,11 +24,17 @@ public class SendMailToDeclinedWriter implements JavaDelegate {
 
         Object explanation = delegateExecution.getVariable("explanation");
         if(explanation == "" || explanation == null){
-            explanation = "You failed to upload your work in given time";
+            if(delegateExecution.getCurrentActivityId().equals("PlagiatEmail")){
+                explanation = "Your book has been detected as plagiarism.";
+            } else if (delegateExecution.getCurrentActivityId().equals("NotifyApproval")) {
+                explanation = "Your book has been denied by editor.";
+            } else {
+                explanation = "You failed to upload your work in given time";
+            }
         }
         User writer = userService.findByUsername(delegateExecution.getVariable("loggedInWriter").toString());
-        final String message = "Hello " + writer.getUsername() + ",\n\nYour request to publish book has been declined." +
-                "Explanation from our editor:"+explanation+"\n\n\neBook Team";
+        final String message = "Hello " + writer.getUsername() + ",\n\nYour request to publish book has been declined. " +
+                "Explanation from our editor: "+explanation+"\n\n\neBook Team";
         emailService.sendMail(writer,message);
     }
 }

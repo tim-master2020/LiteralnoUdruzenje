@@ -6,6 +6,8 @@ import { defaultUrl } from '../../backendConfig.js';
 import CamundaForm from '../CamundaForm.js';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import './Global.css'
+
 const alert = withReactContent(Swal)
 
 const DeclineExplanation = ({history,updateUser}) => {
@@ -56,7 +58,7 @@ const DeclineExplanation = ({history,updateUser}) => {
     }
 
     return(
-        <Card style={{padding:'15px'}}>
+        <Card className='cardHolder'>
         <CamundaForm
         formFields={formFields}
         setformFields={setformFields}

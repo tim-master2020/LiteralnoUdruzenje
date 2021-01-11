@@ -10,10 +10,8 @@ import { withRouter } from 'react-router-dom';
 const SidebarList = ({history, user}) => {
     function renderTasks(tasks) {
         return tasks.map((task) => {
-            console.log(`url: ${TaskNameRoutes(task.name)}/${task.taskId}`);
             return (
                 <ListItem  onClick={() => {
-                   //history.push(`${TaskNameRoutes(task.name)}/${task.taskId}`)
                     history.push({
                         pathname:`${TaskNameRoutes(task.name)}/${task.taskId}`,
                         state: {

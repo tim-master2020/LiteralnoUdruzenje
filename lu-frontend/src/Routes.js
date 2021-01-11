@@ -36,6 +36,12 @@ const Routes = ({loggedInUser,setLoggedIn}) => {
              <Route exact path='/comparePlagiats/:taskId' render={props =>
                 <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} comparePlagiats={true}/>
                 } />
+            <Route exact path='/downloadBook/:taskId' render={props =>
+                <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} downloadBook={true}/>
+                } />
+            <Route exact path='/decideBeta/:taskId' render={props =>
+                <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} decideBeta={true}/>
+                } />
         </Switch>
         );
 }

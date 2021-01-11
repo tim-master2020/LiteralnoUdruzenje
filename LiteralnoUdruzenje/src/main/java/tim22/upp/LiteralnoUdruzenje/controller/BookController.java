@@ -7,18 +7,19 @@ import org.camunda.bpm.engine.form.FormField;
 import org.camunda.bpm.engine.task.Task;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 import tim22.upp.LiteralnoUdruzenje.dto.*;
 import tim22.upp.LiteralnoUdruzenje.model.Genre;
 import tim22.upp.LiteralnoUdruzenje.model.Writer;
 import tim22.upp.LiteralnoUdruzenje.service.IBookService;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -73,8 +74,7 @@ public class BookController {
         formService.submitTaskForm(taskId,decision);
 
         Task nextTask = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
-        String taskName = nextTask.getName().toString();
-        if(nextTask != null && taskName.equals("GiveExplanation")) {
+        if(nextTask != null && task.getName().equals("GiveExplanation")) {
             if(formService.getTaskFormData(nextTask.getId()) != null) {
                 List<FormField> properties = formService.getTaskFormData(nextTask.getId()).getFormFields();
                 return new ResponseEntity<>(new FormFieldsDTO(nextTask.getId(), processInstanceId, properties, nextTask.getName()), HttpStatus.OK);
@@ -103,7 +103,8 @@ public class BookController {
 
         String username = task.getAssignee();
         String processInstanceId = task.getProcessInstanceId();
-        List<String> booksSaved = bookService.savePdf((List<String>) bookDTO.get(0).getFieldValue(), username);
+        String bookName = (String) taskService.getVariables(taskId).get("bookName");
+        List<String> booksSaved = bookService.savePdf((List<String>) bookDTO.get(0).getFieldValue(), bookName, username);
         runtimeService.setVariable(processInstanceId, "booksSaved", booksSaved);
 
         HashMap<String, Object> map = new HashMap<>();
@@ -115,6 +116,76 @@ public class BookController {
             formService.submitTaskForm(taskId, map);
         }catch (Exception e){
             return new ResponseEntity<>(new ExplanationDTO("Uploading book failed."),HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/download/{name:.+}")
+    public ResponseEntity<StreamingResponseBody> downloadBook(@PathVariable String name) throws IOException {
+        StreamingResponseBody response = bookService.downloadPDF(name);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=generic_file_name.bin")
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(response);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/submit-plagiarism-decision/{taskId}")
+    public ResponseEntity<?> submitPlagiarismDecision(@RequestBody List<FormSubmissionDTO> plagiatDTO, @PathVariable String taskId) {
+        HashMap<String, Object> map = this.mapListToDto(plagiatDTO);
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+        String processInstanceId = task.getProcessInstanceId();
+        String plagiat = (String) map.get("isPlagiat");
+        runtimeService.setVariable(processInstanceId, "isPlagiat", plagiat);
+        formService.submitTaskForm(taskId,map);
+
+        Task nextTask = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
+        if(nextTask != null && nextTask.getName().equals("DownloadFile")) {
+            if(formService.getTaskFormData(nextTask.getId()) != null) {
+                List<FormField> properties = formService.getTaskFormData(nextTask.getId()).getFormFields();
+                return new ResponseEntity<>(new FormFieldsDTO(nextTask.getId(), processInstanceId, properties, nextTask.getName()), HttpStatus.OK);
+            }
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/submit-approval/{taskId}")
+    public ResponseEntity<?> submitApproval(@RequestBody List<FormSubmissionDTO> plagiatDTO, @PathVariable String taskId) {
+        HashMap<String, Object> map = this.mapListToDto(plagiatDTO);
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+        String processInstanceId = task.getProcessInstanceId();
+        String approval = (String) map.get("approval");
+        runtimeService.setVariable(processInstanceId, "isApproved", approval);
+        formService.submitTaskForm(taskId,map);
+
+        Task nextTask = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
+        if(nextTask != null) {
+            if(formService.getTaskFormData(nextTask.getId()) != null) {
+                List<FormField> properties = formService.getTaskFormData(nextTask.getId()).getFormFields();
+                return new ResponseEntity<>(new FormFieldsDTO(nextTask.getId(), processInstanceId, properties, nextTask.getName()), HttpStatus.OK);
+            }
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/submit-sending-to-beta/{taskId}")
+    public ResponseEntity<?> submitSendingToBetaReaders(@RequestBody List<FormSubmissionDTO> plagiatDTO, @PathVariable String taskId) {
+        HashMap<String, Object> map = this.mapListToDto(plagiatDTO);
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+        String processInstanceId = task.getProcessInstanceId();
+        String decision = (String) map.get("sendToBetaReaders");
+        runtimeService.setVariable(processInstanceId, "sendToBeta", decision);
+        formService.submitTaskForm(taskId,map);
+
+        Task nextTask = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
+        if(nextTask != null) {
+            if(formService.getTaskFormData(nextTask.getId()) != null) {
+                List<FormField> properties = formService.getTaskFormData(nextTask.getId()).getFormFields();
+                return new ResponseEntity<>(new FormFieldsDTO(nextTask.getId(), processInstanceId, properties, nextTask.getName()), HttpStatus.OK);
+            }
         }
 
         return new ResponseEntity<>(HttpStatus.OK);

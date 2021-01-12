@@ -35,7 +35,7 @@ public class SaveGeneralBookData  implements JavaDelegate {
         book.setSynopsis(generalBookData.get("synopsis").toString());
         LinkedHashMap<String,String> genres = (LinkedHashMap<String, String>) generalBookData.get("Genres");
         //genreService.findByName(genres.get("value"));
-        book.setGenre(genreService.findByName(genres.get("value")));
+        book.setGenre(genreService.findById(Long.parseLong(genres.get("value"))));
 
         Writer writer = writerService.findByUsername(delegateExecution.getVariable("loggedInWriter").toString());
         Set<Writer> writers = book.getWriters();

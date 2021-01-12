@@ -49,7 +49,7 @@ const DecideSendingToBeta = ({history,updateUser}) => {
             (resp) => {
                 updateUser();
                 console.log(resp.data);
-                alert.fire({text:'Your decision about this book has been submitted.'});
+                //alert.fire({text:'Your decision about this book has been submitted.'});
 
                 if(resp.data !== ""){
                     history.push({

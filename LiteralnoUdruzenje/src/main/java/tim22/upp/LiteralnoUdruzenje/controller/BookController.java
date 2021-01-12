@@ -180,13 +180,13 @@ public class BookController {
         runtimeService.setVariable(processInstanceId, "sendToBeta", decision);
         formService.submitTaskForm(taskId,map);
 
-        Task nextTask = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
-        if(nextTask != null) {
-            if(formService.getTaskFormData(nextTask.getId()) != null) {
-                List<FormField> properties = formService.getTaskFormData(nextTask.getId()).getFormFields();
-                return new ResponseEntity<>(new FormFieldsDTO(nextTask.getId(), processInstanceId, properties, nextTask.getName()), HttpStatus.OK);
-            }
-        }
+//        Task nextTask = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
+//        if(nextTask != null) {
+//            if(formService.getTaskFormData(nextTask.getId()) != null) {
+//                List<FormField> properties = formService.getTaskFormData(nextTask.getId()).getFormFields();
+//                return new ResponseEntity<>(new FormFieldsDTO(nextTask.getId(), processInstanceId, properties, nextTask.getName()), HttpStatus.OK);
+//            }
+//        }
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

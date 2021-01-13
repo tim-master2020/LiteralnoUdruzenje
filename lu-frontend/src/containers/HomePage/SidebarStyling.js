@@ -71,7 +71,7 @@ export  function styling (theme) {
             backgroundColor:'white',
         },
         button: {
-            marginRight: '0.5%'
+            margin: '0 0.25%'
         }
     }
     return stylingObject;

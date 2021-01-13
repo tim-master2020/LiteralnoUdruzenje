@@ -30,7 +30,6 @@ public class Genre implements Serializable {
 
     public Genre(String name)
     {
-        this.id = id;
         this.name = name;
     }
 

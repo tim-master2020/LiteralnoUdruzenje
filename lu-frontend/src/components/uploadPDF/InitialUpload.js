@@ -6,8 +6,9 @@ import './InitialUpload.css';
 import { withRouter } from 'react-router-dom';
 import CamundaForm from '../CamundaForm.js';
 import { validate } from '../../functions/FormFunctions';
+import { alert } from '../../functions/alertSwal' 
 
-const InitialUpload = ({ history, type, processId }) => {
+const InitialUpload = ({ history,updateUser }) => {
 
     const [formFields, setformFields] = React.useState([]);
     const [validationMessage, setValidationMessage] = React.useState({});
@@ -18,13 +19,15 @@ const InitialUpload = ({ history, type, processId }) => {
     const [uploadedFiles, setUploadedFiles] = React.useState([]);
     const [taskName, setTaskName] = React.useState('');
 
+    const options = {
+        headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
+    };
+    
     React.useEffect(() => {
-        axios.get(`${defaultUrl}/api/writers/upload-pdf-task/${processId}`,).then(
+        axios.get(`${defaultUrl}/process/get-form-fields/${history.location.state.taskId}`, options).then(
             (resp) => {
-                setformFields(resp.data.formFields);
-                setTaskId(resp.data.taskId);
                 setTaskName(resp.data.taskName);
-                console.log(resp.data)
+                setformFields(resp.data.formFields);
             },
             (resp) => { alert("error getting form fields,try again"); }
         );
@@ -32,11 +35,6 @@ const InitialUpload = ({ history, type, processId }) => {
 
 
     function SavePdfs(e) {
-
-        let token = localStorage.getItem('token');
-        const options = {
-            headers: { 'Authorization': 'Bearer ' + token}
-        };
 
         e.preventDefault();
         const returnValue = [];
@@ -57,9 +55,10 @@ const InitialUpload = ({ history, type, processId }) => {
             }
         }
 
-        axios.post(`${defaultUrl}/api/books/save-pdfs/${taskId}`, returnValue, options).then(
+        axios.post(`${defaultUrl}/api/books/save-pdfs/${history.location.state.taskId}`, returnValue, options).then(
             (resp) => {
                 alert('Your documents are uploaded successfully.')
+                updateUser();
                 history.push('/');
             },
             (resp) => {

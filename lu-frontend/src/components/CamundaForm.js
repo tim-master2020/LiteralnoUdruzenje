@@ -6,7 +6,6 @@ import { React, useImperativeHandle, forwardRef } from 'react';
 import { Form, Button, Col } from "react-bootstrap";
 import {validate} from '../functions/FormFunctions.js';
 import './bookReview/BookReview.css';
-import Select from 'react-select';
 import { Link } from "@material-ui/core";
 import { downloadBook } from '../functions/downloadBook'
 
@@ -59,6 +58,7 @@ const CamundaForm = ({ formFields,
                 if(field.type.name.includes('singleEnum')){
                     return(
                         <div className="selectDiv">  
+                        <Form.Label id={field.id} name={field.id}>{field.label}: {field.value.value}</Form.Label>
                         <Select
                             value={selected}
                             onChange={setSelected}
@@ -179,17 +179,15 @@ const CamundaForm = ({ formFields,
                     return (
                         <Form.Group key={field.id} as={Col} className="singleInputField">
                             <Form.Label>{field.label}</Form.Label>
-                            <Select
-                            value={selected}
-                            onChange={setSelected}
-                            options={initializeOptions(field.type.values)}
-                            />
-                         </Form.Group>
+                            <Form.Control type={field.type.name} id={field.id} name={field.id} onChange={handleChange} />
+                            {isValid.hasOwnProperty(`${field.id}`) &&
+                                showValidationErrors(field)
+                            }
+                        </Form.Group>
                     );
                 }
             }
-            )
-        }
+        )};
     }
 
 
@@ -252,7 +250,6 @@ const CamundaForm = ({ formFields,
     };
 
     function showValidationErrors(field) {
-        debugger;
         if (isValid.hasOwnProperty(`${field.id}`)) {
             return (
                 <div style={{ color: 'red' }}>

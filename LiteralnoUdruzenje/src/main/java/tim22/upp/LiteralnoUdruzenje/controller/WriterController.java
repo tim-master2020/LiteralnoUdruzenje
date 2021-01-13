@@ -38,29 +38,6 @@ public class WriterController {
     @Autowired
     IWriterService writerService;
 
-    @GetMapping(path = "/upload-pdf-task/{taskId}", produces = "application/json")
-    public @ResponseBody FormFieldsDTO getFormFieldUploadPdf(@PathVariable String taskId) {
-        return getFormFieldsDTO(taskId);
-    }
-
-    @GetMapping(path = "/pay/{taskId}", produces = "application/json")
-    public @ResponseBody FormFieldsDTO pay(@PathVariable String taskId) {
-        return getFormFieldsDTO(taskId);
-    }
-
-    private FormFieldsDTO getFormFieldsDTO(@PathVariable String taskId) {
-        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
-        String piId = task.getProcessInstanceId();
-        List<FormField> properties = null;
-        String taskName = task.getName();
-        if(task !=  null && formService.getTaskFormData(task.getId()) != null) {
-            properties = formService.getTaskFormData(task.getId()).getFormFields();
-        }
-        FormFieldsDTO formFieldsDTO = new FormFieldsDTO(taskId, piId, properties);
-        formFieldsDTO.setTaskName(taskName);
-        return formFieldsDTO;
-    }
-
     @PostMapping(path = "/activate-account/{taskId}", produces = "application/json")
     public ResponseEntity<?> activate(@PathVariable String taskId) {
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();

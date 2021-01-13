@@ -5,22 +5,23 @@ import { Form, Button, FormGroup, FormControl, ControlLabel, Col, Card } from "r
 import { withRouter } from 'react-router-dom';
 import CamundaForm from '../CamundaForm.js';
 import { validate } from '../../functions/FormFunctions';
+import { alert } from '../../functions/alertSwal' 
 
-const Payment = ({ history, tId }) => {
+const Payment = ({ history,updateUser }) => {
 
     const [formFields, setformFields] = React.useState([]);
     const [selected, setSelected] = React.useState([]);
     const [isValid, setIsValid] = React.useState({});
-    const [taskId, setTaskId] = React.useState('');
     const [shouldSubmit, setShouldSubmit] = React.useState(true);
-    console.log(tId);
+
+    const options = {
+        headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
+    };
 
     React.useEffect(() => {
-        axios.get(`${defaultUrl}/api/writers/pay/${tId}`,).then(
+        axios.get(`${defaultUrl}/process/get-form-fields/${history.location.state.taskId}`, options).then(
             (resp) => {
                 setformFields(resp.data.formFields);
-                setTaskId(resp.data.taskId);
-                
             },
             (resp) => { alert("error getting form fields,try again"); }
         );
@@ -41,9 +42,10 @@ const Payment = ({ history, tId }) => {
 
         e.preventDefault();
 
-        axios.post(`${defaultUrl}/api/writers/activate-account/${taskId}`, options).then(
+        axios.post(`${defaultUrl}/api/writers/activate-account/${history.location.state.taskId}`, options).then(
             (resp) => {
                 alert('The account is activated')
+                updateUser();
                 history.push('/');
             },
             (resp) => {

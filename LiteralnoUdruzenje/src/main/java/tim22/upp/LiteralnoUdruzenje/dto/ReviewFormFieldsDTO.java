@@ -11,11 +11,12 @@ public class ReviewFormFieldsDTO extends FormFieldsDTO {
         super();
     }
 
-    public ReviewFormFieldsDTO(String taskId, String processInstanceId, List<FormField> formFields, String writer) {
+    public ReviewFormFieldsDTO(String taskId, String processInstanceId, List<FormField> formFields, String taskName, String writer) {
         super();
         this.taskId = taskId;
         this.formFields = formFields;
         this.processInstanceId = processInstanceId;
+        this.taskName = taskName;
         this.writer = writer;
     }
 

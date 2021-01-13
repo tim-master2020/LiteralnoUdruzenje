@@ -51,15 +51,6 @@ public class BookController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @Autowired
-    private TaskService taskService;
-
-    @Autowired
-    private RuntimeService runtimeService;
-
-    @Autowired
-    private FormService formService;
-
     @RequestMapping(method = RequestMethod.GET, value = "/all")
     public ResponseEntity<List<BookDTO>> getAll() {
         return new ResponseEntity<>(bookService.findAll(), HttpStatus.OK);
@@ -70,19 +61,13 @@ public class BookController {
         return new ResponseEntity(bookService.findAllByGenre(modelMapper.map(genreDTO, Genre.class)), HttpStatus.OK);
     }
 
-    /*@RequestMapping(method = RequestMethod.GET, value = "/by-writer")
-    public ResponseEntity<List<BookDTO>> getAllByGenre(WriterDTO writerDTO) {
-        return new ResponseEntity(bookService.findAllByWriter(modelMapper.map(writerDTO, Writer.class)), HttpStatus.OK);
-    }*/
-
     @PostMapping(path = "/save-pdfs/{taskId}", produces = "application/json")
     public ResponseEntity<?> submitInitialPdfs(@RequestBody List<FormSubmissionDTO> formDTO, @PathVariable String taskId, Principal principal) {
 
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
         String username = task.getAssignee();
         String processInstanceId = task.getProcessInstanceId();
-
-        List<String> booksSaved = bookService.savePdf((List<String>) formDTO.get(0).getFieldValue(), username);
+        List<String> booksSaved = bookService.savePdf((List<String>) formDTO.get(0).getFieldValue(), null, username);
 
         runtimeService.setVariable(processInstanceId, "booksSaved", booksSaved);
 
@@ -152,17 +137,20 @@ public class BookController {
         String processInstanceId = task.getProcessInstanceId();
         String bookName = (String) taskService.getVariables(taskId).get("bookName");
         List<String> booksSaved = bookService.savePdf((List<String>) bookDTO.get(0).getFieldValue(), bookName, username);
+        runtimeService.setVariable(processInstanceId, "booksSaved", booksSaved);
 
-        return new ResponseEntity<>(new ExplanationDTO("Uploading book failed."),HttpStatus.BAD_REQUEST);
-    }
+        HashMap<String, Object> map = new HashMap<>();
+        for (String name : booksSaved){
+            map.put("name", name);
+        }
 
-    @GetMapping(path = "/book-review/{taskId}", produces = "application/json")
-    public @ResponseBody FormFieldsDTO getFormFieldsBookReview(@PathVariable String taskId) {
-        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
-        String writer = (String) taskService.getVariables(taskId).get("writer");
-        TaskFormData taskFormData = formService.getTaskFormData(task.getId());
-        List<FormField> properties = taskFormData.getFormFields();
-        return new ReviewFormFieldsDTO(task.getId(), task.getProcessInstanceId(), properties, writer);
+        try {
+            formService.submitTaskForm(taskId, map);
+        }catch (Exception e){
+            return new ResponseEntity<>(new ExplanationDTO("Uploading book failed."),HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(path = "/download/{name:.+}")

@@ -34,19 +34,15 @@ public class SaveGeneralBookData  implements JavaDelegate {
         book.setName(generalBookData.get("bookTitle").toString());
         book.setSynopsis(generalBookData.get("synopsis").toString());
         LinkedHashMap<String,String> genres = (LinkedHashMap<String, String>) generalBookData.get("Genres");
-        //genreService.findByName(genres.get("value"));
         book.setGenre(genreService.findById(Long.parseLong(genres.get("value"))));
 
-        Writer writer = writerService.findByUsername(delegateExecution.getVariable("loggedInWriter").toString());
         Set<Writer> writers = book.getWriters();
         writers.add(writerService.findByUsername(delegateExecution.getVariable("loggedInWriter").toString()));
         book.setWriters(writers);
 
-        Set<Book> books = writer.getBooks();
-        books.add(book);
-        writer.setBooks(books);
+        Book saved = bookService.save(book);
 
-        if(bookService.save(book) != null){
+        if(saved != null){
             delegateExecution.setVariable("bookSaved",true);
             delegateExecution.setVariable("bookName", book.getName());
             delegateExecution.setVariable("bookId",book.getId());

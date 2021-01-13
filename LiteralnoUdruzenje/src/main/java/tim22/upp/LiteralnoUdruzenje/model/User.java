@@ -58,9 +58,6 @@ public class User implements org.camunda.bpm.engine.identity.User, UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @ManyToMany(mappedBy = "users")
-    private Set<Genre> genres = new HashSet<>();
-
     @Override
     public String getId() {
         return String.valueOf(id);
@@ -205,13 +202,5 @@ public class User implements org.camunda.bpm.engine.identity.User, UserDetails {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
-    }
-
-    public Set<Genre> getGenres() {
-        return genres;
-    }
-
-    public void setGenres(Set<Genre> genres) {
-        this.genres = genres;
     }
 }

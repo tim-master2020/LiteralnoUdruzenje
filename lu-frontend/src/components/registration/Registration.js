@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom';
 import CamundaForm from '../CamundaForm.js';
 import {validate} from '../../functions/FormFunctions';
 import BetaReader from './BetaReader';
+import { alert } from '../../functions/alertSwal' 
 
 const RegistrationForm = ({history, type}) => {
 
@@ -16,7 +17,6 @@ const RegistrationForm = ({history, type}) => {
     const [isValid, setIsValid] = React.useState({});
     const [taskId, setTaskId] = React.useState('');
     const [shouldSubmit,setShouldSubmit] = React.useState(true);
-    console.log(type);
 
     React.useEffect(() => {
         axios.get(`${defaultUrl}/api/users/reg-task/${type}`,).then(
@@ -52,13 +52,10 @@ const RegistrationForm = ({history, type}) => {
         
         
         if(dataIsValid){
-            console.log('taskid',taskId);
-            console.log(returnValue);
            
             var role = (type === "WriterRegistration") ? "writer" : "reader";
             axios.post(`${defaultUrl}/api/users/submit-general-data/${taskId}/${role}`, returnValue).then(
             (resp) => {
-                console.log(resp);
                 if (resp.data !== "") {
                 
                     history.push({

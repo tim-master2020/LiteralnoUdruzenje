@@ -14,6 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tim22.upp.LiteralnoUdruzenje.dto.FormFieldsDTO;
+import tim22.upp.LiteralnoUdruzenje.dto.ReviewFormFieldsDTO;
+import tim22.upp.LiteralnoUdruzenje.model.Review;
 import tim22.upp.LiteralnoUdruzenje.model.enums.Role;
 import tim22.upp.LiteralnoUdruzenje.model.User;
 import tim22.upp.LiteralnoUdruzenje.service.IUserService;
@@ -73,5 +75,13 @@ public class ProcessController {
         return new ResponseEntity<>(new FormFieldsDTO(task.getId(),task.getProcessInstanceId(), properties,task.getName()),HttpStatus.OK);
     }
 
+    @GetMapping(path = "/get-form-fields/review/{taskId}", produces = "application/json")
+    public ResponseEntity<ReviewFormFieldsDTO> getFormFieldsReview(@PathVariable String taskId) {
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+        TaskFormData taskFormData = formService.getTaskFormData(task.getId());
+        List<FormField> properties = taskFormData.getFormFields();
+        String writer = (String) taskService.getVariables(taskId).get("writer");
+        return new ResponseEntity<>(new ReviewFormFieldsDTO(task.getId(),task.getProcessInstanceId(), properties,task.getName(), writer),HttpStatus.OK);
+    }
 
 }

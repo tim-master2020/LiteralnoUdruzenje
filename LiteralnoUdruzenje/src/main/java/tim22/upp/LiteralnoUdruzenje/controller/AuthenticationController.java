@@ -55,9 +55,6 @@ public class AuthenticationController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @Autowired
-    private TaskService taskService;
-
     @RequestMapping(method = RequestMethod.POST, value = "/login")
     public ResponseEntity<?> login(@RequestBody JwtAuthenticationRequest authenticationRequest) {
 
@@ -73,8 +70,9 @@ public class AuthenticationController {
         UserDetails details = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         String username = authenticationRequest.getUsername();
 
-        if((userService.findByUsername(username).getRole().equals(Role.READER) || userService.findByUsername(username).getRole().equals(Role.COMMITTEE))
-                && userService.findByUsername(username).isActiveAccount()){
+        User user = userService.findByUsername(username);
+        if((user.getRole().equals(Role.READER) || user.getRole().equals(Role.COMMITTEE) || user.getRole().equals(Role.EDITOR))
+                && user.isActiveAccount()){
             String jwt = tokenUtils.generateToken(details.getUsername());
             int expiresIn = tokenUtils.getExpiredIn();
 
@@ -82,7 +80,7 @@ public class AuthenticationController {
         }
 
 
-        if (userService.findByUsername(username).getRole().equals(Role.WRITER)) {
+        if (user.getRole().equals(Role.WRITER)) {
             Writer writer = writerService.findByUsername(username);
             if(writer.isVerified()) {
                 String jwt = tokenUtils.generateToken(details.getUsername());

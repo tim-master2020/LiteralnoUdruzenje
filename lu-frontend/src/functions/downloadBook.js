@@ -3,7 +3,6 @@ import streamSaver from 'streamsaver';
 
 export function downloadBook(e, book) {
     e.preventDefault();
-    
     var url = `${defaultUrl}/api/books/download/${book}`;
     fetch(url, {
         method: 'GET',

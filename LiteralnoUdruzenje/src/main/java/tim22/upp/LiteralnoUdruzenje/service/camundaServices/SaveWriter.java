@@ -63,7 +63,7 @@ public class SaveWriter implements JavaDelegate {
 
         Set<Genre> writerGenres =  new HashSet<>();
         for (LinkedHashMap<String,String> oneOption : genres){
-            writerGenres.add(genreService.findByName(oneOption.get("value")));
+            writerGenres.add(genreService.findById(Long.parseLong(oneOption.get("value"))));
         }
 
         writer.setGenres(writerGenres);

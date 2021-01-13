@@ -5,7 +5,7 @@ import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tim22.upp.LiteralnoUdruzenje.model.Reader;
-import tim22.upp.LiteralnoUdruzenje.model.Role;
+import tim22.upp.LiteralnoUdruzenje.model.enums.Role;
 import tim22.upp.LiteralnoUdruzenje.model.User;
 import tim22.upp.LiteralnoUdruzenje.service.IGenreService;
 import tim22.upp.LiteralnoUdruzenje.service.IReaderService;
@@ -38,6 +38,6 @@ public class GetBetaReadersByGenre implements JavaDelegate {
                 .map(User::getUsername).collect(Collectors.toList());
 
         delegateExecution.setVariable("betaReaders", betaUsernames);
-        //delegateExecution.setVariable("betaSum", betaUsernames.size());
+        delegateExecution.setVariable("betaSum", betaUsernames.size());
     }
 }

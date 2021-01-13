@@ -8,8 +8,12 @@ import './BookReview.css';
 import CamundaForm from '../CamundaForm.js';
 import streamSaver from 'streamsaver';
 import {validate} from '../../functions/FormFunctions';
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
 
-const BookReview = ({ history , setLoggedIn, tId}) => {
+const alert = withReactContent(Swal)
+
+const BookReview = ({ history,updateUser }) => {
     const [formFields, setformFields] = React.useState([]);
     const [ writer, setWriter ] = useState('');
     const [taskId, setTaskId] = React.useState('');
@@ -18,50 +22,23 @@ const BookReview = ({ history , setLoggedIn, tId}) => {
     const [shouldSubmit,setShouldSubmit] = React.useState(true);
     const [validationMessage, setValidationMessage] = React.useState({});
 
+    const options = {
+        headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
+    };
+    
     React.useEffect(() => {
-        axios.get(`${defaultUrl}/api/books/book-review/${tId}`).then(
+        axios.get(`${defaultUrl}/process/get-form-fields/review/${history.location.state.taskId}`, options).then(
             (resp) => {
-                console.log(resp.data);
                 setWriter(resp.data.writer);
                 setformFields(resp.data.formFields);
-                setTaskId(resp.data.taskId);
             },
-            (resp) => { alert("Cannot load books."); }
+            (resp) => { alert.fire({
+                text:'Error occured while getting fields, please try again.',
+            }); }
         );
     }, []);
 
-    function downloadBook(e, book) {
-        e.preventDefault();
-        console.log(book);
-        var url = `${defaultUrl}/api/books/download/${book}`;
-        fetch(url, {
-            method: 'GET',
-        })
-        .then(response => {  
-        
-            const fileStream = streamSaver.createWriteStream(book.concat('.pdf'));   
-            const readableStream = response.body;
-
-            // More optimized
-            if (readableStream.pipeTo) {
-                return readableStream.pipeTo(fileStream);
-            }   
-        
-            window.writer = fileStream.getWriter();
-        
-            const reader = response.body.getReader();
-            const pump = () => reader.read()
-                .then(res => res.done
-                    ? writer.close()
-                    : writer.write(res.value).then(pump));
-        
-            pump();
-        })
-        .catch(error => {
-            console.log(error);
-        });
-    }
-
+    
     function submitReview(e) {
 
         e.preventDefault();   
@@ -86,14 +63,19 @@ const BookReview = ({ history , setLoggedIn, tId}) => {
             console.log('taskid',taskId);
             console.log(returnValue);
 
-            axios.post(`${defaultUrl}/api/reviews/save-review/${taskId}/${writer}`, returnValue).then(
+            axios.post(`${defaultUrl}/api/reviews/save-review/${history.location.state.taskId}/${writer}`, returnValue).then(
             (resp) => {
                 console.log(resp);
-                alert('You left review successfully!')
+                alert.fire({
+                    text:'You left review successfully!',
+                });
+                updateUser();
                 history.push('/');
             },
             (resp) => { 
-                alert("Something went wrong."); 
+                alert.fire({
+                    text:'Error occured, please try again.',
+                });
             }
         );
     }
@@ -120,7 +102,6 @@ const BookReview = ({ history , setLoggedIn, tId}) => {
                     setformFields={setformFields}
                     isValid={isValid}
                     setIsValid={setIsValid}
-                    downloadBook={downloadBook}
                     />              
                 </Card.Body>
             </Card>

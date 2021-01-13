@@ -8,6 +8,7 @@ import './BookReview.css';
 import CamundaForm from '../CamundaForm.js';
 import streamSaver from 'streamsaver';
 import {validate} from '../../functions/FormFunctions';
+import { alert } from '../../functions/alertSwal' 
 
 const ReviewPage = ({ history}) => {
     const [ writer, setWriter ] = useState('');
@@ -22,7 +23,6 @@ const ReviewPage = ({ history}) => {
 
         axios.get(`${defaultUrl}/api/reviews/all`, options).then(
             (resp) => {
-                console.log(resp.data);
                 setReviews(resp.data);
             },
             (resp) => { alert("Cannot load reviews."); }

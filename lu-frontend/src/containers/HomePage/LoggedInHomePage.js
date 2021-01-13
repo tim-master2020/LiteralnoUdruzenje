@@ -27,6 +27,7 @@ import getUser from "../../functions/UserFunctions";
 import ComparePlagiats from "../../components/publish-book/ComparePlagiats";
 import DownloadBook from "../../components/publish-book/DownloadBook"
 import DecideSendingToBeta from "../../components/publish-book/DecideSendingToBeta"
+
 const LoggedInHomepage = ({ loggedInUser,setLoggedIn,history,isInitialUpload,isReview,isPayment,isReviewPreview,publishBookGeneralData,reviewBookGeneral,giveExplanation,uploadRestWork,comparePlagiats,downloadBook,decideBeta}) => {
     const [isOpen, setOpen] = useState(false);
 
@@ -72,16 +73,17 @@ const LoggedInHomepage = ({ loggedInUser,setLoggedIn,history,isInitialUpload,isR
                         <MenuIcon style={{ color: 'black' }} />
                     </IconButton>
 
-                    <div style={{ width: '100%' }}>
+                    <div style={{ width: '100%' }}></div>
                     <Button className={classes.button} onClick={() => history.push('/')}>Home</Button>
                     { loggedInUser.role === 'WRITER' &&
-                        <div>
-                            <Button className={classes.button} onClick={() => history.push('/reviews')}>Reviews</Button>
-                            <Button
-                                onClick={() => { startPublishBookProcess() }}
-                            >
-                                Book publishing
-                            </Button>
+                        <div style={{ display: 'flex' }}>
+                            <Button className={classes.button} onClick={() => history.push('/reviews')}>Reviews</Button> 
+                            { loggedInUser.activeAccount &&  
+                                <Button className={classes.button} onClick={() => { startPublishBookProcess() }} >
+                                    Book publishing
+                                </Button>
+                            }
+                            <br/>
                         </div>
                     }
                     { loggedInUser.role === 'COMMITTEE' &&
@@ -92,13 +94,6 @@ const LoggedInHomepage = ({ loggedInUser,setLoggedIn,history,isInitialUpload,isR
                             localStorage.clear(); 
                             history.push('/')
                             setLoggedIn(undefined)}}>Logout</Button>
-
-                    <Button onClick={() => {
-                        localStorage.clear();
-                        history.push('/')
-                        setLoggedIn(undefined)
-                    }}>logout</Button>
-                </div>
                 </Toolbar>
             </AppBar>
             <MenuIcon />

@@ -3,6 +3,9 @@ import { withRouter } from 'react-router-dom';
 import CamundaForm from '../CamundaForm';
 import axios from 'axios';
 import { defaultUrl } from '../../backendConfig.js';
+import { Card } from 'react-bootstrap';
+import './RegistrationForm.css'
+import { alert } from '../../functions/alertSwal' 
 
 const BetaReader = ({ history }) => {
     
@@ -10,14 +13,14 @@ const BetaReader = ({ history }) => {
     const [taskId, setTaskId] = React.useState('');
 
     return (
-        <div>
+        <Card className="cardHolder">
             <CamundaForm
                 formFields={history.location.state.formFields}
                 onSubmit={(e) => { sendBetaGenres(e) }}
                 selected={selected}
                 setSelected={setSelected}
             />
-        </div>
+        </Card>
     )
 
 
@@ -28,7 +31,7 @@ const BetaReader = ({ history }) => {
     
         axios.post(`${defaultUrl}/api/users/submit-beta-user/${history.location.state.taskId}`, returnValue).then(
             (resp) => {
-                alert('super')
+                history.push('/');
             },
             (resp) => { alert("not good"); }
         );

@@ -45,9 +45,11 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 
     @Override
     public void removeUser(String username) {
-        if(userRepository.findByUsername(username) != null){
+        if (userRepository.findByUsername(username) != null) {
             userRepository.removeByUsername(username);
         }
+    }
+
     public List<User> findByRole(Role role) {
         return userRepository.findByRole(role);
     }

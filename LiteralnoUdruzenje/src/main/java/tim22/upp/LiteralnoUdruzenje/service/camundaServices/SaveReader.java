@@ -65,7 +65,7 @@ public class SaveReader implements JavaDelegate{
 
         Set<Genre> readerGenres =  new HashSet<>();
         for (LinkedHashMap<String,String> oneOption : genres){
-            readerGenres.add(genreService.findByName(oneOption.get("value")));
+            readerGenres.add(genreService.findById(Long.parseLong(oneOption.get("value"))));
         }
         reader.setGenres(readerGenres);
 

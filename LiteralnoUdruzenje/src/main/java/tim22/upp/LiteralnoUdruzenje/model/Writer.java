@@ -20,6 +20,9 @@ public class Writer extends User implements Serializable {
     @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL)
     private Set<Review> reviews = new HashSet<>();
 
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private Set<Genre> genres = new HashSet<>();
+
     public Writer() {}
 
     public boolean isVerified() {
@@ -38,4 +41,19 @@ public class Writer extends User implements Serializable {
         this.books = books;
     }
 
+    public Set<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Set<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public Set<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(Set<Genre> genres) {
+        this.genres = genres;
+    }
 }

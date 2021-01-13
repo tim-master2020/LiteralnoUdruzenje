@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import tim22.upp.LiteralnoUdruzenje.model.Reader;
 import tim22.upp.LiteralnoUdruzenje.repository.ReaderRepository;
 import tim22.upp.LiteralnoUdruzenje.service.IReaderService;
+import tim22.upp.LiteralnoUdruzenje.service.IUserService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,9 +16,12 @@ public class ReaderServiceImpl implements IReaderService {
     @Autowired
     private ReaderRepository readerRepository;
 
+    @Autowired
+    private IUserService userService;
+
     @Override
     public Reader saveReader(Reader reader) {
-        if (readerRepository.findByUsername(reader.getUsername()) == null && readerRepository.findByEmail(reader.getEmail()) == null) {
+        if (userService.findByUsername(reader.getUsername()) == null && userService.findByEmail(reader.getEmail()) == null) {
             return  readerRepository.save(reader);
         }
         return null;

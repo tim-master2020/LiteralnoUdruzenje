@@ -29,6 +29,14 @@ public class Reader extends User implements Serializable{
         this.betaReader = betaReader;
     }
 
+    public Set<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(Set<Genre> genres) {
+        this.genres = genres;
+    }
+
     public Set<Genre> getBetaGenres() {
         return betaGenres;
     }

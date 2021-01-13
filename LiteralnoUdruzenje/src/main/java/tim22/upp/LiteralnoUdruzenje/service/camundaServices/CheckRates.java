@@ -17,17 +17,8 @@ import java.util.stream.Collectors;
 @Service
 public class CheckRates implements JavaDelegate {
 
-    @Autowired
-    private IReviewService reviewService;
-
-    @Autowired
-    private IWriterService writerService;
-
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
-        String writerUsername = (String) delegateExecution.getVariable("writer");
-        //Writer writer = writerService.findByUsername(writerUsername.toString());
-        List<Review> reviews = reviewService.findByWriter(writerUsername);
         String result = "";
         List<Vote> votesFromProcess = (List<Vote>) delegateExecution.getVariable("votes");
 

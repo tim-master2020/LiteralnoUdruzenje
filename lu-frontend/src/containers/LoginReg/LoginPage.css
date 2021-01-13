@@ -27,5 +27,7 @@
 }
 
 .loginFormTitle{
-    margin: 10px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 31px;
+    margin: 10px 25px;
 }

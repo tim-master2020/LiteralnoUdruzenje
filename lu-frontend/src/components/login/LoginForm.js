@@ -5,6 +5,10 @@ import { Form, Button, FormGroup, FormControl, ControlLabel, Col, Card } from "r
 import { withRouter } from 'react-router-dom';
 import getUser from '../../functions/UserFunctions.js';
 import '../../containers/LoginReg/LoginPage.css';
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
+
+const alert = withReactContent(Swal)
 
 const LoginForm = ({ history , setLoggedIn}) => {
 
@@ -21,15 +25,15 @@ const LoginForm = ({ history , setLoggedIn}) => {
         const fields = [];
 
         const user = {username: username, password: password};
-
         axios.post(`${defaultUrl}/auth/login`,user).then(
             (resp) => {               
-                //alert('success');
                 localStorage.setItem('token', resp.data.accessToken);
                 history.push({pathname: '/'});
                 getUser(setLoggedIn);
         },
-            (resp) => {alert('wrong')}
+            (resp) => {alert.fire({
+                text:'Invalid email or password.',
+            });}
         );
     }
 

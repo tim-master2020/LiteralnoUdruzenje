@@ -113,9 +113,9 @@ public class BookServiceImpl implements IBookService {
         Writer writer = writerService.findByUsername(username);
 
         List<String> booksSaved = new ArrayList<>();
-        Book book = new Book();
         Boolean isInitial = false;
         for(int i = 0; i < fileNames.size(); i++) {
+            Book book = new Book();
             if(bookName == null){
                 book.setName(fileNames.get(i).split(".pdf")[0]);
                 isInitial = true;
@@ -162,10 +162,9 @@ public class BookServiceImpl implements IBookService {
                 book.setPdfName(name.replace(name.split("[\\(\\)]")[1], String.valueOf(fileNumber)));
                 book.setPdfName(book.getPdfName());
             }
-        }
-
-        if(isInitial){
-            book.setName(book.getPdfName());
+            if(isInitial){
+                book.setName(book.getPdfName());
+            }
         }
 
         File file = new File("src/main/resources/pdfs/" + book.getPdfName() + ".pdf");

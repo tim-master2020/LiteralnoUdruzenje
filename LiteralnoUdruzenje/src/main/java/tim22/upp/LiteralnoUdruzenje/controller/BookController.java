@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.security.Principal;
 import java.util.HashMap;
+import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -48,6 +50,15 @@ public class BookController {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private TaskService taskService;
+
+    @Autowired
+    private RuntimeService runtimeService;
+
+    @Autowired
+    private FormService formService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/all")
     public ResponseEntity<List<BookDTO>> getAll() {
@@ -72,6 +83,7 @@ public class BookController {
         String processInstanceId = task.getProcessInstanceId();
 
         List<String> booksSaved = bookService.savePdf((List<String>) formDTO.get(0).getFieldValue(), username);
+
         runtimeService.setVariable(processInstanceId, "booksSaved", booksSaved);
 
         HashMap<String, Object> map = new HashMap<>();
@@ -87,6 +99,61 @@ public class BookController {
         }
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @RequestMapping(method = RequestMethod.POST, value = "/save-general-book-data/{taskId}")
+    public ResponseEntity<List<BookDTO>> saveGeneralBookData(@RequestBody List<FormSubmissionDTO> bookDTO, @PathVariable String taskId) {
+        HashMap<String, Object> map = this.mapListToDto(bookDTO);
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+        String processInstanceId = task.getProcessInstanceId();
+
+        runtimeService.setVariable(processInstanceId, "generalBookData", map);
+        formService.submitTaskForm(taskId,map);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/save-general-book-data-review/{taskId}")
+    public ResponseEntity<?> submitGeneralBookDataReview(@RequestBody List<FormSubmissionDTO> reviewDTO, @PathVariable String taskId) {
+        HashMap<String, Object> map = this.mapListToDto(reviewDTO);
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+        String processInstanceId = task.getProcessInstanceId();
+        LinkedHashMap decision = (LinkedHashMap) map.get("decision");
+        runtimeService.setVariable(processInstanceId, "result", decision.get("value"));
+        formService.submitTaskForm(taskId,decision);
+
+        Task nextTask = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
+        if(nextTask != null && task.getName().equals("GiveExplanation")) {
+            if(formService.getTaskFormData(nextTask.getId()) != null) {
+                List<FormField> properties = formService.getTaskFormData(nextTask.getId()).getFormFields();
+                return new ResponseEntity<>(new FormFieldsDTO(nextTask.getId(), processInstanceId, properties, nextTask.getName()), HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/submit-explanation/{taskId}")
+    public ResponseEntity<?> submitExplanation(@RequestBody List<FormSubmissionDTO> explanationDTO, @PathVariable String taskId) {
+        HashMap<String, Object> map = this.mapListToDto(explanationDTO);
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+        runtimeService.setVariable(task.getProcessInstanceId(),"explanation",map);
+        formService.submitTaskForm(taskId,map);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/submit-rest-of-work/{taskId}")
+    public ResponseEntity<?> submitRestOfBook(@RequestBody List<FormSubmissionDTO> bookDTO, @PathVariable String taskId) {
+
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+
+        if(task == null){
+            return new ResponseEntity<>( new  ExplanationDTO("You failed to upload your book in given time. Your data will not be submitted."),HttpStatus.OK);
+        }
+
+        String username = task.getAssignee();
+        String processInstanceId = task.getProcessInstanceId();
+        String bookName = (String) taskService.getVariables(taskId).get("bookName");
+        List<String> booksSaved = bookService.savePdf((List<String>) bookDTO.get(0).getFieldValue(), bookName, username);
+
+        return new ResponseEntity<>(new ExplanationDTO("Uploading book failed."),HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping(path = "/book-review/{taskId}", produces = "application/json")
@@ -108,6 +175,58 @@ public class BookController {
                 .body(response);
     }
 
+    @RequestMapping(method = RequestMethod.POST, value = "/submit-plagiarism-decision/{taskId}")
+    public ResponseEntity<?> submitPlagiarismDecision(@RequestBody List<FormSubmissionDTO> plagiatDTO, @PathVariable String taskId) {
+        HashMap<String, Object> map = this.mapListToDto(plagiatDTO);
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+        String processInstanceId = task.getProcessInstanceId();
+        String plagiat = (String) map.get("isPlagiat");
+        runtimeService.setVariable(processInstanceId, "isPlagiat", plagiat);
+        formService.submitTaskForm(taskId,map);
+
+        Task nextTask = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
+        if(nextTask != null && nextTask.getName().equals("DownloadFile")) {
+            if(formService.getTaskFormData(nextTask.getId()) != null) {
+                List<FormField> properties = formService.getTaskFormData(nextTask.getId()).getFormFields();
+                return new ResponseEntity<>(new FormFieldsDTO(nextTask.getId(), processInstanceId, properties, nextTask.getName()), HttpStatus.OK);
+            }
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/submit-approval/{taskId}")
+    public ResponseEntity<?> submitApproval(@RequestBody List<FormSubmissionDTO> plagiatDTO, @PathVariable String taskId) {
+        HashMap<String, Object> map = this.mapListToDto(plagiatDTO);
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+        String processInstanceId = task.getProcessInstanceId();
+        String approval = (String) map.get("approval");
+        runtimeService.setVariable(processInstanceId, "isApproved", approval);
+        formService.submitTaskForm(taskId,map);
+
+        Task nextTask = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
+        if(nextTask != null) {
+            if(formService.getTaskFormData(nextTask.getId()) != null) {
+                List<FormField> properties = formService.getTaskFormData(nextTask.getId()).getFormFields();
+                return new ResponseEntity<>(new FormFieldsDTO(nextTask.getId(), processInstanceId, properties, nextTask.getName()), HttpStatus.OK);
+            }
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/submit-sending-to-beta/{taskId}")
+    public ResponseEntity<?> submitSendingToBetaReaders(@RequestBody List<FormSubmissionDTO> plagiatDTO, @PathVariable String taskId) {
+        HashMap<String, Object> map = this.mapListToDto(plagiatDTO);
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+        String processInstanceId = task.getProcessInstanceId();
+        String decision = (String) map.get("sendToBetaReaders");
+        runtimeService.setVariable(processInstanceId, "sendToBeta", decision);
+        formService.submitTaskForm(taskId,map);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     private HashMap<String, Object> mapListToDto(List<FormSubmissionDTO> list)
     {
         HashMap<String, Object> map = new HashMap<String, Object>();
@@ -118,3 +237,6 @@ public class BookController {
         return map;
     }
 }
+
+
+

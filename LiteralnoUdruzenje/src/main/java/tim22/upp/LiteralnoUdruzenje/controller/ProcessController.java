@@ -62,7 +62,7 @@ public class ProcessController {
         }else if( user.getRole() == Role.EDITOR){
             runtimeService.setVariable(pi.getId(),"loggedInEditor",user.getUsername());
         }
-        return new ResponseEntity<>(pi, HttpStatus.OK);
+        return new ResponseEntity<>(new FormFieldsDTO(task.getId(), pi.getId(), null,""),HttpStatus.OK);
     }
 
     @GetMapping(path = "/get-form-fields/{taskId}", produces = "application/json")
@@ -70,7 +70,7 @@ public class ProcessController {
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
         TaskFormData taskFormData = formService.getTaskFormData(task.getId());
         List<FormField> properties = taskFormData.getFormFields();
-        return new ResponseEntity<>(new FormFieldsDTO(task.getId(),task.getProcessInstanceId(), properties),HttpStatus.OK);
+        return new ResponseEntity<>(new FormFieldsDTO(task.getId(),task.getProcessInstanceId(), properties,task.getName()),HttpStatus.OK);
     }
 
 

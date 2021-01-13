@@ -11,11 +11,12 @@ public class FormFieldsDTO {
     String processInstanceId;
     String taskName;
 
-    public FormFieldsDTO(String taskId, String processInstanceId, List<FormField> formFields) {
+    public FormFieldsDTO(String taskId, String processInstanceId, List<FormField> formFields,String name) {
         super();
         this.taskId = taskId;
         this.formFields = formFields;
         this.processInstanceId = processInstanceId;
+        this.taskName = name;
     }
 
     public FormFieldsDTO() {

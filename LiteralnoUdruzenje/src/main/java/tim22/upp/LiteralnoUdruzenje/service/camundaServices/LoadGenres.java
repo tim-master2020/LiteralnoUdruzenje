@@ -4,9 +4,11 @@ import org.camunda.bpm.engine.delegate.DelegateTask;
 import org.camunda.bpm.engine.delegate.TaskListener;
 import org.camunda.bpm.engine.form.FormField;
 import org.camunda.bpm.engine.form.TaskFormData;
+import org.camunda.bpm.engine.impl.form.type.EnumFormType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tim22.upp.LiteralnoUdruzenje.dto.GenreDTO;
+import tim22.upp.LiteralnoUdruzenje.model.camundaCustomTypes.EnumType;
 import tim22.upp.LiteralnoUdruzenje.model.camundaCustomTypes.MultiEnumType;
 import tim22.upp.LiteralnoUdruzenje.service.IGenreService;
 
@@ -24,10 +26,15 @@ public class LoadGenres implements TaskListener {
 
             for (FormField field : taskFormFields.getFormFields()) {
                 if (field.getId().equals("Genres")) {
-                    MultiEnumType multipleEnumFormType = (MultiEnumType) field.getType();
+                    EnumFormType formType = null;
+                    if(field.getType().getName().contains("multi")) {
+                         formType = (MultiEnumType) field.getType();
+                    }else{
+                         formType = (EnumType) field.getType();
+                    }
 
                     for (GenreDTO genre : genres) {
-                        multipleEnumFormType.getValues().put(Long.toString(genre.getId()), genre.getName());
+                        formType.getValues().put(Long.toString(genre.getId()), genre.getName());
                     }
                 }
             }

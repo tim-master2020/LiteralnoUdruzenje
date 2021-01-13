@@ -44,17 +44,17 @@ const LoggedOutHomepage = ({history }) => {
             <MenuIcon />
 
             <main className={clsx(classes.content, { [classes.contentShift]: isOpen })}>
-            <Carousel style={{heigth:'30%',width:'40%',marginLeft:'30%',marginTop:'2%'}}>
-                <Carousel.Item>
-                    <img className="d-block w-100"src={photo1} style={{height:'inherit'}}/>
-                </Carousel.Item>
-                <Carousel.Item>
-                    <img className="d-block w-100"src={photo2} style={{height:'inherit'}}/>
-                </Carousel.Item>
-                <Carousel.Item>
-                    <img className="d-block w-100"src={photo3} style={{height:'inherit'}}/>
-                </Carousel.Item>
-            </Carousel>
+                <Carousel style={{heigth:'30%',width:'40%',marginLeft:'30%',marginTop:'2%'}}>
+                    <Carousel.Item>
+                        <img className="d-block w-100"src={photo1} style={{height:'inherit'}}/>
+                    </Carousel.Item>
+                    <Carousel.Item>
+                        <img className="d-block w-100"src={photo2} style={{height:'inherit'}}/>
+                    </Carousel.Item>
+                    <Carousel.Item>
+                        <img className="d-block w-100"src={photo3} style={{height:'inherit'}}/>
+                    </Carousel.Item>
+                </Carousel>
             </main>
         </div>
     );

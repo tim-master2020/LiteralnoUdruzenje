@@ -35,4 +35,9 @@ public class GenreServiceImpl implements IGenreService {
     public Genre findByName(String name) {
         return genreRepository.findByName(name);
     }
+
+    @Override
+    public Genre findById(long id) {
+        return genreRepository.findById(id);
+    }
 }

@@ -13,10 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-import tim22.upp.LiteralnoUdruzenje.dto.ReaderDTO;
-import tim22.upp.LiteralnoUdruzenje.dto.TaskDTO;
-import tim22.upp.LiteralnoUdruzenje.dto.UserDTO;
-import tim22.upp.LiteralnoUdruzenje.dto.WriterDTO;
+import tim22.upp.LiteralnoUdruzenje.dto.*;
 import tim22.upp.LiteralnoUdruzenje.model.*;
 import tim22.upp.LiteralnoUdruzenje.model.enums.Role;
 import tim22.upp.LiteralnoUdruzenje.security.TokenUtils;
@@ -58,6 +55,8 @@ public class AuthenticationController {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private TaskService taskService;
 
     @RequestMapping(method = RequestMethod.POST, value = "/login")
     public ResponseEntity<?> login(@RequestBody JwtAuthenticationRequest authenticationRequest) {
@@ -109,17 +108,27 @@ public class AuthenticationController {
             readerDTO.setTasks(mapTasks(tasks));
             return new ResponseEntity<>(readerDTO, HttpStatus.OK);
 
-        } else if ( user.getRole().equals(Role.WRITER)){
+        }if ( user.getRole().equals(Role.WRITER)){
             Writer writer = writerService.findByEmail(user.getEmail());
             WriterDTO writerDTO = modelMapper.map(writer, WriterDTO.class);
             writerDTO.setTasks(mapTasks(tasks));
-            return new ResponseEntity<>(writerDTO, HttpStatus.OK);
 
+            for(Book book : writer.getBooks()){
+                BookDTO bookDTO = modelMapper.map(book,BookDTO.class);
+                writerDTO.getBooks().add(bookDTO);
+            }
+            return new ResponseEntity<>(writerDTO, HttpStatus.OK);
+        
         } else if (user.getRole().equals(Role.COMMITTEE)) {
             UserDTO userDTO = modelMapper.map(user, UserDTO.class);
             userDTO.setTasks(mapTasks(tasks));
             return new ResponseEntity<>(userDTO, HttpStatus.OK);
-        } else {
+        
+        }else if (!user.getRole().equals((Role.WRITER)) && !user.getRole().equals(Role.READER)){
+            UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+            userDTO.setTasks(mapTasks(tasks));
+            return new ResponseEntity<>(userDTO, HttpStatus.OK);
+        }else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }

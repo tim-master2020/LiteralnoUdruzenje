@@ -12,11 +12,15 @@ import java.util.List;
 public interface IBookService {
 
     List<BookDTO> findAll();
+    List<Book> findAllModels();
     List<BookDTO> convertFromModelToDto(List<Book> books);
     Book findBookByName(String name);
     List<Book> findAllByGenre(Genre genre);
-    //List<Book> findAllByWriter(Writer writer);
-    List<String> savePdf(List<String> filesNames, String username);
+    List<String> savePdf(List<String> filesNames, String bookName, String username);
     Book save(Book book);
+    Book update(Book book);
     StreamingResponseBody downloadPDF(String name) throws IOException;
+    Book findById(Long id);
+    void removeBookFromDB(Long id);
+
 }

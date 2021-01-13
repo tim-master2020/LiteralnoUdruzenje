@@ -35,6 +35,27 @@ const Routes = ({loggedInUser,setLoggedIn}) => {
                 } />
             <Route exact path='/reviews' render={props =>
                     <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} isReviewPreview={true}/>
+            } />
+             <Route exact path='/bookGeneralData' render={props =>
+                    <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} publishBookGeneralData={true}/>
+                } />
+             <Route exact path='/reviewBookGeneral/:taskId' render={props =>
+                <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} reviewBookGeneral={true}/>
+                } />
+            <Route exact path='/giveExplanation/:taskId' render={props =>
+                <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} giveExplanation={true}/>
+                } />
+            <Route exact path='/uploadRestWork/:taskId' render={props =>
+                <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} uploadRestWork={true}/>
+                } />
+             <Route exact path='/comparePlagiats/:taskId' render={props =>
+                <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} comparePlagiats={true}/>
+                } />
+            <Route exact path='/downloadBook/:taskId' render={props =>
+                <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} downloadBook={true}/>
+                } />
+            <Route exact path='/decideBeta/:taskId' render={props =>
+                <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} decideBeta={true}/>
                 } />
         </Switch>
         );

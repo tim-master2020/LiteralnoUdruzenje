@@ -11,7 +11,6 @@ export default function getUser(setLoggedIn) {
         axios.get(`${defaultUrl}/auth/user`, options).then(
             (resp) => {
                 setLoggedIn(resp.data);
-                console.log(resp.data);
             },
             (resp) => {
                 alert('error getting logged in user data');

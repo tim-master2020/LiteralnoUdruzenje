@@ -1,9 +1,3 @@
-import React from 'react';
-import Divider from '@material-ui/core/Divider';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-
 export function TaskNameRoutes(name) {
     var route = '';
     switch (name) {
@@ -17,6 +11,25 @@ export function TaskNameRoutes(name) {
         case 'Payment':
             route = '/pay';
             break;
+        case 'reviewBookToPublish':
+            route = '/reviewBookGeneral';
+            break;
+        case 'GiveExplanation':
+        case 'GiveDeclineExplanation':
+            route = '/giveExplanation';
+            break;
+        case 'UploadRestOfWork':
+            route = '/uploadRestWork';
+            break;
+        case 'ComparePlagiats':
+            route = '/comparePlagiats';
+            break;
+        case 'DownloadFile':
+            route = '/downloadBook';
+            break;
+        case 'DecideSendingToBetaReaders':
+            route = '/decideBeta';
+            break;     
         default:
             route = '/';
             break;

@@ -12,7 +12,10 @@ import java.util.Date;
 @Entity
 public class Reader extends User implements Serializable{
 
-    @ManyToMany(mappedBy = "betaReaders")
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private Set<Genre> genres = new HashSet<>();
+
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<Genre> betaGenres = new HashSet<>();
 
     @Column

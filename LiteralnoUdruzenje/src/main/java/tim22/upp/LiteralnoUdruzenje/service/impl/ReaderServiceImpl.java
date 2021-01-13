@@ -6,6 +6,9 @@ import tim22.upp.LiteralnoUdruzenje.model.Reader;
 import tim22.upp.LiteralnoUdruzenje.repository.ReaderRepository;
 import tim22.upp.LiteralnoUdruzenje.service.IReaderService;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class ReaderServiceImpl implements IReaderService {
 
@@ -38,6 +41,13 @@ public class ReaderServiceImpl implements IReaderService {
     @Override
     public Reader findByEmail(String email) {
         return readerRepository.findByEmail(email);
+    }
+
+    @Override
+    public List<Reader> findBetaReaders() {
+        List<Reader> readers = readerRepository.findAll();
+        List<Reader> betaReaders = readers.stream().filter(Reader::isBetaReader).collect(Collectors.toList());
+        return betaReaders;
     }
 
 }

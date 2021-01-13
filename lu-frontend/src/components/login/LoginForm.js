@@ -24,7 +24,7 @@ const LoginForm = ({ history , setLoggedIn}) => {
 
         axios.post(`${defaultUrl}/auth/login`,user).then(
             (resp) => {               
-                alert('success');
+                //alert('success');
                 localStorage.setItem('token', resp.data.accessToken);
                 history.push({pathname: '/'});
                 getUser(setLoggedIn);

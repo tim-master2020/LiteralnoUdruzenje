@@ -27,13 +27,12 @@ public class EmailServiceImpl implements IEmailService {
         mail.setText(mailText);
         javaMailSender.send(mail);
     }
-
-    @Override
-    public void sendEditorEmailForReview(User user, String mailText) {
+    
+    public void sendMail(User user, String mailText) {
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(user.getEmail());
         mail.setFrom("ebook.app.upp@gmail.com");
-        mail.setSubject("Ebook: Registration");
+        mail.setSubject("Ebook");
         mail.setText(mailText);
         javaMailSender.send(mail);
     }

@@ -9,4 +9,5 @@ public interface IEmailService {
 
     public void sendCustomerEmail(User reader,String mailText);
     public void sendEditorEmailForReview(User user,String mailText);
+    public void sendMail(User user,String mailText);
 }

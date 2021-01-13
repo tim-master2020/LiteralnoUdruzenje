@@ -10,7 +10,7 @@ import clsx from 'clsx';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { SidebarList } from './SidebarList';
+import SidebarList  from './SidebarList';
 import { styling } from './SidebarStyling';
 import { AppBar, Toolbar } from "@material-ui/core";
 import { defaultUrl } from '../../backendConfig';
@@ -18,8 +18,16 @@ import InitialUpload from "../../components/uploadPDF/InitialUpload";
 import BookReview from '../../components/bookReview/BookReview'
 import Payment from '../../components/payment/Payment';
 import ReviewPage from '../../components/bookReview/ReviewPage';
-
-const LoggedInHomepage = ({ loggedInUser, setLoggedIn,history, isInitialUpload, isReview, isPayment, isReviewPreview }) => {
+import axios from 'axios';
+import PublishBookGeneralData from "../../components/publish-book/PublishBookGeneralData";
+import ReviewBookGeneral from "../../components/publish-book/ReviewBookGeneral";
+import DeclineExplanation from "../../components/publish-book/DeclineExplanation";
+import UploadRestOfTheWork from "../../components/publish-book/UploadRestOfTheWork";
+import getUser from "../../functions/UserFunctions";
+import ComparePlagiats from "../../components/publish-book/ComparePlagiats";
+import DownloadBook from "../../components/publish-book/DownloadBook"
+import DecideSendingToBeta from "../../components/publish-book/DecideSendingToBeta"
+const LoggedInHomepage = ({ loggedInUser,setLoggedIn,history,isInitialUpload,isReview,isPayment,isReviewPreview,publishBookGeneralData,reviewBookGeneral,giveExplanation,uploadRestWork,comparePlagiats,downloadBook,decideBeta}) => {
     const [isOpen, setOpen] = useState(false);
 
     const handleDrawerToggle = () => {
@@ -30,19 +38,30 @@ const LoggedInHomepage = ({ loggedInUser, setLoggedIn,history, isInitialUpload, 
     const useStyles = makeStyles((theme) => (styling(theme)));
     const classes = useStyles();
 
-    let {id} = useParams();
+    const startPublishBookProcess = () => {
 
-    // const startPublishBookProcess = () => {
-    //     axios.get(`${defaultUrl}/auth/user`, options).then(
-    //         (resp) => {
-    //             setLoggedIn(resp.data);
-    //         },
-    //         (resp) => {
-    //             alert('error getting logged in user data');
-    //             setLoggedIn(undefined);
-    //         }
-    //     );
-    // }
+        const options = {
+            headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
+        };
+
+        axios.get(`${defaultUrl}/process/start-process-specific/BookPublishing`, options).then(
+            (resp) => {
+                history.push({
+                    pathname: '/bookGeneralData',
+                    state: {
+                      taskId: resp.data.taskId
+                    }
+                  });
+            },
+            (resp) => {
+                alert('fail start of process');
+            }
+        );
+    }
+
+    const updateUser = () => {
+        getUser(setLoggedIn);
+    }
 
     return (
         <div className={classes.root}>
@@ -52,12 +71,19 @@ const LoggedInHomepage = ({ loggedInUser, setLoggedIn,history, isInitialUpload, 
                     <IconButton color="inherit" onClick={handleDrawerToggle} edge="start" className={clsx(classes.menuButton, isOpen && classes.hide)}>
                         <MenuIcon style={{ color: 'black' }} />
                     </IconButton>
-                    <div style={{ width: '100%' }}></div>
+
+                    <div style={{ width: '100%' }}>
                     <Button className={classes.button} onClick={() => history.push('/')}>Home</Button>
                     { loggedInUser.role === 'WRITER' &&
-                        <Button className={classes.button} onClick={() => history.push('/reviews')}>Reviews</Button>
+                        <div>
+                            <Button className={classes.button} onClick={() => history.push('/reviews')}>Reviews</Button>
+                            <Button
+                                onClick={() => { startPublishBookProcess() }}
+                            >
+                                Book publishing
+                            </Button>
+                        </div>
                     }
-                    <Button className={classes.button} >My account</Button>
                     { loggedInUser.role === 'COMMITTEE' &&
                         <Button className={classes.button} onClick={() => history.push('/review')}>Book review</Button>
                     }
@@ -66,6 +92,13 @@ const LoggedInHomepage = ({ loggedInUser, setLoggedIn,history, isInitialUpload, 
                             localStorage.clear(); 
                             history.push('/')
                             setLoggedIn(undefined)}}>Logout</Button>
+
+                    <Button onClick={() => {
+                        localStorage.clear();
+                        history.push('/')
+                        setLoggedIn(undefined)
+                    }}>logout</Button>
+                </div>
                 </Toolbar>
             </AppBar>
             <MenuIcon />
@@ -76,22 +109,35 @@ const LoggedInHomepage = ({ loggedInUser, setLoggedIn,history, isInitialUpload, 
                     </IconButton>
                 </div>
                 <Divider />
-                {SidebarList(history, loggedInUser)}
+                {SidebarList({user: loggedInUser})}
             </Drawer>
             <main className={clsx(classes.content, { [classes.contentShift]: isOpen })}>
                 <div className={classes.drawerHeader} />
-                { isInitialUpload &&
-                    <InitialUpload processId={id}/>
-                }
-                { isReview &&
-                    <BookReview tId={id} />
-                }
-                { isPayment &&
-                    <Payment tId={id}></Payment>
-                }
-                { isReviewPreview &&
-                    <ReviewPage />
-                }
+                <div>
+                    { publishBookGeneralData &&
+                        <PublishBookGeneralData/>
+                    }{ reviewBookGeneral &&
+                        <ReviewBookGeneral updateUser={()=>updateUser()}/>
+                    }{ giveExplanation &&
+                        <DeclineExplanation updateUser={()=>updateUser()}/>
+                    }{ uploadRestWork &&
+                        <UploadRestOfTheWork updateUser={()=>updateUser()}/>
+                    }{ comparePlagiats &&
+                        <ComparePlagiats updateUser={()=>updateUser()}/>
+                    }{ downloadBook &&
+                        <DownloadBook updateUser={()=>updateUser()}/>
+                    }{ decideBeta &&
+                        <DecideSendingToBeta updateUser={()=>updateUser()}/>
+                    }{ isInitialUpload &&
+                        <InitialUpload updateUser={()=>updateUser()}/>
+                    }{ isReview &&
+                        <BookReview updateUser={()=>updateUser()} />
+                    }{ isPayment &&
+                        <Payment updateUser={()=>updateUser()} />
+                    }{ isReviewPreview &&
+                        <ReviewPage updateUser={()=>updateUser()} />
+                    }
+                </div>
             </main>
         </div>
     );

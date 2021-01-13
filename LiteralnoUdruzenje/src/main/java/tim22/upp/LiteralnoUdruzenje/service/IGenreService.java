@@ -9,4 +9,5 @@ public interface IGenreService {
 
     List<GenreDTO> findAllGenres();
     Genre findByName(String name);
+    Genre findById(long id);
 }

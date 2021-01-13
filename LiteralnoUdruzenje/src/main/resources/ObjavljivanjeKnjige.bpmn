@@ -21,7 +21,7 @@
     <bpmn:sequenceFlow id="Flow_1flmgmp" sourceRef="Activity_07nbsww" targetRef="Gateway_103ymk8" />
     <bpmn:sequenceFlow id="Flow_0e7hoe4" sourceRef="Activity_1x9xrnw" targetRef="Event_0brcw0b" />
     <bpmn:endEvent id="Event_1xvllid">
-      <bpmn:incoming>Flow_0ujgvtv</bpmn:incoming>
+      <bpmn:incoming>Flow_062xcww</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:serviceTask id="Activity_07nbsww" name="Save book data" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.bookPublishing.SaveGeneralBookData">
       <bpmn:incoming>Flow_1kaj5y0</bpmn:incoming>
@@ -255,14 +255,14 @@ custom type koji ce napraviti Jelena</bpmn:documentation>
       <bpmn:outgoing>Flow_0ujgvtv</bpmn:outgoing>
       <bpmn:outgoing>Flow_1qrxqla</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_0ujgvtv" sourceRef="Gateway_0rqel6t" targetRef="Event_1xvllid">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${betaReaders.length != null}</bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="Flow_0ujgvtv" sourceRef="Gateway_0rqel6t" targetRef="Activity_05fazvn">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${betaReaders.size &gt; 0}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:endEvent id="Event_1ws07hy">
       <bpmn:incoming>Flow_1qrxqla</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1qrxqla" sourceRef="Gateway_0rqel6t" targetRef="Event_1ws07hy">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${betaReaders.length == null}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${betaReaders.size == 0}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:intermediateThrowEvent id="Check" name="Check">
       <bpmn:incoming>Flow_1coker0</bpmn:incoming>
@@ -270,10 +270,37 @@ custom type koji ce napraviti Jelena</bpmn:documentation>
       <bpmn:messageEventDefinition id="MessageEventDefinition_18orz8z" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.EmailServices.SendMailToDeclinedWriter" />
     </bpmn:intermediateThrowEvent>
     <bpmn:sequenceFlow id="Flow_1jrwyz9" sourceRef="Check" targetRef="Event_17o6z9e" />
+    <bpmn:userTask id="Activity_05fazvn" name="Filter beta readers" camunda:assignee="${editorsUsername}">
+      <bpmn:documentation>ovde cemo izabrati podlistu onih kojima se salje da ostavljaju komentare i smesticemo je u betaReadersChoosen proc. varijablu</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="betas" type="multiEnum" defaultValue="${betaReaders}" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0ujgvtv</bpmn:incoming>
+      <bpmn:outgoing>Flow_062xcww</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_062xcww" sourceRef="Activity_05fazvn" targetRef="Event_1xvllid" />
   </bpmn:process>
   <bpmn:message id="Message_1w8d8gf" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="BookPublishing">
+      <bpmndi:BPMNEdge id="Flow_1jrwyz9_di" bpmnElement="Flow_1jrwyz9">
+        <di:waypoint x="1178" y="1310" />
+        <di:waypoint x="1262" y="1310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1qrxqla_di" bpmnElement="Flow_1qrxqla">
+        <di:waypoint x="1055" y="1560" />
+        <di:waypoint x="1262" y="1560" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ujgvtv_di" bpmnElement="Flow_0ujgvtv">
+        <di:waypoint x="1030" y="1585" />
+        <di:waypoint x="1030" y="1650" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1hvhdx8_di" bpmnElement="Flow_1hvhdx8">
+        <di:waypoint x="1030" y="1480" />
+        <di:waypoint x="1030" y="1535" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1vq4piv_di" bpmnElement="Flow_1vq4piv">
         <di:waypoint x="412" y="80" />
         <di:waypoint x="240" y="80" />
@@ -409,21 +436,9 @@ custom type koji ce napraviti Jelena</bpmn:documentation>
         <di:waypoint x="188" y="227" />
         <di:waypoint x="215" y="227" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1hvhdx8_di" bpmnElement="Flow_1hvhdx8">
-        <di:waypoint x="1030" y="1480" />
-        <di:waypoint x="1030" y="1535" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0ujgvtv_di" bpmnElement="Flow_0ujgvtv">
-        <di:waypoint x="1030" y="1585" />
-        <di:waypoint x="1030" y="1742" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1qrxqla_di" bpmnElement="Flow_1qrxqla">
-        <di:waypoint x="1055" y="1560" />
-        <di:waypoint x="1262" y="1560" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1jrwyz9_di" bpmnElement="Flow_1jrwyz9">
-        <di:waypoint x="1178" y="1310" />
-        <di:waypoint x="1262" y="1310" />
+      <bpmndi:BPMNEdge id="Flow_062xcww_di" bpmnElement="Flow_062xcww">
+        <di:waypoint x="1030" y="1730" />
+        <di:waypoint x="1030" y="1792" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="152" y="209" width="36" height="36" />
@@ -539,14 +554,17 @@ custom type koji ce napraviti Jelena</bpmn:documentation>
       <bpmndi:BPMNShape id="Event_1ws07hy_di" bpmnElement="Event_1ws07hy">
         <dc:Bounds x="1262" y="1542" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1xvllid_di" bpmnElement="Event_1xvllid">
-        <dc:Bounds x="1012" y="1742" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0xbsyhr_di" bpmnElement="Check">
         <dc:Bounds x="1142" y="1292" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1144" y="1338" width="33" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1xvllid_di" bpmnElement="Event_1xvllid">
+        <dc:Bounds x="1012" y="1792" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_05fazvn_di" bpmnElement="Activity_05fazvn">
+        <dc:Bounds x="980" y="1650" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0y8q2am_di" bpmnElement="Event_044dg0v">
         <dc:Bounds x="1192" y="512" width="36" height="36" />

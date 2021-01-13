@@ -38,5 +38,6 @@ public class GetBetaReadersByGenre implements JavaDelegate {
                 .map(User::getUsername).collect(Collectors.toList());
 
         delegateExecution.setVariable("betaReaders", betaUsernames);
+        //delegateExecution.setVariable("betaSum", betaUsernames.size());
     }
 }

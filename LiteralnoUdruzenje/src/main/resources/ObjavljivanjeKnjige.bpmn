@@ -21,7 +21,7 @@
     <bpmn:sequenceFlow id="Flow_1flmgmp" sourceRef="Activity_07nbsww" targetRef="Gateway_103ymk8" />
     <bpmn:sequenceFlow id="Flow_0e7hoe4" sourceRef="Activity_1x9xrnw" targetRef="Event_0brcw0b" />
     <bpmn:endEvent id="Event_1xvllid">
-      <bpmn:incoming>Flow_062xcww</bpmn:incoming>
+      <bpmn:incoming>Flow_056h1ey</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:serviceTask id="Activity_07nbsww" name="Save book data" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.bookPublishing.SaveGeneralBookData">
       <bpmn:incoming>Flow_1kaj5y0</bpmn:incoming>
@@ -270,20 +270,28 @@ custom type koji ce napraviti Jelena</bpmn:documentation>
       <bpmn:messageEventDefinition id="MessageEventDefinition_18orz8z" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.EmailServices.SendMailToDeclinedWriter" />
     </bpmn:intermediateThrowEvent>
     <bpmn:sequenceFlow id="Flow_1jrwyz9" sourceRef="Check" targetRef="Event_17o6z9e" />
-    <bpmn:sequenceFlow id="Flow_062xcww" sourceRef="Activity_05fazvn" targetRef="Event_1xvllid" />
-    <bpmn:task id="Activity_05fazvn" name="Filter beta readers">
+    <bpmn:userTask id="Activity_05fazvn" name="Filter beta readers" camunda:assignee="${editorsUsername}">
       <bpmn:documentation>ovde cemo izabrati podlistu onih kojima se salje da ostavljaju komentare i smesticemo je u betaReadersChoosen proc. varijablu</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:taskListener class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.Load.LoadBetaReaders" event="create" />
+        <camunda:formData>
+          <camunda:formField id="betas" label="Betas" type="multiEnum_betas" />
+        </camunda:formData>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0ujgvtv</bpmn:incoming>
-      <bpmn:outgoing>Flow_062xcww</bpmn:outgoing>
-    </bpmn:task>
+      <bpmn:outgoing>Flow_0bpfofs</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0bpfofs" sourceRef="Activity_05fazvn" targetRef="NotifySelectedBetaReaders" />
+    <bpmn:sequenceFlow id="Flow_056h1ey" sourceRef="NotifySelectedBetaReaders" targetRef="Event_1xvllid" />
+    <bpmn:intermediateThrowEvent id="NotifySelectedBetaReaders" name="NotifySelectedBetaReaders">
+      <bpmn:incoming>Flow_0bpfofs</bpmn:incoming>
+      <bpmn:outgoing>Flow_056h1ey</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_189k8jc" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.EmailServices.EmailNotification" />
+    </bpmn:intermediateThrowEvent>
   </bpmn:process>
   <bpmn:message id="Message_1w8d8gf" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="BookPublishing">
-      <bpmndi:BPMNEdge id="Flow_062xcww_di" bpmnElement="Flow_062xcww">
-        <di:waypoint x="1030" y="1730" />
-        <di:waypoint x="1030" y="1792" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1jrwyz9_di" bpmnElement="Flow_1jrwyz9">
         <di:waypoint x="1178" y="1310" />
         <di:waypoint x="1262" y="1310" />
@@ -435,14 +443,19 @@ custom type koji ce napraviti Jelena</bpmn:documentation>
         <di:waypoint x="188" y="227" />
         <di:waypoint x="215" y="227" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0bpfofs_di" bpmnElement="Flow_0bpfofs">
+        <di:waypoint x="1030" y="1730" />
+        <di:waypoint x="1030" y="1812" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_056h1ey_di" bpmnElement="Flow_056h1ey">
+        <di:waypoint x="1030" y="1848" />
+        <di:waypoint x="1030" y="1942" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="152" y="209" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1m0ykaa_di" bpmnElement="Activity_01gath5">
         <dc:Bounds x="290" y="187" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1xvllid_di" bpmnElement="Event_1xvllid">
-        <dc:Bounds x="1012" y="1792" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_09cvnni_di" bpmnElement="Activity_07nbsww">
         <dc:Bounds x="430" y="187" width="100" height="80" />
@@ -558,8 +571,17 @@ custom type koji ce napraviti Jelena</bpmn:documentation>
           <dc:Bounds x="1144" y="1338" width="33" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_12lmapn_di" bpmnElement="Activity_05fazvn">
+      <bpmndi:BPMNShape id="Activity_02xfzgz_di" bpmnElement="Activity_05fazvn">
         <dc:Bounds x="980" y="1650" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1xvllid_di" bpmnElement="Event_1xvllid">
+        <dc:Bounds x="1012" y="1942" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1a89kd6_di" bpmnElement="NotifySelectedBetaReaders">
+        <dc:Bounds x="1012" y="1812" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="915" y="1820" width="85" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0y8q2am_di" bpmnElement="Event_044dg0v">
         <dc:Bounds x="1192" y="512" width="36" height="36" />

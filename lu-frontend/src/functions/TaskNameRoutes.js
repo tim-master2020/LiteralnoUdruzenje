@@ -29,6 +29,9 @@ export function TaskNameRoutes(name) {
             break;
         case 'DecideSendingToBetaReaders':
             route = '/decideBeta';
+            break;   
+        case 'Filter beta readers':
+            route = '/choosebetareader';
             break;     
         default:
             route = '/';

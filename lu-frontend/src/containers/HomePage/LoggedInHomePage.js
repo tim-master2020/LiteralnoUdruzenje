@@ -27,8 +27,9 @@ import getUser from "../../functions/UserFunctions";
 import ComparePlagiats from "../../components/publish-book/ComparePlagiats";
 import DownloadBook from "../../components/publish-book/DownloadBook"
 import DecideSendingToBeta from "../../components/publish-book/DecideSendingToBeta"
+import ChooseBetaReader from "../../components/publish-book/ChooseBetaReader";
 
-const LoggedInHomepage = ({ loggedInUser,setLoggedIn,history,isInitialUpload,isReview,isPayment,isReviewPreview,publishBookGeneralData,reviewBookGeneral,giveExplanation,uploadRestWork,comparePlagiats,downloadBook,decideBeta}) => {
+const LoggedInHomepage = ({ loggedInUser,setLoggedIn,history,isInitialUpload,isReview,isPayment,isReviewPreview,publishBookGeneralData,reviewBookGeneral,giveExplanation,uploadRestWork,comparePlagiats,downloadBook,decideBeta, isChooseBetaReader}) => {
     const [isOpen, setOpen] = useState(false);
 
     const handleDrawerToggle = () => {
@@ -131,6 +132,8 @@ const LoggedInHomepage = ({ loggedInUser,setLoggedIn,history,isInitialUpload,isR
                         <Payment updateUser={()=>updateUser()} />
                     }{ isReviewPreview &&
                         <ReviewPage updateUser={()=>updateUser()} />
+                    }{ isChooseBetaReader &&
+                        <ChooseBetaReader updateUser={()=>updateUser()} />
                     }
                 </div>
             </main>

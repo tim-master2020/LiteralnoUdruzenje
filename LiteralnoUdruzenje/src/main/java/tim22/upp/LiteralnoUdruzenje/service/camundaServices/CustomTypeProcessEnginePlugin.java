@@ -32,5 +32,6 @@ public class CustomTypeProcessEnginePlugin extends AbstractProcessEnginePlugin {
         formTypes.add(new CustomType("input_single"));
         formTypes.add(new CustomType("pdfs"));
         formTypes.add(new MultipleDownloadFilesType("multiFilesDownload"));
+        formTypes.add(new MultiEnumType("betas"));
     }
 }

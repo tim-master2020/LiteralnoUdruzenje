@@ -10,6 +10,7 @@ import { withRouter } from 'react-router-dom';
 const SidebarList = ({history, user}) => {
     function renderTasks(tasks) {
         return tasks.map((task) => {
+            console.log(task);
             return (
                 <ListItem  onClick={() => {
                     history.push({

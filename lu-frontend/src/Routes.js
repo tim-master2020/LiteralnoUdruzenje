@@ -57,6 +57,9 @@ const Routes = ({loggedInUser,setLoggedIn}) => {
             <Route exact path='/decideBeta/:taskId' render={props =>
                 <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} decideBeta={true}/>
                 } />
+            <Route exact path='/choosebetareader/:taskId' render={props =>
+                <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} isChooseBetaReader={true}/>
+                } />
         </Switch>
         );
 }

@@ -47,7 +47,15 @@ public class EmailNotification implements JavaDelegate {
                 emailService.sendCustomerEmail(user, "You have new books to review.");
             }
 
-        } else {
+        } else if (taskId.equals("NotifySelectedBetaReaders")) {
+            //List<String> usernames = (List<String>) delegateExecution.getVariable("selectedBetaReaders");
+            //for (String username : usernames) {
+                //User user = userService.findByUsername(username);
+                //emailService.sendCustomerEmail(user, "Dear" + user.getFirstName() + "\n," + "you have new book to read and comment on. You have five days to do so.");
+            //}
+        }
+        else
+         {
             String username = (String) delegateExecution.getVariable("writer");
             Writer writer = writerService.findByUsername(username);
 

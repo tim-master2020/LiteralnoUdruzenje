@@ -1,0 +1,86 @@
+import React from 'react';
+import { withRouter } from 'react-router-dom';
+import CamundaForm from '../CamundaForm';
+import axios from 'axios';
+import { defaultUrl } from '../../backendConfig';
+import { Card } from 'react-bootstrap';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+import './Global.css';
+
+const alert = withReactContent(Swal)
+
+const ChooseBetaReader = ({ taskId, history }) => {
+
+    const [formFields, setformFields] = React.useState([]);
+    const [isValid, setIsValid] = React.useState({});
+    const [selected, setSelected] = React.useState([]);
+    const [shouldSubmit, setShouldSubmit] = React.useState(true);
+
+    const options = {
+        headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
+    };
+
+    React.useEffect(() => {
+        axios.get(`${defaultUrl}/process/get-form-fields/${history.location.state.taskId}`, options).then(
+            (resp) => {
+                setformFields(resp.data.formFields);
+            },
+            (resp) => { alert("error getting form fields,try again"); }
+        );
+    }, []);
+
+    function choose(e) {
+
+        e.preventDefault();
+        var usernames = [];
+        formFields.forEach(field => {
+
+            if (field.type.name.includes('multiEnum_betas')) {
+                selected.forEach(s => {
+                    usernames.push({ fieldId: s.value, fieldValue: s.label });
+                })
+            }
+        });
+
+        console.log(usernames);
+
+        axios.post(`${defaultUrl}/api/betareaders/choose-beta-reader/${history.location.state.taskId}`, usernames, options).then(
+            (resp) => {
+
+                alert.fire({
+                    title: "Success",
+                    text: 'You successfully selected the BetaReader.',
+                    type: "success",
+                    button: true
+                  });
+                  history.push('/');
+            },
+            (resp) => {
+                alert.fire({
+                    text:'Error occured please try again',
+                });
+            }
+        );
+    }
+
+    return (
+        <Card style={{ width: '40%', padding: '15px', marginLeft: '25%' }}>
+
+            <CamundaForm
+                id="camundaForm"
+                formFields={formFields}
+                setformFields={setformFields}
+                isValid={isValid}
+                setIsValid={setIsValid}
+                onSubmit={choose}
+                selected={selected}
+                setSelected={setSelected}
+                shouldSubmit={shouldSubmit}
+                setShouldSubmit={setShouldSubmit}
+            />
+        </Card>
+    )
+
+}
+export default withRouter(ChooseBetaReader);

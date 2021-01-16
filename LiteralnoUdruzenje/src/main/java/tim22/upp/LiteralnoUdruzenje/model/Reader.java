@@ -21,6 +21,9 @@ public class Reader extends User implements Serializable{
     @Column
     private boolean betaReader;
 
+    @Column
+    private int penaltyPoints = 0;
+
     public boolean isBetaReader() {
         return betaReader;
     }
@@ -43,5 +46,13 @@ public class Reader extends User implements Serializable{
 
     public void setBetaGenres(Set<Genre> betaGenres) {
         this.betaGenres = betaGenres;
+    }
+
+    public int getPenaltyPoints() {
+        return penaltyPoints;
+    }
+
+    public void setPenaltyPoints(int penaltyPoints) {
+        this.penaltyPoints = penaltyPoints;
     }
 }

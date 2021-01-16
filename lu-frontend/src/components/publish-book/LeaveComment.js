@@ -1,23 +1,23 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
-import CamundaForm from '../CamundaForm';
 import axios from 'axios';
-import { defaultUrl } from '../../backendConfig';
+import CamundaForm from '../CamundaForm';
 import { Card } from 'react-bootstrap';
-import './Global.css';
-import {alert} from '../../functions/alertSwal';
+import { withRouter } from 'react-router-dom';
+import { defaultUrl } from '../../backendConfig';
 
-const ChooseBetaReader = ({ taskId, history,updateUser }) => {
+
+const LeaveComment =({history,updateUser}) => {
 
     const [formFields, setformFields] = React.useState([]);
     const [isValid, setIsValid] = React.useState({});
-    const [selected, setSelected] = React.useState([]);
-    const [shouldSubmit, setShouldSubmit] = React.useState(true);
+    const [shouldSubmit,setShouldSubmit] = React.useState(true);
+    const [validationMessage, setValidationMessage] = React.useState({});
 
     const options = {
         headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
     };
 
+    debugger;
     React.useEffect(() => {
         axios.get(`${defaultUrl}/process/get-form-fields/${history.location.state.taskId}`, options).then(
             (resp) => {
@@ -27,32 +27,22 @@ const ChooseBetaReader = ({ taskId, history,updateUser }) => {
         );
     }, []);
 
-    function choose(e) {
+    function submitComment(e) {
 
         e.preventDefault();
-        var usernames = [];
+        const returnArray = [];
         formFields.forEach(field => {
-
-            if (field.type.name.includes('multiEnum_betas')) {
-                selected.forEach(s => {
-                    usernames.push({ fieldId: s.value, fieldValue: s.label });
-                })
-            }
+            returnArray.push({ fieldId: field.id, fieldValue: field.value.value });
         });
-
-        console.log(usernames);
-
-        axios.post(`${defaultUrl}/api/betareaders/choose-beta-reader/${history.location.state.taskId}`, usernames, options).then(
+        debugger;
+        axios.post(`${defaultUrl}/api/books/submit-comment/${history.location.state.taskId}`, returnArray, options).then(
             (resp) => {
                 updateUser();
-
-                alert("You successfully selected the Beta readers.");
+                alert('Comment submited');
                 history.push('/');
             },
             (resp) => {
                 alert('Error occured please try again');
-                history.push('/');
-
             }
         );
     }
@@ -66,14 +56,14 @@ const ChooseBetaReader = ({ taskId, history,updateUser }) => {
                 setformFields={setformFields}
                 isValid={isValid}
                 setIsValid={setIsValid}
-                onSubmit={choose}
-                selected={selected}
-                setSelected={setSelected}
                 shouldSubmit={shouldSubmit}
                 setShouldSubmit={setShouldSubmit}
+                setValidationMessage={setValidationMessage}
+                onSubmit={submitComment}
             />
         </Card>
     )
 
+
 }
-export default withRouter(ChooseBetaReader);
+export default withRouter(LeaveComment);

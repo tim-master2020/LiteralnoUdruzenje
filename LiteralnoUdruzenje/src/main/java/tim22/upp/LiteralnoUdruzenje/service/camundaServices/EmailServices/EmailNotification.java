@@ -5,12 +5,14 @@ import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tim22.upp.LiteralnoUdruzenje.model.Reader;
 import tim22.upp.LiteralnoUdruzenje.model.User;
 import tim22.upp.LiteralnoUdruzenje.model.Writer;
 import tim22.upp.LiteralnoUdruzenje.service.IEmailService;
 import tim22.upp.LiteralnoUdruzenje.service.IUserService;
 import tim22.upp.LiteralnoUdruzenje.service.IWriterService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -48,11 +50,11 @@ public class EmailNotification implements JavaDelegate {
             }
 
         } else if (taskId.equals("NotifySelectedBetaReaders")) {
-            //List<String> usernames = (List<String>) delegateExecution.getVariable("selectedBetaReaders");
-            //for (String username : usernames) {
-                //User user = userService.findByUsername(username);
-                //emailService.sendCustomerEmail(user, "Dear" + user.getFirstName() + "\n," + "you have new book to read and comment on. You have five days to do so.");
-            //}
+            List<String> usernames = (List<String>) delegateExecution.getVariable("selectedBetaReaders");
+            for (String username : usernames) {
+                User user = userService.findByUsername(username);
+                emailService.sendCustomerEmail(user, "Dear" + user.getFirstName() + "\n," + "you have new book to read and comment on. You have five days to do so.");
+            }
         }
         else
          {
@@ -75,6 +77,12 @@ public class EmailNotification implements JavaDelegate {
                         " Your request for registration has now been denied.");
             } else if (taskId.equals("RegistrationFinalMail")) {
                 emailService.sendCustomerEmail(writer, "You paid your membership and you are now officially registered on EBook.");
+            } else if (taskId.equals("LossOfPenaltyEmail")) {
+                List losingBetaStatus = (ArrayList<String>) delegateExecution.getVariable("losingBetaStatus");
+                for(Object betaReader : losingBetaStatus){
+                    User reader = userService.findByUsername(betaReader.toString());
+                    emailService.sendCustomerEmail(reader, "Dear beta reader, you failed to leave a comment in given time.Your beta status has been revoked.");
+                }
             }
 
         }

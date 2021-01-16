@@ -113,23 +113,23 @@ public class BookServiceImpl implements IBookService {
         Writer writer = writerService.findByUsername(username);
 
         List<String> booksSaved = new ArrayList<>();
-        Boolean isInitial = false;
+        Boolean isInitialUploadOfABook = false;
         for(int i = 0; i < fileNames.size(); i++) {
             Book book = new Book();
             if(bookName == null){
                 book.setName(fileNames.get(i).split(".pdf")[0]);
-                isInitial = true;
+                isInitialUploadOfABook = true;
             } else {
                 book = bookRepository.findBookByName(bookName);
             }
 
-            book.setPdfName(fileNames.get(i).split(".pdf")[0]);
+            book.setPdfName(book.getName());
 
             if (writer != null && !book.getWriters().contains(writer)){
                 book.getWriters().add(writer);
             }
-            //book.setBytes(getFileBytes().get(i));
-            convertToPdf(fileBytes.get(i), book, isInitial);
+
+            convertToPdf(fileBytes.get(i), book, isInitialUploadOfABook);
 
             Book bookSaved = new Book();
             if(bookName == null){
@@ -142,27 +142,29 @@ public class BookServiceImpl implements IBookService {
         return booksSaved;
     }
 
-    private void convertToPdf(String bytes, Book book, Boolean isInitial) {
-        String[] existingFileNamesWithExtenstion = new File("src/main/resources/pdfs").list();
-        List<String> existingFileNames = new ArrayList<>();
+    private void convertToPdf(String bytes, Book book, Boolean isInitialUploadOfABook) {
+        String[] existingFileNamesWithExtension = new File("src/main/resources/pdfs").list();
+        List<String> existingFileNamesWithoutExtenstion = new ArrayList<>();
 
-        boolean oneAlreadyExists = false;
-        for (String name : existingFileNamesWithExtenstion) {
-            if(name.equals(book.getPdfName() + "(1)"))
+       boolean oneAlreadyExists = false;
+        for (String name : existingFileNamesWithExtension) {
+            if(name.equals(book.getPdfName() + ".pdf"))
                 oneAlreadyExists = true;
-            existingFileNames.add(name.split(".pdf")[0]);
+            existingFileNamesWithoutExtenstion.add(name.split(".pdf")[0]);
         }
 
-        for (String name : existingFileNames) {
-            if(name.equals(book.getPdfName()) && oneAlreadyExists == false)
+        for (String name : existingFileNamesWithoutExtenstion) {
+            if (name.equals(book.getPdfName()) && oneAlreadyExists == true & !name.contains("(")) {
                 book.setPdfName(book.getPdfName() + "(1)");
+            }
             else if (name.contains(book.getPdfName()) && name.contains("(") && name.contains(")")) {
                 int fileNumber = Integer.parseInt(name.split("[\\(\\)]")[1]);
                 fileNumber++;
                 book.setPdfName(name.replace(name.split("[\\(\\)]")[1], String.valueOf(fileNumber)));
                 book.setPdfName(book.getPdfName());
             }
-            if(isInitial){
+
+            if (isInitialUploadOfABook) {
                 book.setName(book.getPdfName());
             }
         }

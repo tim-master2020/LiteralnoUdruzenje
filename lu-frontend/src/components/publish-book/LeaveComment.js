@@ -4,7 +4,7 @@ import CamundaForm from '../CamundaForm';
 import { Card } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import { defaultUrl } from '../../backendConfig';
-
+import { alert } from '../../functions/alertSwal';
 
 const LeaveComment =({history,updateUser}) => {
 
@@ -17,7 +17,6 @@ const LeaveComment =({history,updateUser}) => {
         headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
     };
 
-    debugger;
     React.useEffect(() => {
         axios.get(`${defaultUrl}/process/get-form-fields/${history.location.state.taskId}`, options).then(
             (resp) => {
@@ -34,7 +33,7 @@ const LeaveComment =({history,updateUser}) => {
         formFields.forEach(field => {
             returnArray.push({ fieldId: field.id, fieldValue: field.value.value });
         });
-        debugger;
+
         axios.post(`${defaultUrl}/api/books/submit-comment/${history.location.state.taskId}`, returnArray, options).then(
             (resp) => {
                 updateUser();

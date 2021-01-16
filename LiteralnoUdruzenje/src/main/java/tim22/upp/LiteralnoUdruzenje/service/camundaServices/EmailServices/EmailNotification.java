@@ -55,6 +55,31 @@ public class EmailNotification implements JavaDelegate {
                 User user = userService.findByUsername(username);
                 emailService.sendCustomerEmail(user, "Dear" + user.getFirstName() + "\n," + "you have new book to read and comment on. You have five days to do so.");
             }
+        } else if (taskId.equals("EmailUpdatedBookForEditor")) {
+            User writer = userService.findByUsername(delegateExecution.getVariable("loggedInWriter").toString());
+            User editor = userService.findByUsername(delegateExecution.getVariable("editorsUsername").toString());
+            emailService.sendCustomerEmail(editor, "Hello,  \n\n" + writer.getUsername()
+                    + " has updated his/hers book. You can download new version and review it.");
+        }else if (taskId.equals("NotifyLector")) {
+            User writer = userService.findByUsername(delegateExecution.getVariable("loggedInWriter").toString());
+            User lector = userService.findByUsername(delegateExecution.getVariable("lector").toString());
+            emailService.sendCustomerEmail(lector, "Hello,  \n\n" + lector.getUsername()
+                    + "You can download and review " + writer.getUsername() + "'s book. ");
+        }else if (taskId.equals("NotifyMainEditor")) {
+            User writer = userService.findByUsername(delegateExecution.getVariable("loggedInWriter").toString());
+            User editor = userService.findByUsername(delegateExecution.getVariable("mainEditor").toString());
+            emailService.sendCustomerEmail(editor, "Hello, " + editor.getUsername()+  "\n\n"
+                    + "You can download and review " + writer.getUsername() + "'s book. ");
+        }else if (taskId.equals("NotifyWriterNoTimeMainEditor")) {
+            User writer = userService.findByUsername(delegateExecution.getVariable("loggedInWriter").toString());
+            emailService.sendCustomerEmail(writer, "Hello,  \n\n"
+                    + "Time for uploading updated book has expired. You can upload book" +
+                    " and get reviewed again from the beginning.\n");
+        }else if (taskId.equals("NotifyWriterPrint")) {
+            User writer = userService.findByUsername(delegateExecution.getVariable("loggedInWriter").toString());
+            emailService.sendCustomerEmail(writer, "Hello,  \n\n"
+                    + "Congratulations! \n\n" + "Your book has been approved by everyone in the committee." +
+                    " It is sent to printing and indexing now.\n");
         }
         else
          {

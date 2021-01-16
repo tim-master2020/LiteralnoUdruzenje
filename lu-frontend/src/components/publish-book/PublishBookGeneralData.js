@@ -27,7 +27,9 @@ const PublishBookGeneralData = ({ taskId, history }) => {
             (resp) => {
                 setformFields(resp.data.formFields);
             },
-            (resp) => { alert("error getting form fields,try again"); }
+            (resp) => { alert.fire({
+                text:'Error occured please try again',
+            }); }
         );
     }, []);
 

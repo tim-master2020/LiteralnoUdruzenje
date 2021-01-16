@@ -63,6 +63,21 @@ const Routes = ({loggedInUser,setLoggedIn}) => {
             <Route exact path='/leaveComment/:taskId' render={props =>
                 <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} leaveComment={true}/>
                 } />
+            <Route exact path='/updateBook/:taskId' render={props =>
+                <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} uploadUpdatedBook={true}/>
+                } />
+            <Route exact path='/editorReview/:taskId' render={props =>
+                <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} editorReview={true} type={"editor"}/>
+                } />
+            <Route exact path='/lectorReview/:taskId' render={props =>
+                <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} lectorReview={true} type={"lector"}/>
+                } />
+            <Route exact path='/mainEditorReview/:taskId' render={props =>
+                <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} mainEditorReview={true} type={"mainEditor"}/>
+                } />
+            <Route exact path='/printBook/:taskId' render={props =>
+                <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} printBook={true} type={"printBook"}/>
+                } />
         </Switch>
         );
 }

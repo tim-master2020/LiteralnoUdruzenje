@@ -71,7 +71,7 @@ public class AuthenticationController {
         String username = authenticationRequest.getUsername();
 
         User user = userService.findByUsername(username);
-        if((user.getRole().equals(Role.READER) || user.getRole().equals(Role.COMMITTEE) || user.getRole().equals(Role.EDITOR))
+        if((user.getRole().equals(Role.READER) || user.getRole().equals(Role.COMMITTEE) || user.getRole().equals(Role.EDITOR) || user.getRole().equals(Role.LECTOR) || user.getRole().equals(Role.MAINEDITOR))
                 && user.isActiveAccount()){
             String jwt = tokenUtils.generateToken(details.getUsername());
             int expiresIn = tokenUtils.getExpiredIn();
@@ -117,12 +117,7 @@ public class AuthenticationController {
             }
             return new ResponseEntity<>(writerDTO, HttpStatus.OK);
         
-        } else if (user.getRole().equals(Role.COMMITTEE)) {
-            UserDTO userDTO = modelMapper.map(user, UserDTO.class);
-            userDTO.setTasks(mapTasks(tasks));
-            return new ResponseEntity<>(userDTO, HttpStatus.OK);
-        
-        }else if (!user.getRole().equals((Role.WRITER)) && !user.getRole().equals(Role.READER)){
+        } else if (!user.getRole().equals((Role.WRITER)) && !user.getRole().equals(Role.READER)){
             UserDTO userDTO = modelMapper.map(user, UserDTO.class);
             userDTO.setTasks(mapTasks(tasks));
             return new ResponseEntity<>(userDTO, HttpStatus.OK);

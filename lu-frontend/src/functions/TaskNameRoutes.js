@@ -35,7 +35,22 @@ export function TaskNameRoutes(name) {
             break;   
         case 'LeaveComment':
             route = '/leaveComment';
-            break;  
+            break;
+        case 'UploadUpdatedBook':
+            route = '/updateBook';
+            break;
+        case 'DecideAboutNewChanges':
+            route = '/editorReview';
+            break;
+        case 'DownloadAndReview':
+            route = '/lectorReview';
+            break;
+        case 'MainEditorReview':
+            route = '/mainEditorReview';
+            break;
+        case 'PrintBook':
+            route = '/printBook';
+            break;
         default:
             route = '/';
             break;

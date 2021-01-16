@@ -58,8 +58,7 @@ const ChooseBetaReader = ({ taskId, history,updateUser }) => {
     }
 
     return (
-        <Card style={{ width: '40%', padding: '15px', marginLeft: '25%' }}>
-
+        <Card className='cardHolder'>
             <CamundaForm
                 id="camundaForm"
                 formFields={formFields}

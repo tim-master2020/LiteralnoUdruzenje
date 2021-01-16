@@ -18,7 +18,13 @@ const HomePage = ({
     downloadBook,
     decideBeta, 
     isChooseBetaReader,
-    leaveComment}) => {
+    leaveComment,
+    uploadUpdatedBook,
+    editorReview,
+    lectorReview,
+    mainEditorReview,
+    printBook,
+    type}) => {
     if(loggedInUser === undefined){
     return (
         <LoggedOutHomepage/>
@@ -41,6 +47,12 @@ const HomePage = ({
             isReviewPreview={isReviewPreview}
             isChooseBetaReader={isChooseBetaReader}
             leaveComment={leaveComment}
+            uploadUpdatedBook={uploadUpdatedBook}
+            editorReview={editorReview}
+            lectorReview={lectorReview}
+            mainEditorReview={mainEditorReview}
+            printBook={printBook}
+            type={type}
             />);
     }
 

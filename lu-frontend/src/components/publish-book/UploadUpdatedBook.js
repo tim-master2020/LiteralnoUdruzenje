@@ -1,23 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Card } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
+import CamundaForm from '../CamundaForm';
 import axios from 'axios';
 import { defaultUrl } from '../../backendConfig.js';
 import './Global.css';
-import withReactContent from 'sweetalert2-react-content';
-import Swal from 'sweetalert2';
-import CamundaForm from '../CamundaForm.js';
-import { Card } from 'react-bootstrap';
-import { TaskNameRoutes } from '../../functions/TaskNameRoutes';
+import { alert } from '../../functions/alertSwal'
 
-const alert = withReactContent(Swal)
-
-const DecideSendingToBeta = ({history,updateUser}) => {
+const UploadUpdatedBook = ({history,updateUser}) =>{
 
     const [formFields, setformFields] = React.useState([]);
     const [isValid, setIsValid] = React.useState({});
     const [shouldSubmit,setShouldSubmit] = React.useState(true);
     const [validationMessage, setValidationMessage] = React.useState({});
     const [selected,setSelected] =  React.useState([]);
+    const [uploadedFiles, setUploadedFiles] = React.useState([]);
     const [taskId,setTaskId] =  React.useState(history.location.state.taskId);
 
     const options = {
@@ -33,45 +30,40 @@ const DecideSendingToBeta = ({history,updateUser}) => {
         );
     }, []);
 
-    function handleSubmit(e) {
+    function SavePdfs(e) {
+
+        let token = localStorage.getItem('token');
+        const options = {
+            headers: { 'Authorization': 'Bearer ' + token}
+        };
 
         e.preventDefault();
-        const returnArray = [];
-        formFields.forEach(field => {
+        const returnValue = [];
 
-            if (field.type.name.includes('enum')) {
-                field.value.value = selected.value;
-            }
-            returnArray.push({ fieldId: field.id, fieldValue: field.value.value });
+        formFields.forEach(field => {
+            returnValue.push({ fieldId: field.id, fieldValue: field.value.value })
         });
-        console.log(returnArray)
-        axios.post(`${defaultUrl}/api/books/submit-sending-to-beta/${history.location.state.taskId}`, returnArray, options).then(
+
+        axios.post(`${defaultUrl}/api/books/submit-updated-book/${history.location.state.taskId}`, returnValue, options).then(
             (resp) => {
                 updateUser();
-                console.log(resp.data);
-
-                if(resp.data !== "" && resp.data.taskName === "Filter beta readers"){
-                    history.push({
-                        pathname:`${TaskNameRoutes(resp.data.taskName)}/${resp.data.taskId}`,
-                        state: {
-                          taskId: resp.data.taskId
-                        }
-                      });
+                if(resp.data.hasOwnProperty("message")){
+                    alert(resp.data.message);
                 }else{
-                    history.push('/');
+                    alert('Your document is uploaded successfully!');
                 }
+                history.push('/');
             },
             (resp) => {
-                alert.fire({
-                    text:'Error occured, please try again.',
-                });
+                alert('Error while uploading files,please try again.');
             }
         );
     }
 
     return(
         <div>
-            <Card className='cardHolder'>
+            <p className='title'>You can see comments for your book in your email. Based on them, you can edit book and upload it here.</p>
+            <Card className="cardHolder">
                 <CamundaForm
                 formFields={formFields}
                 setformFields={setformFields}
@@ -80,11 +72,13 @@ const DecideSendingToBeta = ({history,updateUser}) => {
                 isValid={isValid}
                 setIsValid={setIsValid}
                 selected={selected}
-                onSubmit={(e) => { handleSubmit(e) }}
                 setSelected={setSelected}
+                onSubmit={(e) => { SavePdfs(e) }}
+                uploadedFiles={uploadedFiles}
+                setUploadedFiles={setUploadedFiles}
                 />
             </Card>
         </div>
-    )
+    );
 }
-export default withRouter(DecideSendingToBeta);
+export default withRouter(UploadUpdatedBook);

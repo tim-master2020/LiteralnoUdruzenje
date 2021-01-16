@@ -29,6 +29,8 @@ import DownloadBook from "../../components/publish-book/DownloadBook"
 import DecideSendingToBeta from "../../components/publish-book/DecideSendingToBeta"
 import ChooseBetaReader from "../../components/publish-book/ChooseBetaReader";
 import LeaveComment from "../../components/publish-book/LeaveComment";
+import UploadUpdatedBook from "../../components/publish-book/UploadUpdatedBook";
+import BookReviewFinal from "../../components/publish-book/BookReview";
 
 const LoggedInHomepage = ({ 
     loggedInUser,
@@ -46,7 +48,13 @@ const LoggedInHomepage = ({
     downloadBook,
     decideBeta, 
     isChooseBetaReader,
-    leaveComment}) => {
+    leaveComment,
+    uploadUpdatedBook,
+    editorReview,
+    lectorReview,
+    mainEditorReview,
+    printBook,
+    type}) => {
     const [isOpen, setOpen] = useState(false);
 
     const handleDrawerToggle = () => {
@@ -153,6 +161,10 @@ const LoggedInHomepage = ({
                         <ChooseBetaReader updateUser={()=>updateUser()} />
                     }{leaveComment &&
                         <LeaveComment updateUser={()=>updateUser()}/>
+                    }{uploadUpdatedBook &&
+                        <UploadUpdatedBook updateUser={()=>updateUser()}/>
+                    }{ (editorReview || lectorReview || mainEditorReview || printBook) &&
+                        <BookReviewFinal updateUser={()=>updateUser()} type={type}/>
                     }
                 </div>
             </main>

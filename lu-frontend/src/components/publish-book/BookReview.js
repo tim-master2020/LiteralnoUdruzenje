@@ -3,15 +3,12 @@ import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { defaultUrl } from '../../backendConfig.js';
 import './Global.css';
-import withReactContent from 'sweetalert2-react-content';
-import Swal from 'sweetalert2';
 import CamundaForm from '../CamundaForm.js';
 import { Card } from 'react-bootstrap';
 import { TaskNameRoutes } from '../../functions/TaskNameRoutes';
+import {alert} from '../../functions/alertSwal'
 
-const alert = withReactContent(Swal)
-
-const DecideSendingToBeta = ({history,updateUser}) => {
+const BookReview = ({history,updateUser,type}) => {
 
     const [formFields, setformFields] = React.useState([]);
     const [isValid, setIsValid] = React.useState({});
@@ -24,6 +21,7 @@ const DecideSendingToBeta = ({history,updateUser}) => {
         headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
     };
 
+    console.log(type);
     React.useEffect(() => {
         axios.get(`${defaultUrl}/process/get-form-fields/${history.location.state.taskId}`, options).then(
             (resp) => {
@@ -34,7 +32,7 @@ const DecideSendingToBeta = ({history,updateUser}) => {
     }, []);
 
     function handleSubmit(e) {
-
+        
         e.preventDefault();
         const returnArray = [];
         formFields.forEach(field => {
@@ -45,12 +43,22 @@ const DecideSendingToBeta = ({history,updateUser}) => {
             returnArray.push({ fieldId: field.id, fieldValue: field.value.value });
         });
         console.log(returnArray)
-        axios.post(`${defaultUrl}/api/books/submit-sending-to-beta/${history.location.state.taskId}`, returnArray, options).then(
+        let reviewType = '';
+        if (type === 'lector') {
+            reviewType = 'lector-review';
+        } else if (type === 'mainEditor') {
+            reviewType = 'main-editor-review';
+        } else if (type === 'editor') {
+            reviewType = 'editor-review';
+        } else if (type === 'printBook') {
+            reviewType = 'print-book';
+        }
+    
+        axios.post(`${defaultUrl}/api/books/${reviewType}/${history.location.state.taskId}`, returnArray, options).then(
             (resp) => {
                 updateUser();
-                console.log(resp.data);
-
-                if(resp.data !== "" && resp.data.taskName === "Filter beta readers"){
+                alert('Your decision is successfully submited!');
+                if(resp.data !== "" && resp.data.taskName === "PrintBook"){
                     history.push({
                         pathname:`${TaskNameRoutes(resp.data.taskName)}/${resp.data.taskId}`,
                         state: {
@@ -60,17 +68,20 @@ const DecideSendingToBeta = ({history,updateUser}) => {
                 }else{
                     history.push('/');
                 }
+
             },
-            (resp) => {
-                alert.fire({
-                    text:'Error occured, please try again.',
-                });
+            () => {
+                alert('Error occured.');
             }
         );
     }
 
     return(
         <div>
+            { type==="printBook" && 
+                <p className="title">This book has been approved through all checks. By clicking on submit, book will be
+                sent to printing and indexing.</p>
+            }
             <Card className='cardHolder'>
                 <CamundaForm
                 formFields={formFields}
@@ -87,4 +98,4 @@ const DecideSendingToBeta = ({history,updateUser}) => {
         </div>
     )
 }
-export default withRouter(DecideSendingToBeta);
+export default withRouter(BookReview);

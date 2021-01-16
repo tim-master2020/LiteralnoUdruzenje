@@ -210,6 +210,14 @@ public class BookController {
         runtimeService.setVariable(processInstanceId, "sendToBeta", decision);
         formService.submitTaskForm(taskId,map);
 
+        Task nextTask = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
+        if(nextTask != null) {
+            if(formService.getTaskFormData(nextTask.getId()) != null) {
+                List<FormField> properties = formService.getTaskFormData(nextTask.getId()).getFormFields();
+                return new ResponseEntity<>(new FormFieldsDTO(nextTask.getId(), processInstanceId, properties, nextTask.getName()), HttpStatus.OK);
+            }
+        }
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -218,8 +226,85 @@ public class BookController {
         HashMap<String, Object> map = this.mapListToDto(commentDTO);
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
         Map betasThatCommented = (HashMap<String,String>)runtimeService.getVariable(task.getProcessInstanceId(),"betasThatCommented");
-        betasThatCommented.put(task.getAssignee(),commentDTO.get(0).getFieldValue());
+        betasThatCommented.put(task.getAssignee(),commentDTO.get(1).getFieldValue());
         runtimeService.setVariable(task.getProcessInstanceId(),"betasThatCommented",betasThatCommented);
+        formService.submitTaskForm(taskId,map);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/submit-updated-book/{taskId}")
+    public ResponseEntity<?> submitUpdatedBook(@RequestBody List<FormSubmissionDTO> bookDTO, @PathVariable String taskId) {
+
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+
+        String username = task.getAssignee();
+        String bookName = (String) taskService.getVariables(taskId).get("bookName");
+        List<String> booksSaved = bookService.savePdf((List<String>) bookDTO.get(0).getFieldValue(), bookName, username);
+        runtimeService.setVariable(task.getProcessInstanceId(),"booksSaved",booksSaved);
+
+        HashMap<String, Object> map = new HashMap<>();
+        for (String name : booksSaved){
+            map.put("name", name);
+        }
+
+        try {
+            formService.submitTaskForm(taskId, map);
+        }catch (Exception e){
+            return new ResponseEntity<>(new ExplanationDTO("Uploading book failed."),HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/editor-review/{taskId}")
+    public ResponseEntity<?> submitNewChangesDecision(@RequestBody List<FormSubmissionDTO> decisionDTO, @PathVariable String taskId) {
+
+        HashMap<String, Object> map = this.mapListToDto(decisionDTO);
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+        String processInstanceId = task.getProcessInstanceId();
+        String decision = (String) map.get("changesNeeded");
+        String comment = (String) map.get("comment");
+        runtimeService.setVariable(processInstanceId, "changesNeeded", decision);
+        runtimeService.setVariable(processInstanceId, "editorsComment", comment);
+        formService.submitTaskForm(taskId,map);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/lector-review/{taskId}")
+    public ResponseEntity<?> submitLectorDecision(@RequestBody List<FormSubmissionDTO> decisionDTO, @PathVariable String taskId) {
+
+        HashMap<String, Object> map = this.mapListToDto(decisionDTO);
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+        String processInstanceId = task.getProcessInstanceId();
+        String decision = (String) map.get("changesNeeded");
+        String comment = (String) map.get("comment");
+        runtimeService.setVariable(processInstanceId, "lectorChangesNeeded", decision);
+        runtimeService.setVariable(processInstanceId, "lectorsComment", comment);
+        runtimeService.setVariable(processInstanceId, "lectorViewed", true);
+        formService.submitTaskForm(taskId,map);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/main-editor-review/{taskId}")
+    public ResponseEntity<?> submitMainEditorDecision(@RequestBody List<FormSubmissionDTO> decisionDTO, @PathVariable String taskId) {
+
+        HashMap<String, Object> map = this.mapListToDto(decisionDTO);
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+        String processInstanceId = task.getProcessInstanceId();
+        String decision = (String) map.get("changesNeeded");
+        String comment = (String) map.get("comment");
+        runtimeService.setVariable(processInstanceId, "mainEditorChangesNeeded", decision);
+        runtimeService.setVariable(processInstanceId, "mainEditorsComment", comment);
+        formService.submitTaskForm(taskId,map);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/print-book/{taskId}")
+    public ResponseEntity<?> sendBookToPrinting(@RequestBody List<FormSubmissionDTO> decisionDTO, @PathVariable String taskId) {
+        HashMap<String, Object> map = this.mapListToDto(decisionDTO);
         formService.submitTaskForm(taskId,map);
         return new ResponseEntity<>(HttpStatus.OK);
     }

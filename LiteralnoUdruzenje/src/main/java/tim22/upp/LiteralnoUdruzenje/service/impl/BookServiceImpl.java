@@ -123,6 +123,11 @@ public class BookServiceImpl implements IBookService {
                 book = bookRepository.findBookByName(bookName);
             }
 
+            Boolean isPdfUpdate = false;
+            if (book.getPdfName() != null) {
+                removePdf(book.getPdfName());
+                isPdfUpdate = true;
+            }
             book.setPdfName(book.getName());
 
             if (writer != null && !book.getWriters().contains(writer)){
@@ -132,10 +137,14 @@ public class BookServiceImpl implements IBookService {
             convertToPdf(fileBytes.get(i), book, isInitialUploadOfABook);
 
             Book bookSaved = new Book();
-            if(bookName == null){
-                bookSaved = save(book);
+            if (!isPdfUpdate) {
+                if (bookName == null) {
+                    bookSaved = save(book);
+                } else {
+                    bookSaved = update(book);
+                }
             } else {
-                bookSaved = update(book);
+                bookSaved = book;
             }
             booksSaved.add(bookSaved.getName());
         }
@@ -179,6 +188,19 @@ public class BookServiceImpl implements IBookService {
             System.out.println("PDF File Saved");
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void removePdf(String pdfName){
+        if(pdfName != null) {
+            File file = new File("src/main/resources/pdfs/".concat(pdfName).concat(".pdf"));
+            if(file != null) {
+                if (file.delete()) {
+                    System.out.println("File deleted successfully");
+                } else {
+                    System.out.println("Failed to delete the file");
+                }
+            }
         }
     }
 }

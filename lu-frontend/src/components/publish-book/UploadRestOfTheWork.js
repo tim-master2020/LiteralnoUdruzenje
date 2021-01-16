@@ -70,7 +70,6 @@ const UploadRestOfTheWork = ({history,updateUser}) =>{
                 //window.location.reload();
             },
             (resp) => {
-                debugger;
                 alert.fire({text:'Error while uploading files,please try again.'});
             }
         );

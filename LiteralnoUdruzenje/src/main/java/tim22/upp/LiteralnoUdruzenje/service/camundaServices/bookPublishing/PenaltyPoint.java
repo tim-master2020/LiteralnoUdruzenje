@@ -9,7 +9,9 @@ import tim22.upp.LiteralnoUdruzenje.service.IReaderService;
 import tim22.upp.LiteralnoUdruzenje.service.IUserService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PenaltyPoint implements JavaDelegate {
@@ -20,12 +22,12 @@ public class PenaltyPoint implements JavaDelegate {
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
         System.out.println("got a penalty point");
-        List betasThatCommented = (ArrayList<String>)delegateExecution.getVariable("betasThatCommented");
+        Map betasThatCommented = (HashMap<String,String>)delegateExecution.getVariable("betasThatCommented");
         List selecteBetaReaders = (ArrayList<String>)delegateExecution.getVariable("selectedBetaReaders");
         List betasThatHaventCommented = new ArrayList();
 
         for(Object username : selecteBetaReaders){
-            if(!betasThatCommented.contains(username)){
+            if(betasThatCommented.get(username) == null){
                Reader reader = readerService.findByUsername(username.toString());
                reader.setPenaltyPoints(reader.getPenaltyPoints()+1);
                readerService.updateReader(reader);

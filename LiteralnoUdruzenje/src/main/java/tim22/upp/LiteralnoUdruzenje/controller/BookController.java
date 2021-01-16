@@ -25,11 +25,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.stream.Stream;
 
 @CrossOrigin("http://localhost:3000")
@@ -220,8 +217,8 @@ public class BookController {
     public ResponseEntity<?> submitComment(@RequestBody List<FormSubmissionDTO> commentDTO, @PathVariable String taskId) {
         HashMap<String, Object> map = this.mapListToDto(commentDTO);
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
-       List betasThatCommented = (ArrayList<String>)runtimeService.getVariable(task.getProcessInstanceId(),"betasThatCommented");
-       betasThatCommented.add(task.getAssignee());
+        Map betasThatCommented = (HashMap<String,String>)runtimeService.getVariable(task.getProcessInstanceId(),"betasThatCommented");
+        betasThatCommented.put(task.getAssignee(),commentDTO.get(0).getFieldValue());
         runtimeService.setVariable(task.getProcessInstanceId(),"betasThatCommented",betasThatCommented);
         formService.submitTaskForm(taskId,map);
         return new ResponseEntity<>(HttpStatus.OK);

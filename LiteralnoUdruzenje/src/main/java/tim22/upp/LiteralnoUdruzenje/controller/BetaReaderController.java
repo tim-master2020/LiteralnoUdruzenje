@@ -44,7 +44,7 @@ public class BetaReaderController {
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
 
         List betaReaders = new ArrayList();
-        List betasThatCommented = new ArrayList();
+        Map betasThatCommented = new HashMap<String,String>();
 
         for(Object username : map.values()){ ;
             betaReaders.add(username);

@@ -17,10 +17,7 @@ import tim22.upp.LiteralnoUdruzenje.dto.ExplanationDTO;
 import tim22.upp.LiteralnoUdruzenje.dto.FormSubmissionDTO;
 import tim22.upp.LiteralnoUdruzenje.service.IBookService;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/api/betareaders")
@@ -45,7 +42,15 @@ public class BetaReaderController {
     public ResponseEntity<?> chooseBetaReader(@RequestBody List<FormSubmissionDTO> betaUsernames, @PathVariable String taskId) {
         HashMap<String, Object> map = this.mapListToDto(betaUsernames);
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
-        runtimeService.setVariable(task.getProcessInstanceId(), "selectedBetaReaders", map);
+
+        List betaReaders = new ArrayList();
+        List betasThatCommented = new ArrayList();
+
+        for(Object username : map.values()){ ;
+            betaReaders.add(username);
+        }
+        runtimeService.setVariable(task.getProcessInstanceId(), "selectedBetaReaders", betaReaders);
+        runtimeService.setVariable(task.getProcessInstanceId(), "betasThatCommented", betasThatCommented);
 
         try {
             formService.submitTaskForm(taskId, map);

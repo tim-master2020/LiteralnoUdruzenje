@@ -3,13 +3,29 @@ import React from 'react';
 import LoggedInHomePage from './LoggedInHomePage';
 import LoggedOutHomepage from './LoggedOutHomepage';
 
-const HomePage = ({loggedInUser,setLoggedIn,isInitialUpload,isReview,isPayment,isReviewPreview,publishBookGeneralData,reviewBookGeneral,giveExplanation,uploadRestWork,comparePlagiats,downloadBook,decideBeta, isChooseBetaReader}) => {
+const HomePage = ({
+    loggedInUser,
+    setLoggedIn,
+    isInitialUpload,
+    isReview,
+    isPayment,
+    isReviewPreview,
+    publishBookGeneralData,
+    reviewBookGeneral,
+    giveExplanation,
+    uploadRestWork,
+    comparePlagiats,
+    downloadBook,
+    decideBeta, 
+    isChooseBetaReader,
+    leaveComment}) => {
     if(loggedInUser === undefined){
     return (
         <LoggedOutHomepage/>
     );
     }else if( loggedInUser !== undefined){
-        return(<LoggedInHomePage 
+        return(
+        <LoggedInHomePage 
             loggedInUser={loggedInUser} 
             setLoggedIn={setLoggedIn} 
             publishBookGeneralData={publishBookGeneralData}
@@ -24,6 +40,7 @@ const HomePage = ({loggedInUser,setLoggedIn,isInitialUpload,isReview,isPayment,i
             isPayment={isPayment}
             isReviewPreview={isReviewPreview}
             isChooseBetaReader={isChooseBetaReader}
+            leaveComment={leaveComment}
             />);
     }
 

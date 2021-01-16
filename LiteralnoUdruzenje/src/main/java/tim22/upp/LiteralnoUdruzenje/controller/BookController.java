@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -212,6 +213,17 @@ public class BookController {
         runtimeService.setVariable(processInstanceId, "sendToBeta", decision);
         formService.submitTaskForm(taskId,map);
 
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/submit-comment/{taskId}")
+    public ResponseEntity<?> submitComment(@RequestBody List<FormSubmissionDTO> commentDTO, @PathVariable String taskId) {
+        HashMap<String, Object> map = this.mapListToDto(commentDTO);
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+       List betasThatCommented = (ArrayList<String>)runtimeService.getVariable(task.getProcessInstanceId(),"betasThatCommented");
+       betasThatCommented.add(task.getAssignee());
+        runtimeService.setVariable(task.getProcessInstanceId(),"betasThatCommented",betasThatCommented);
+        formService.submitTaskForm(taskId,map);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

@@ -32,7 +32,10 @@ export function TaskNameRoutes(name) {
             break;   
         case 'Filter beta readers':
             route = '/choosebetareader';
-            break;     
+            break;   
+        case 'LeaveComment':
+            route = '/leaveComment';
+            break;  
         default:
             route = '/';
             break;

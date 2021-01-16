@@ -46,9 +46,9 @@ values (-13,'jana', 'maric','jana', 'reader2@gmail.com', '$2a$10$En99NVAv.YrTtVx
 INSERT INTO user_authority (user_id,authority_id) values (-13,2);
 
 --Readers
-insert into reader(id,beta_reader) values (-6,false);
-insert into reader(id,beta_reader) values (-12,true);
-insert into reader(id,beta_reader) values (-13,true);
+insert into reader(id,beta_reader,penalty_points) values (-6,false,0);
+insert into reader(id,beta_reader,penalty_points) values (-12,true,1);
+insert into reader(id,beta_reader,penalty_points) values (-13,true,4);
 
 --Writers
 insert into writer(id,is_verified) values (-7,true);

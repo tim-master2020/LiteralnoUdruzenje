@@ -80,6 +80,16 @@ public class EmailNotification implements JavaDelegate {
             emailService.sendCustomerEmail(writer, "Hello,  \n\n"
                     + "Congratulations! \n\n" + "Your book has been approved by everyone in the committee." +
                     " It is sent to printing and indexing now.\n");
+        } else if (taskId.equals("NotifyMainEditorAboutPlagiarism")) {
+            User editor = userService.findByUsername(delegateExecution.getVariable("mainEditor").toString());
+            emailService.sendCustomerEmail(editor, "Hello, " + editor.getUsername()+  "\n\n"
+                    + "There's been a complaint about plagiarism. You have to select minimum of two editors to review it.");
+        } else if(taskId.equals("NotifySelectedEditors")) {
+            List<String> usernames = (List<String>) delegateExecution.getVariable("selectedEditors");
+            for (String username : usernames) {
+                User user = userService.findByUsername(username);
+                emailService.sendCustomerEmail(user, "Dear" + user.getFirstName() + "\n," + "you have new book to read and comment on. You have five days to do so.");
+            }
         }
         else
          {

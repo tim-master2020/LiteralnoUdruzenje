@@ -24,7 +24,9 @@ const HomePage = ({
     lectorReview,
     mainEditorReview,
     printBook,
-    type}) => {
+    isFileAComplaint,
+    isChooseEditor,
+    type,}) => {
     if(loggedInUser === undefined){
     return (
         <LoggedOutHomepage/>
@@ -52,6 +54,8 @@ const HomePage = ({
             lectorReview={lectorReview}
             mainEditorReview={mainEditorReview}
             printBook={printBook}
+            isFileAComplaint={isFileAComplaint}
+            isChooseEditor={isChooseEditor}
             type={type}
             />);
     }

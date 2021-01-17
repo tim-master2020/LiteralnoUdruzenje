@@ -24,7 +24,6 @@ public class Writer extends User implements Serializable {
     private Set<Genre> genres = new HashSet<>();
 
     public Writer() {}
-
     public boolean isVerified() {
         return isVerified;
     }
@@ -56,4 +55,5 @@ public class Writer extends User implements Serializable {
     public void setGenres(Set<Genre> genres) {
         this.genres = genres;
     }
+
 }

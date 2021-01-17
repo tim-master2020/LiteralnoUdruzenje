@@ -12,4 +12,5 @@ public interface IUserService {
     User updateUser(User user);
     List<User> findByRole(Role role);
     void removeUser(String username);
+    User findMainEditor();
 }

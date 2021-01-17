@@ -51,6 +51,9 @@ export function TaskNameRoutes(name) {
         case 'PrintBook':
             route = '/printBook';
             break;
+        case 'SelectEditors':
+            route = '/choose-editor';
+            break;  
         default:
             route = '/';
             break;

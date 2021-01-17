@@ -20,7 +20,7 @@ values (-6,'jelena', 'bojanic','jelena', 'admin@gmail.com', '$2a$10$En99NVAv.YrT
 INSERT INTO user_authority (user_id,authority_id) values (-6,2);
 
 insert into users (id,firstname, lastname,username, email, password,last_password_reset_date,city,country,is_active_account,role)
-values (-7,'mina', 'maras','mina', 'tamaraa.jancic@gmail.com', '$2a$10$En99NVAv.YrTtVxJ1fssBeVO4AFnfl1OMwzFbPeaDdSBm1KLUzp12','2012-09-17 18:47:52.69','Novi Sad','Srbija',true,'WRITER');
+values (-7,'mina', 'maras','mina', 'mina@gmail.com', '$2a$10$En99NVAv.YrTtVxJ1fssBeVO4AFnfl1OMwzFbPeaDdSBm1KLUzp12','2012-09-17 18:47:52.69','Novi Sad','Srbija',true,'WRITER');
 INSERT INTO user_authority (user_id,authority_id) values (-7,1);
 
 insert into users (id,firstname, lastname,username, email, password,last_password_reset_date,city,country,is_active_account,role)
@@ -36,7 +36,7 @@ values (-10,'svetlana', 'svetlanic','svetlana', 'svetlana@gmail.com', '$2a$10$En
 INSERT INTO user_authority (user_id,authority_id) values (-10,1);
 
 insert into users (id,firstname, lastname,username, email, password,last_password_reset_date,city,country,is_active_account,role)
-values (-11,'pera', 'peric','pera', 'tamara.jancic@hotmail.com', '$2a$10$En99NVAv.YrTtVxJ1fssBeVO4AFnfl1OMwzFbPeaDdSBm1KLUzp12','2012-09-17 18:47:52.69','Novi Sad','Srbija',true,'EDITOR');
+values (-11,'pera', 'peric','pera', 'pera@hotmail.com', '$2a$10$En99NVAv.YrTtVxJ1fssBeVO4AFnfl1OMwzFbPeaDdSBm1KLUzp12','2012-09-17 18:47:52.69','Novi Sad','Srbija',true,'EDITOR');
 INSERT INTO user_authority (user_id,authority_id) values (-11,3);
 
 insert into users (id,firstname, lastname,username, email, password,last_password_reset_date,city,country,is_active_account,role)

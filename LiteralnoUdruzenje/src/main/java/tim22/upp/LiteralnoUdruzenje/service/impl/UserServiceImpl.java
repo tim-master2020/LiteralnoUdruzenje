@@ -53,4 +53,8 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
     public List<User> findByRole(Role role) {
         return userRepository.findByRole(role);
     }
+
+    public User findMainEditor() {
+        return userRepository.findByUsername("lena");
+    }
 }

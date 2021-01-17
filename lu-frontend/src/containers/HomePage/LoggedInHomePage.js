@@ -31,6 +31,8 @@ import ChooseBetaReader from "../../components/publish-book/ChooseBetaReader";
 import LeaveComment from "../../components/publish-book/LeaveComment";
 import UploadUpdatedBook from "../../components/publish-book/UploadUpdatedBook";
 import BookReviewFinal from "../../components/publish-book/BookReview";
+import FileAComlpaint from "../../components/plagiarism/FileAComplaint";
+import ChooseEditors from "../../components/plagiarism/ChooseEditors";
 
 const LoggedInHomepage = ({ 
     loggedInUser,
@@ -54,6 +56,8 @@ const LoggedInHomepage = ({
     lectorReview,
     mainEditorReview,
     printBook,
+    isFileAComplaint,
+    isChooseEditor,
     type}) => {
     const [isOpen, setOpen] = useState(false);
 
@@ -86,6 +90,27 @@ const LoggedInHomepage = ({
         );
     }
 
+    const startPlagiarsmProcess = () => {
+
+        const options = {
+            headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
+        };
+
+        axios.get(`${defaultUrl}/process/start-process-specific/ComplainPlagiarisam`, options).then(
+            (resp) => {
+                history.push({
+                    pathname: '/fileAComplaint',
+                    state: {
+                      taskId: resp.data.taskId
+                    }
+                  });
+            },
+            (resp) => {
+                alert('fail start of process');
+            }
+        );
+    }
+
     const updateUser = () => {
         getUser(setLoggedIn);
     }
@@ -107,6 +132,11 @@ const LoggedInHomepage = ({
                             { loggedInUser.activeAccount &&  
                                 <Button className={classes.button} onClick={() => { startPublishBookProcess() }} >
                                     Book publishing
+                                </Button>
+                            }
+                            { loggedInUser.activeAccount &&  
+                                <Button className={classes.button} onClick={() => { startPlagiarsmProcess() }} >
+                                    Sumbit Plagiarsm
                                 </Button>
                             }
                             <br/>
@@ -165,6 +195,10 @@ const LoggedInHomepage = ({
                         <UploadUpdatedBook updateUser={()=>updateUser()}/>
                     }{ (editorReview || lectorReview || mainEditorReview || printBook) &&
                         <BookReviewFinal updateUser={()=>updateUser()} type={type}/>
+                    }{ isFileAComplaint &&
+                        <FileAComlpaint/>
+                    }{ isChooseEditor &&
+                        <ChooseEditors updateUser={()=>updateUser()} />
                     }
                 </div>
             </main>

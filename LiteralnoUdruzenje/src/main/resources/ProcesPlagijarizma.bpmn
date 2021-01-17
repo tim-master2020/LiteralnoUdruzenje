@@ -65,7 +65,7 @@
     <bpmn:sequenceFlow id="Flow_03gfv3f" sourceRef="NotifySelectedEditors" targetRef="Gateway_10loctm" />
     <bpmn:sequenceFlow id="Flow_10qud2z" sourceRef="SelectEditors" targetRef="NotifySelectedEditors" />
     <bpmn:sequenceFlow id="Flow_1i2zhtb" sourceRef="SaveComplaint" targetRef="NotifyMainEditorAboutPlagiarism" />
-    <bpmn:serviceTask id="SaveComplaint" name="SaveComplaint" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.SaveComplaint">
+    <bpmn:serviceTask id="SaveComplaint" name="SaveComplaint" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.plagiatorProcess.SaveComplaint">
       <bpmn:incoming>Flow_1y11iht</bpmn:incoming>
       <bpmn:outgoing>Flow_1i2zhtb</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -84,7 +84,7 @@
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_15aavgd" sourceRef="Event_1dy4s5k" targetRef="CheckWhoDidntReview" />
     <bpmn:sequenceFlow id="Flow_1hh8udi" sourceRef="CheckWhoDidntReview" targetRef="Activity_0u210xv" />
-    <bpmn:serviceTask id="CheckWhoDidntReview" name="CheckWhoDidntReview" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.CheckWhoDidntReview">
+    <bpmn:serviceTask id="CheckWhoDidntReview" name="CheckWhoDidntReview" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.plagiatorProcess.CheckWhoDidntReview">
       <bpmn:incoming>Flow_15aavgd</bpmn:incoming>
       <bpmn:outgoing>Flow_1hh8udi</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -96,7 +96,7 @@
     <bpmn:sequenceFlow id="Flow_0t4ciff" sourceRef="Gateway_10loctm" targetRef="DownloadBooksForReview" />
     <bpmn:sequenceFlow id="Flow_0ds2xa5" sourceRef="Activity_0u210xv" targetRef="Gateway_10loctm" />
     <bpmn:sequenceFlow id="Flow_0yaf7m0" sourceRef="DownloadBooksForReview" targetRef="Gateway_0t08owu" />
-    <bpmn:serviceTask id="Activity_1bjdh6y" name="CheckReviewsResult" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.CheckReviews">
+    <bpmn:serviceTask id="Activity_1bjdh6y" name="CheckReviewsResult" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.plagiatorProcess.CheckReviews">
       <bpmn:incoming>Flow_1yr6rd1</bpmn:incoming>
       <bpmn:outgoing>Flow_0a82qxa</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -113,7 +113,7 @@
       <bpmn:outgoing>Flow_0y1qf59</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_0y1qf59" sourceRef="Gateway_0t08owu" targetRef="Activity_1c1xx2p" />
-    <bpmn:serviceTask id="Activity_1c1xx2p" name="ResetVotes" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.ResetVotes">
+    <bpmn:serviceTask id="Activity_1c1xx2p" name="ResetVotes" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.plagiatorProcess.ResetVotes">
       <bpmn:incoming>Flow_0y1qf59</bpmn:incoming>
       <bpmn:outgoing>Flow_1htk19q</bpmn:outgoing>
     </bpmn:serviceTask>

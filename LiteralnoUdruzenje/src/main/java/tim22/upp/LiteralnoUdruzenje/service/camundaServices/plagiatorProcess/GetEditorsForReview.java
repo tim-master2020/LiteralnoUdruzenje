@@ -1,4 +1,4 @@
-package tim22.upp.LiteralnoUdruzenje.service.camundaServices;
+package tim22.upp.LiteralnoUdruzenje.service.camundaServices.plagiatorProcess;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;

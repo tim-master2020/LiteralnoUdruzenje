@@ -46,6 +46,7 @@ public class LoadEditors implements TaskListener {
 
                 for (Map.Entry<String, String> entry : dict.entrySet()) {
                     formType.getValues().put(entry.getValue(), entry.getKey());
+
                 }
             }
         }

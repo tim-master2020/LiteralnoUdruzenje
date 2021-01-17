@@ -9,7 +9,7 @@ import withReactContent from 'sweetalert2-react-content';
 
 const alert = withReactContent(Swal)
 
-const FileAComlpaint = ({ taskId, history }) => {
+const FileAComlpaint = ({ taskId, history,updateUser}) => {
 
     const [formFields, setformFields] = React.useState([]);
     const [isValid, setIsValid] = React.useState({});
@@ -42,7 +42,7 @@ const FileAComlpaint = ({ taskId, history }) => {
 
         axios.post(`${defaultUrl}/plagiarism/file-complaint/${history.location.state.taskId}`, returnArray, options).then(
             (resp) => {
-
+                updateUser();
                 alert.fire({
                     title: "Success",
                     text: 'Your file a complaint successfully.',
@@ -53,7 +53,7 @@ const FileAComlpaint = ({ taskId, history }) => {
             },
             (resp) => {
                 alert.fire({
-                    text:'Error occured please try again',
+                    text:"You either didn't enter right writer name,book title or the book wasn't writer by that writer.Please try again",
                 });
             }
         );

@@ -26,7 +26,9 @@ const HomePage = ({
     printBook,
     isFileAComplaint,
     isChooseEditor,
-    type,}) => {
+    type,
+    downloadAndReview,
+    findReplacement}) => {
     if(loggedInUser === undefined){
     return (
         <LoggedOutHomepage/>
@@ -57,6 +59,8 @@ const HomePage = ({
             isFileAComplaint={isFileAComplaint}
             isChooseEditor={isChooseEditor}
             type={type}
+            downloadAndReview={downloadAndReview}
+            findReplacement={findReplacement}
             />);
     }
 

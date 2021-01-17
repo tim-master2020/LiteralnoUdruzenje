@@ -84,6 +84,12 @@ const Routes = ({ loggedInUser, setLoggedIn }) => {
             <Route exact path='/choose-editor/:taskId' render={props =>
                 <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} isChooseEditor={true} />
             } />
+            <Route exact path='/download-and-review/:taskId' render={props =>
+                <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} downloadAndReview={true} />
+            } />
+            <Route exact path='/find-replacement/:taskId' render={props =>
+                <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} findReplacement={true} />
+            } />
         </Switch>
     );
 }

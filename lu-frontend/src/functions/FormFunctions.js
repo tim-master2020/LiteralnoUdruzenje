@@ -12,6 +12,7 @@ export function validate(field,value,setIsValid,isValid){
 
 
         if (constraint.configuration !== null) {
+            debugger;
             
             if(value !== undefined && value !== null && value !== ''){
                 if (constraint.name === 'minlength' && field.type.name === 'string') {
@@ -58,6 +59,14 @@ export function validate(field,value,setIsValid,isValid){
                     setIsValid(isValid);
                 }
             }
+            if (constraint.name === 'validator' && constraint.configuration === 'tim22.upp.LiteralnoUdruzenje.validators.EditorSumValidator') {
+                if (value !== null || value !== undefined || value !== null || value !== '' && value.length <= 2) {
+                    setIsValid(isValid[field.id] = (`${field.id} you need to select at least 2 editors.`));
+            }else{
+                delete isValid[`${field.id}`];
+                setIsValid(isValid);
+            }
+        }
         }
     }
     });

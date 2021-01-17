@@ -35,4 +35,9 @@ public class WriterServiceImpl implements IWriterService {
     public Writer updateWriter(Writer writer) {
         return writerRepository.save(writer);
     }
+
+    @Override
+    public Writer findByFullname(String firstname, String lastname) {
+        return writerRepository.findByFirstnameAndLastname(firstname,lastname);
+    }
 }

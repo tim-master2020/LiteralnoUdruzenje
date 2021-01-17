@@ -1,7 +1,5 @@
 import MultiSelect from "react-multi-select-component";
 import Select from 'react-select';
-import maintenance from '../icons/maintenance.svg';
-import reading from '../icons/readingbook.svg';
 import { React, useImperativeHandle, forwardRef } from 'react';
 import { Form, Button, Col } from "react-bootstrap";
 import {validate} from '../functions/FormFunctions.js';
@@ -29,6 +27,20 @@ const CamundaForm = ({ formFields,
         </Form>
     );
 
+    // function updateSelected(e,field){
+    //     const values = e.map(element => element.label);
+
+    //     if (!validate(field,values,setIsValid,isValid)) {
+    //         setValidationMessage(`Input value for field ${field.id} should be`);
+    //         if (Object.keys(isValid).length > 0) {
+    //             setShouldSubmit(false);
+    //         } else {
+    //             setSelected(e);
+    //             setShouldSubmit(true);
+    //         }
+    //     }
+        
+    // }
 
     function renderFormFields(formFields) {
         if (formFields !== undefined && formFields.length > 0) {
@@ -270,6 +282,7 @@ const CamundaForm = ({ formFields,
         }
         return options;
     }
+
 }
 export default CamundaForm;
 

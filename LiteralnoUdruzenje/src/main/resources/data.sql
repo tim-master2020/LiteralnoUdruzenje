@@ -35,9 +35,23 @@ insert into users (id,firstname, lastname,username, email, password,last_passwor
 values (-10,'svetlana', 'svetlanic','svetlana', 'svetlana@gmail.com', '$2a$10$En99NVAv.YrTtVxJ1fssBeVO4AFnfl1OMwzFbPeaDdSBm1KLUzp12','2012-09-17 18:47:52.69','Novi Sad','Srbija',true,'WRITER');
 INSERT INTO user_authority (user_id,authority_id) values (-10,1);
 
+--editors
 insert into users (id,firstname, lastname,username, email, password,last_password_reset_date,city,country,is_active_account,role)
 values (-11,'pera', 'peric','pera', 'pera@hotmail.com', '$2a$10$En99NVAv.YrTtVxJ1fssBeVO4AFnfl1OMwzFbPeaDdSBm1KLUzp12','2012-09-17 18:47:52.69','Novi Sad','Srbija',true,'EDITOR');
 INSERT INTO user_authority (user_id,authority_id) values (-11,3);
+
+insert into users (id,firstname, lastname,username, email, password,last_password_reset_date,city,country,is_active_account,role)
+values (-25,'stanko', 'stankic','stanko', 'stanko@hotmail.com', '$2a$10$En99NVAv.YrTtVxJ1fssBeVO4AFnfl1OMwzFbPeaDdSBm1KLUzp12','2012-09-17 18:47:52.69','Novi Sad','Srbija',true,'EDITOR');
+INSERT INTO user_authority (user_id,authority_id) values (-25,3);
+
+insert into users (id,firstname, lastname,username, email, password,last_password_reset_date,city,country,is_active_account,role)
+values (-26,'bogdan', 'bogdanovic','bogdan', 'stanko@hotmail.com', '$2a$10$En99NVAv.YrTtVxJ1fssBeVO4AFnfl1OMwzFbPeaDdSBm1KLUzp12','2012-09-17 18:47:52.69','Novi Sad','Srbija',true,'EDITOR');
+INSERT INTO user_authority (user_id,authority_id) values (-26,3);
+
+insert into users (id,firstname, lastname,username, email, password,last_password_reset_date,city,country,is_active_account,role)
+values (-27,'milan', 'milic','milan', 'stanko@hotmail.com', '$2a$10$En99NVAv.YrTtVxJ1fssBeVO4AFnfl1OMwzFbPeaDdSBm1KLUzp12','2012-09-17 18:47:52.69','Novi Sad','Srbija',true,'EDITOR');
+INSERT INTO user_authority (user_id,authority_id) values (-27,3);
+----
 
 insert into users (id,firstname, lastname,username, email, password,last_password_reset_date,city,country,is_active_account,role)
 values (-12,'ana', 'maric','ana', 'reader1@gmail.com', '$2a$10$En99NVAv.YrTtVxJ1fssBeVO4AFnfl1OMwzFbPeaDdSBm1KLUzp12','2012-09-17 18:47:52.69','Novi Sad','Srbija',true,'READER');
@@ -70,11 +84,16 @@ insert into reader_beta_genres(reader_id, beta_genres_id) values (-12,-2);
 insert into reader_beta_genres(reader_id, beta_genres_id) values (-13,-2);
 
 --Books
-insert into book(id,name,number_of_pages,pdf_name,publisher,isbn,year,synopsis,place,genre_id)
-values(-10,'JeleninaKnjiga',120,'JeleninaKnjiga','Jelena books','abc',1997,'Jelenina autobiografija','NOVI SAD',-1);
+--insert into book(id,name,number_of_pages,pdf_name,publisher,isbn,year,synopsis,place,genre_id)
+--values(-10,'JeleninaKnjiga',120,'JeleninaKnjiga','Jelena books','abc',1997,'Jelenina autobiografija','NOVI SAD',-1);
 
 insert into book(id,name,number_of_pages,pdf_name,publisher,isbn,year,synopsis,place,genre_id)
-values(-11,'TamarinaKnjiga',120,'TamarinaKnjiga','Tamara books','abcd',1997,'Tamarina autobiografija','NOVI SAD',-2);
+values(-11,'LepaKnjiga',120,'TamarinaKnjiga','Tamara books','abcd',1997,'Tamarina autobiografija','NOVI SAD',-2);
 
 insert into book(id,name,number_of_pages,pdf_name,publisher,isbn,year,synopsis,place,genre_id)
 values(-12,'MininaKnjiga',120,'MininaKnjiga','Mina books','abcde',1997,'Minina autobiografija','NOVI SAD',-3);
+
+--books and writers
+insert into book_writers(book_id,writer_id) values(-12,-7);
+insert into book_writers(book_id,writer_id) values(-11,-10);
+

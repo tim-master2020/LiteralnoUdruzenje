@@ -44,12 +44,21 @@ public class PlagiarismController {
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
         String processInstanceId = task.getProcessInstanceId();
 
+        List booksForComparison = new ArrayList<String>();
+        booksForComparison.add(complaintDTO.get(1).getFieldValue());
+        booksForComparison.add(complaintDTO.get(2).getFieldValue());
+
         runtimeService.setVariable(processInstanceId, "complaintData", map);
+        runtimeService.setVariable(processInstanceId, "booksForComparison", booksForComparison);
         String username = principal.getName();
         User mainEditor = userService.findMainEditor();
         runtimeService.setVariable(processInstanceId, "writerWithComplaint", username);
         runtimeService.setVariable(processInstanceId, "mainEditor", mainEditor.getUsername());
-        formService.submitTaskForm(taskId,map);
+        try {
+            formService.submitTaskForm(taskId, map);
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -64,6 +73,7 @@ public class PlagiarismController {
             editors.add(username);
         }
         runtimeService.setVariable(task.getProcessInstanceId(), "selectedEditors", editors);
+        runtimeService.setVariable(task.getProcessInstanceId(),"editorsThatReviewed", new ArrayList<String>());
 
         try {
             formService.submitTaskForm(taskId, map);
@@ -73,6 +83,22 @@ public class PlagiarismController {
         }
 
 
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/submit-review/{taskId}")
+    public ResponseEntity<?> submitReviewAndNotes(@RequestBody List<FormSubmissionDTO> reviewDTO,@PathVariable String taskId,Principal principal){
+        HashMap<String, Object> map = this.mapListToDto(reviewDTO);
+
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+        String processInstanceId = task.getProcessInstanceId();
+
+        List editorsThatReviewed = (List<String>) runtimeService.getVariable(task.getProcessInstanceId(),"editorsThatReviewed");
+        String username = task.getAssignee();
+        editorsThatReviewed.add(username);
+        runtimeService.setVariable(processInstanceId,"editorsThatReviewed",editorsThatReviewed);
+
+        formService.submitTaskForm(taskId,map);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

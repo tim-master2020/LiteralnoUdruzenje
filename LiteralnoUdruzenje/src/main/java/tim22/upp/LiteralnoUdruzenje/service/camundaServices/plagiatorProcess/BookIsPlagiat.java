@@ -5,10 +5,10 @@ import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ResetVotes implements JavaDelegate {
+public class BookIsPlagiat implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
-            System.out.println("reseting votes");
+
     }
 }

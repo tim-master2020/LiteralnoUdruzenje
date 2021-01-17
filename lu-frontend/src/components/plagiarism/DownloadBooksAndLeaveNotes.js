@@ -4,15 +4,16 @@ import CamundaForm from '../CamundaForm';
 import axios from 'axios';
 import { defaultUrl } from '../../backendConfig';
 import { Card } from 'react-bootstrap';
-import {alert} from '../../functions/alertSwal';
+import { alert } from '../../functions/alertSwal';
 
-const ChooseEditors = ({ taskId, history,updateUser }) => {
+const DownloadBooksAndLeaveNotes = ({history,updateUser})=> {
 
     const [formFields, setformFields] = React.useState([]);
     const [isValid, setIsValid] = React.useState({});
-    const [selected, setSelected] = React.useState([]);
-    const [shouldSubmit, setShouldSubmit] = React.useState(true);
+    const [shouldSubmit,setShouldSubmit] = React.useState(true);
     const [validationMessage, setValidationMessage] = React.useState({});
+    const [selected,setSelected] =  React.useState([]);
+    const [taskId,setTaskId] =  React.useState(history.location.state.taskId);
 
     const options = {
         headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
@@ -27,53 +28,44 @@ const ChooseEditors = ({ taskId, history,updateUser }) => {
         );
     }, []);
 
-    function choose(e) {
+    function submitNotes(e) {
 
         e.preventDefault();
-        var usernames = [];
+        const returnArray = [];
         formFields.forEach(field => {
-
-            if (field.type.name.includes('multiEnum_editors')) {
-                selected.forEach(s => {
-                    usernames.push({ fieldId: s.value, fieldValue: s.label });
-                })
-            }
+            returnArray.push({ fieldId: field.id, fieldValue: field.value.value });
         });
 
-        console.log(usernames);
-
-        axios.post(`${defaultUrl}/plagiarism/choose-editors/${history.location.state.taskId}`, usernames, options).then(
+        axios.post(`${defaultUrl}/plagiarism/submit-review/${history.location.state.taskId}`, returnArray, options).then(
             (resp) => {
                 updateUser();
-
-                alert("You successfully selected the editors.");
+                alert('Your  notes successfully.');
                 history.push('/');
             },
             (resp) => {
-                alert('Error occured please try again.');
-                history.push('/');
-
+                alert("Error,please try again");
             }
         );
     }
 
-    return (
-        <Card className='cardHolder'>
-            <CamundaForm
-                id="camundaForm"
+    return(
+        <div>
+            <p className="title">You can download both books,compare them and leave your notes.</p>
+            <Card className='cardHolder'>
+                <CamundaForm
                 formFields={formFields}
                 setformFields={setformFields}
-                isValid={isValid}
-                setIsValid={setIsValid}
-                onSubmit={choose}
-                selected={selected}
-                setSelected={setSelected}
-                shouldSubmit={shouldSubmit}
                 setShouldSubmit={setShouldSubmit}
                 setValidationMessage={setValidationMessage}
-            />
-        </Card>
+                isValid={isValid}
+                setIsValid={setIsValid}
+                selected={selected}
+                setSelected={setSelected}
+                onSubmit={submitNotes}
+                />
+            </Card>
+        </div>
     )
 
 }
-export default withRouter(ChooseEditors);
+export default withRouter (DownloadBooksAndLeaveNotes);

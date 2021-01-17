@@ -54,6 +54,12 @@ export function TaskNameRoutes(name) {
         case 'SelectEditors':
             route = '/choose-editor';
             break;  
+        case 'DownloadBooksForReview':
+            route = '/download-and-review';
+            break;
+        case 'FindReplacment':
+            route = '/find-replacement';
+            break; 
         default:
             route = '/';
             break;

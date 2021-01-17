@@ -33,6 +33,8 @@ import UploadUpdatedBook from "../../components/publish-book/UploadUpdatedBook";
 import BookReviewFinal from "../../components/publish-book/BookReview";
 import FileAComlpaint from "../../components/plagiarism/FileAComplaint";
 import ChooseEditors from "../../components/plagiarism/ChooseEditors";
+import DownloadBooksAndLeaveNotes from "../../components/plagiarism/DownloadBooksAndLeaveNotes";
+import FindReplacement from "../../components/plagiarism/FindReplacement";
 
 const LoggedInHomepage = ({ 
     loggedInUser,
@@ -58,7 +60,9 @@ const LoggedInHomepage = ({
     printBook,
     isFileAComplaint,
     isChooseEditor,
-    type}) => {
+    type,
+    downloadAndReview,
+    findReplacement}) => {
     const [isOpen, setOpen] = useState(false);
 
     const handleDrawerToggle = () => {
@@ -196,9 +200,13 @@ const LoggedInHomepage = ({
                     }{ (editorReview || lectorReview || mainEditorReview || printBook) &&
                         <BookReviewFinal updateUser={()=>updateUser()} type={type}/>
                     }{ isFileAComplaint &&
-                        <FileAComlpaint/>
+                        <FileAComlpaint updateUser={()=>updateUser()}/>
                     }{ isChooseEditor &&
                         <ChooseEditors updateUser={()=>updateUser()} />
+                    }{ downloadAndReview &&
+                        <DownloadBooksAndLeaveNotes updateUser={()=>updateUser()} />
+                    }{ findReplacement &&
+                        <FindReplacement updateUser={()=>updateUser()}/>
                     }
                 </div>
             </main>

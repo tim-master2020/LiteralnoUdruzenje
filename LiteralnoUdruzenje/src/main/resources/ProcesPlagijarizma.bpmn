@@ -46,6 +46,7 @@
         <camunda:formData>
           <camunda:formField id="editors" label="Choose Editors " type="multiEnum_editors" />
         </camunda:formData>
+        <camunda:taskListener class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.Load.LoadEditors" event="create" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0knj9l8</bpmn:incoming>
       <bpmn:outgoing>Flow_10qud2z</bpmn:outgoing>

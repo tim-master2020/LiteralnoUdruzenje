@@ -20,6 +20,7 @@ import tim22.upp.LiteralnoUdruzenje.dto.*;
 import tim22.upp.LiteralnoUdruzenje.model.Genre;
 import tim22.upp.LiteralnoUdruzenje.model.Writer;
 import tim22.upp.LiteralnoUdruzenje.service.IBookService;
+import tim22.upp.LiteralnoUdruzenje.service.IReviewService;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,6 +49,9 @@ public class BookController {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private IReviewService reviewService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/all")
     public ResponseEntity<List<BookDTO>> getAll() {
@@ -227,6 +231,11 @@ public class BookController {
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
         Map betasThatCommented = (HashMap<String,String>)runtimeService.getVariable(task.getProcessInstanceId(),"betasThatCommented");
         betasThatCommented.put(task.getAssignee(),commentDTO.get(1).getFieldValue());
+        String comment = (String) commentDTO.get(1).getFieldValue();
+        String writer = (String) taskService.getVariables(taskId).get("loggedInWriter");
+        String bookName = (String) taskService.getVariables(taskId).get("bookName");
+        reviewService.saveComment(comment, writer, task.getAssignee(), bookName);
+
         runtimeService.setVariable(task.getProcessInstanceId(),"betasThatCommented",betasThatCommented);
         formService.submitTaskForm(taskId,map);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -264,6 +273,10 @@ public class BookController {
         String processInstanceId = task.getProcessInstanceId();
         String decision = (String) map.get("changesNeeded");
         String comment = (String) map.get("comment");
+        String writer = (String) taskService.getVariables(taskId).get("loggedInWriter");
+        String bookName = (String) taskService.getVariables(taskId).get("bookName");
+        reviewService.saveComment(comment, writer, task.getAssignee(), bookName);
+
         runtimeService.setVariable(processInstanceId, "changesNeeded", decision);
         runtimeService.setVariable(processInstanceId, "editorsComment", comment);
         formService.submitTaskForm(taskId,map);
@@ -279,6 +292,10 @@ public class BookController {
         String processInstanceId = task.getProcessInstanceId();
         String decision = (String) map.get("changesNeeded");
         String comment = (String) map.get("comment");
+        String writer = (String) taskService.getVariables(taskId).get("loggedInWriter");
+        String bookName = (String) taskService.getVariables(taskId).get("bookName");
+        reviewService.saveComment(comment, writer, task.getAssignee(), bookName);
+
         runtimeService.setVariable(processInstanceId, "lectorChangesNeeded", decision);
         runtimeService.setVariable(processInstanceId, "lectorsComment", comment);
         runtimeService.setVariable(processInstanceId, "lectorViewed", true);
@@ -295,9 +312,21 @@ public class BookController {
         String processInstanceId = task.getProcessInstanceId();
         String decision = (String) map.get("changesNeeded");
         String comment = (String) map.get("comment");
+        String writer = (String) taskService.getVariables(taskId).get("loggedInWriter");
+        String bookName = (String) taskService.getVariables(taskId).get("bookName");
+        reviewService.saveComment(comment, writer, task.getAssignee(), bookName);
+
         runtimeService.setVariable(processInstanceId, "mainEditorChangesNeeded", decision);
         runtimeService.setVariable(processInstanceId, "mainEditorsComment", comment);
         formService.submitTaskForm(taskId,map);
+
+        Task nextTask = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
+        if(nextTask != null) {
+            if(formService.getTaskFormData(nextTask.getId()) != null) {
+                List<FormField> properties = formService.getTaskFormData(nextTask.getId()).getFormFields();
+                return new ResponseEntity<>(new FormFieldsDTO(nextTask.getId(), processInstanceId, properties, nextTask.getName()), HttpStatus.OK);
+            }
+        }
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

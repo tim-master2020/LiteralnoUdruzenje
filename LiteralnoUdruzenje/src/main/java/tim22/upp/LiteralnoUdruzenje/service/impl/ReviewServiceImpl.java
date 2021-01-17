@@ -11,11 +11,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import tim22.upp.LiteralnoUdruzenje.dto.FormSubmissionDTO;
 import tim22.upp.LiteralnoUdruzenje.dto.ReviewDTO;
+import tim22.upp.LiteralnoUdruzenje.model.Book;
 import tim22.upp.LiteralnoUdruzenje.model.Review;
 import tim22.upp.LiteralnoUdruzenje.model.User;
 import tim22.upp.LiteralnoUdruzenje.model.Writer;
 import tim22.upp.LiteralnoUdruzenje.model.enums.Vote;
 import tim22.upp.LiteralnoUdruzenje.repository.ReviewRepository;
+import tim22.upp.LiteralnoUdruzenje.service.IBookService;
 import tim22.upp.LiteralnoUdruzenje.service.IReviewService;
 import tim22.upp.LiteralnoUdruzenje.service.IUserService;
 import tim22.upp.LiteralnoUdruzenje.service.IWriterService;
@@ -48,6 +50,9 @@ public class ReviewServiceImpl implements IReviewService {
     @Autowired
     private IUserService userService;
 
+    @Autowired
+    private IBookService bookService;
+
     @Override
     public List<Review> findByWriter(String username) {
         Writer writer = writerService.findByUsername(username);
@@ -78,7 +83,7 @@ public class ReviewServiceImpl implements IReviewService {
         for(Review review : reviews){
             ReviewDTO reviewDTO = modelMapper.map(review, ReviewDTO.class);
             reviewDTO.setWriter(writer.getUsername());
-            reviewDTO.setCommittee(review.getCommittee().getUsername());
+            reviewDTO.setCommittee(review.getReviewer().getUsername());
             reviewDTOS.add(reviewDTO);
         }
 
@@ -95,7 +100,7 @@ public class ReviewServiceImpl implements IReviewService {
         review.setWriter(writer);
 
         User user = userService.findByUsername(committee);
-        review.setCommittee(user);
+        review.setReviewer(user);
 
         for(FormSubmissionDTO formSubmissionDTO : formDTO){
             if(formSubmissionDTO.getFieldId().equals("reviewComment")){
@@ -120,6 +125,22 @@ public class ReviewServiceImpl implements IReviewService {
             runtimeService.setVariable(processInstanceId, "votes", votes);
             runtimeService.setVariable(processInstanceId, "comments", comments);
         }
+
+        return save(review);
+    }
+
+    @Override
+    public Review saveComment(String comment, String username, String reviewer, String bookName) {
+        Review review = new Review();
+        review.setComment(comment);
+        Writer writer = writerService.findByUsername(username);
+        review.setWriter(writer);
+
+        User user = userService.findByUsername(reviewer);
+        review.setReviewer(user);
+
+        Book book = bookService.findBookByName(bookName);
+        review.setBook(book);
 
         return save(review);
     }

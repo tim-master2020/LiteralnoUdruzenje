@@ -23,7 +23,10 @@ public class Review implements Serializable {
     private Writer writer;
 
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    private User committee;
+    private User reviewer;
+
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    private Book book;
 
     public Review(){
 
@@ -61,11 +64,19 @@ public class Review implements Serializable {
         this.writer = writer;
     }
 
-    public User getCommittee() {
-        return committee;
+    public User getReviewer() {
+        return reviewer;
     }
 
-    public void setCommittee(User committee) {
-        this.committee = committee;
+    public void setReviewer(User reviewer) {
+        this.reviewer = reviewer;
+    }
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
     }
 }

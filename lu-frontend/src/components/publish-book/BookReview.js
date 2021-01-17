@@ -17,12 +17,11 @@ const BookReview = ({history,updateUser,type}) => {
     const [selected,setSelected] =  React.useState([]);
     const [taskId,setTaskId] =  React.useState(history.location.state.taskId);
 
-    const options = {
-        headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
-    };
-
-    console.log(type);
     React.useEffect(() => {
+        const options = {
+            headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
+        };
+
         axios.get(`${defaultUrl}/process/get-form-fields/${history.location.state.taskId}`, options).then(
             (resp) => {
                 setformFields(resp.data.formFields);
@@ -32,6 +31,10 @@ const BookReview = ({history,updateUser,type}) => {
     }, []);
 
     function handleSubmit(e) {
+
+        const options = {
+            headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
+        };
         
         e.preventDefault();
         const returnArray = [];
@@ -53,7 +56,7 @@ const BookReview = ({history,updateUser,type}) => {
         } else if (type === 'printBook') {
             reviewType = 'print-book';
         }
-    
+        console.log(options);
         axios.post(`${defaultUrl}/api/books/${reviewType}/${history.location.state.taskId}`, returnArray, options).then(
             (resp) => {
                 updateUser();

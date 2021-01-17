@@ -12,5 +12,6 @@ public interface IReviewService {
     List<Review> findByWriter(String username);
     List<ReviewDTO> getAll(Principal principal);
     Review saveReview(List<FormSubmissionDTO> formDTO, String username, String committee, String taskId);
+    Review saveComment(String comment, String username, String reviewer, String bookName);
     Review save(Review review);
 }

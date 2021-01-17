@@ -24,6 +24,7 @@ const ReviewPage = ({ history}) => {
         axios.get(`${defaultUrl}/api/reviews/all`, options).then(
             (resp) => {
                 setReviews(resp.data);
+                console.log(resp.data);
             },
             (resp) => { alert("Cannot load reviews."); }
         );
@@ -34,13 +35,15 @@ const ReviewPage = ({ history}) => {
             reviews.map(review => {
                 return(
                     <Card className="reviewCard">
-                        <Card.Body className="cardBodyReview"> 
-                            <div className="cardLeft">           
-                                <p>Vote: </p>
+                        <Card.Body className={review.vote ? "cardBodyReview" : "cardBodyComment"}> 
+                            <div className="cardLeft">   
+                                {review.bookName && <p>Book name: </p>}        
+                                {review.vote && <p>Vote: </p>}
                                 <p>Comment: </p>
                             </div>
                             <div className="cardRight">
-                                <p>{review.vote}</p>
+                                {review.bookName && <p>{review.bookName}</p>}
+                                {review.vote && <p>{review.vote}</p>}
                                 <p>{review.comment}</p>
                             </div> 
                         </Card.Body>

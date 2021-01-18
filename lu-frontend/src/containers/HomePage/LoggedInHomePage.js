@@ -35,6 +35,7 @@ import FileAComlpaint from "../../components/plagiarism/FileAComplaint";
 import ChooseEditors from "../../components/plagiarism/ChooseEditors";
 import DownloadBooksAndLeaveNotes from "../../components/plagiarism/DownloadBooksAndLeaveNotes";
 import FindReplacement from "../../components/plagiarism/FindReplacement";
+import ReviewNotes from "../../components/plagiarism/ReviewNotes";
 
 const LoggedInHomepage = ({ 
     loggedInUser,
@@ -62,6 +63,7 @@ const LoggedInHomepage = ({
     isChooseEditor,
     type,
     downloadAndReview,
+    isReviewNotes,
     findReplacement}) => {
     const [isOpen, setOpen] = useState(false);
 
@@ -205,6 +207,8 @@ const LoggedInHomepage = ({
                         <ChooseEditors updateUser={()=>updateUser()} />
                     }{ downloadAndReview &&
                         <DownloadBooksAndLeaveNotes updateUser={()=>updateUser()} />
+                    }{ isReviewNotes &&
+                        <ReviewNotes updateUser={()=>updateUser()} />
                     }{ findReplacement &&
                         <FindReplacement updateUser={()=>updateUser()}/>
                     }

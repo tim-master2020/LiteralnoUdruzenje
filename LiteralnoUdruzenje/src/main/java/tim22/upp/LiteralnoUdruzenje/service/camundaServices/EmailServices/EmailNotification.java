@@ -90,6 +90,18 @@ public class EmailNotification implements JavaDelegate {
                 User user = userService.findByUsername(username);
                 emailService.sendCustomerEmail(user, "Dear" + user.getFirstName() + "\n," + "you have new book to read and comment on. You have five days to do so.");
             }
+        } else if (taskId.equals("NotifyInvalidPlagiarism")) {
+            User writer = userService.findByUsername(delegateExecution.getVariable("writerWithComplaint").toString());
+            emailService.sendCustomerEmail(writer, "Hello, " + writer.getUsername()+  "\n\n"
+                    + "The complaint about plagiarism was invalid. We're sorry.");
+        } else if (taskId.equals("NotifyComplanee")) {
+            User writer = userService.findByUsername(delegateExecution.getVariable("writerWithComplaint").toString());
+            emailService.sendCustomerEmail(writer, "Hello, " + writer.getUsername()+  "\n\n"
+                    + "The complaint about plagiarism was correct.");
+        } else if(taskId.equals("")) {
+            User writer = userService.findByUsername(delegateExecution.getVariable("plagiatorWriter").toString());
+            emailService.sendCustomerEmail(writer, "Hello, " + writer.getUsername()+  "\n\n"
+                    + "The complaint about plagiarism was correct. You are a plagiator.");
         }
         else
          {

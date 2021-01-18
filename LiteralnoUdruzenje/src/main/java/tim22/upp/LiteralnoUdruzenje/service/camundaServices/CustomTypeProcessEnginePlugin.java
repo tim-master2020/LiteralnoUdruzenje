@@ -35,5 +35,6 @@ public class CustomTypeProcessEnginePlugin extends AbstractProcessEnginePlugin {
         formTypes.add(new MultiEnumType("betas"));
         formTypes.add(new MultiEnumType("editors","2","none"));
         formTypes.add(new MultiEnumType("editors","none","none"));
+        formTypes.add(new MultipleDownloadFilesType("multiNotesLabel"));
     }
 }

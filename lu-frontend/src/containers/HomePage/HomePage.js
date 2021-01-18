@@ -28,6 +28,7 @@ const HomePage = ({
     isChooseEditor,
     type,
     downloadAndReview,
+    isReviewNotes,
     findReplacement}) => {
     if(loggedInUser === undefined){
     return (
@@ -60,6 +61,7 @@ const HomePage = ({
             isChooseEditor={isChooseEditor}
             type={type}
             downloadAndReview={downloadAndReview}
+            isReviewNotes={isReviewNotes}
             findReplacement={findReplacement}
             />);
     }

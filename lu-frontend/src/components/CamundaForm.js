@@ -1,11 +1,12 @@
 import MultiSelect from "react-multi-select-component";
 import Select from 'react-select';
 import { React, useImperativeHandle, forwardRef } from 'react';
-import { Form, Button, Col } from "react-bootstrap";
-import {validate} from '../functions/FormFunctions.js';
+import { Form, Button, Col, Card } from "react-bootstrap";
+import { validate } from '../functions/FormFunctions.js';
 import './bookReview/BookReview.css';
 import { Link } from "@material-ui/core";
 import { downloadBook } from '../functions/downloadBook'
+import { keys } from "@material-ui/core/styles/createBreakpoints";
 
 const CamundaForm = ({ formFields,
     onSubmit,
@@ -18,12 +19,12 @@ const CamundaForm = ({ formFields,
     setIsValid,
     setformFields,
     uploadedFiles,
-    setUploadedFiles}) => {
+    setUploadedFiles }) => {
 
     return (
         <Form id="camundaForm" onSubmit={onSubmit}>
             {renderFormFields(formFields)}
-            <Button className="submitButton" type="submit" variant="outline-dark" disabled={(!(shouldSubmit === undefined || shouldSubmit === null) ? false: shouldSubmit)}>Submit</Button>
+            <Button className="submitButton" type="submit" variant="outline-dark" disabled={(!(shouldSubmit === undefined || shouldSubmit === null) ? false : shouldSubmit)}>Submit</Button>
         </Form>
     );
 
@@ -37,11 +38,11 @@ const CamundaForm = ({ formFields,
     //             setShouldSubmit(true);
     //         }
     //     }
-        
+
     // }
 
     function renderFormFields(formFields) {
-        console.log('form fields',formFields);
+        console.log('form fields', formFields);
         if (formFields !== undefined && formFields.length > 0) {
             return formFields.map((field) => {
                 if (field.type.name === "boolean") {
@@ -66,25 +67,25 @@ const CamundaForm = ({ formFields,
                         </div>
                     );
                 }
-                if(field.type.name.includes('singleEnum')){
-                    return(
-                        <div className="selectDiv">  
-                        <Form.Label id={field.id} name={field.id}>{field.label}: {field.value.value}</Form.Label>
-                        <Select
-                            value={selected}
-                            onChange={setSelected}
-                            options={initializeOptions(field.type.values)}
-                        />
+                if (field.type.name.includes('singleEnum')) {
+                    return (
+                        <div className="selectDiv">
+                            <Form.Label id={field.id} name={field.id}>{field.label}: {field.value.value}</Form.Label>
+                            <Select
+                                value={selected}
+                                onChange={setSelected}
+                                options={initializeOptions(field.type.values)}
+                            />
                         </div>
-                       
+
                     )
-                }if(field.type.name.includes('label')){
-                    return(
+                } if (field.type.name.includes('label')) {
+                    return (
                         <Form.Group key={field.id} as={Col} className="singleInputField">
                             <Form.Label id={field.id} name={field.id}><b>{field.label}:</b> {field.value.value}</Form.Label>
-                         </Form.Group>
-                    // <label id={field.id} name={field.id}>{field.value.value}</label>
-                       
+                        </Form.Group>
+                        // <label id={field.id} name={field.id}>{field.value.value}</label>
+
                     )
                 }
 
@@ -96,7 +97,7 @@ const CamundaForm = ({ formFields,
                             {isValid.hasOwnProperty(`${field.id}`) &&
                                 showValidationErrors(field)
                             }
-                         </Form.Group>
+                        </Form.Group>
                     );
                 }
                 if (field.type.name.includes('email')) {
@@ -107,15 +108,15 @@ const CamundaForm = ({ formFields,
                             {isValid.hasOwnProperty(`${field.id}`) &&
                                 showValidationErrors(field)
                             }
-                         </Form.Group>
+                        </Form.Group>
                     );
                 }
                 if (field.type.name.includes('input_file')) {
                     return (
                         <Form.Group key={field.id} as={Col} className="singleInputField">
                             <Form.Label>{field.label}</Form.Label>
-                            <br/>
-                            <input multiple type="file" id={field.id} name={field.id} onChange={fileSelectedHandler}/>
+                            <br />
+                            <input multiple type="file" id={field.id} name={field.id} onChange={fileSelectedHandler} />
                         </Form.Group>);
 
                 } if (field.type.name.includes('textArea')) {
@@ -126,7 +127,7 @@ const CamundaForm = ({ formFields,
                             {isValid.hasOwnProperty(`${field.id}`) &&
                                 showValidationErrors(field)
                             }
-                         </Form.Group>
+                        </Form.Group>
                     );
                 }
                 if (field.type.name.includes('enum')) {
@@ -134,19 +135,19 @@ const CamundaForm = ({ formFields,
                         <Form.Group key={field.id} as={Col} className="singleInputField">
                             <Form.Label>{field.label}</Form.Label>
                             <Select
-                            value={selected}
-                            onChange={setSelected}
-                            options={initializeOptions(field.type.values)}
+                                value={selected}
+                                onChange={setSelected}
+                                options={initializeOptions(field.type.values)}
                             />
-                         </Form.Group>
+                        </Form.Group>
                     );
                 }
                 if (field.type.name.includes('button_type')) {
                     return (
                         <Form.Group key={field.id} as={Col} className="singleInputField">
                             <Form.Label className="buttonType">{field.label}</Form.Label>
-                            <br/>
-                         </Form.Group>
+                            <br />
+                        </Form.Group>
                     )
                 }
                 if (field.type.name.includes('pdfs')) {
@@ -155,10 +156,10 @@ const CamundaForm = ({ formFields,
                     console.log(names);
                     return (
                         names.map(name => {
-                            return(
+                            return (
                                 <div>
-                                    <Form.Label onClick={(e) => {downloadBook(e, name)}} className="bookNameDiv">{name}</Form.Label>
-                                    <br/>
+                                    <Form.Label onClick={(e) => { downloadBook(e, name) }} className="bookNameDiv">{name}</Form.Label>
+                                    <br />
                                 </div>
                             )
                         })
@@ -168,9 +169,9 @@ const CamundaForm = ({ formFields,
                     return (
                         <Form.Group key={field.id} as={Col} className="singleInputField">
                             <Form.Label>{field.label}</Form.Label>
-                            <br/>
-                            <input type="file" id={field.id} name={field.id} onChange={fileSelectedHandler}/>
-                         </Form.Group>
+                            <br />
+                            <input type="file" id={field.id} name={field.id} onChange={fileSelectedHandler} />
+                        </Form.Group>
                     );
                 }
                 if (field.type.name.includes('multiFilesDownload')) {
@@ -178,8 +179,23 @@ const CamundaForm = ({ formFields,
                         Object.keys(field.type.values).map((val, k) => {
                             return (
                                 <div>
-                                    <a onClick={(e) => {downloadBook(e, val)}} className="bookNameDiv">{val}</a>
-                                    <br/>
+                                    <a onClick={(e) => { downloadBook(e, val) }} className="bookNameDiv">{val}</a>
+                                    <br />
+                                </div>
+                            )
+                        })
+                    );
+                }
+
+                if (field.type.name.includes('multiNotesLabel')) {
+                    return (
+                        Object.keys(field.type.values).map((val, k) => {
+                            return (
+                                <div>
+                                    <Card>
+                                        <Card.Body><b>Note:</b> {val}</Card.Body>
+                                    </Card>
+                                    <br />
                                 </div>
                             )
                         })
@@ -198,7 +214,8 @@ const CamundaForm = ({ formFields,
                     );
                 }
             }
-        )};
+            )
+        };
     }
 
 
@@ -218,7 +235,7 @@ const CamundaForm = ({ formFields,
 
             reader.onload = (em) => {
                 all.push(em.target.result);
-                
+
             }
 
             all.push(fileName);
@@ -231,7 +248,7 @@ const CamundaForm = ({ formFields,
         var temp = formFields;
         temp.forEach(field => {
             if (e.target.name === field.id) {
-                    field.value.value = all;
+                field.value.value = all;
             }
         });
         setformFields(temp);
@@ -246,7 +263,7 @@ const CamundaForm = ({ formFields,
                     field.value.value = (field.value.value === true) ? false : true;
                 } else {
                     field.value.value = e.target.value;
-                    if (!validate(field, field.value.value,setIsValid,isValid)) {
+                    if (!validate(field, field.value.value, setIsValid, isValid)) {
                         setValidationMessage(`Input value for field ${field.id} should be`);
                         if (Object.keys(isValid).length > 0) {
                             setShouldSubmit(false);

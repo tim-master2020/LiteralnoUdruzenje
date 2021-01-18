@@ -49,6 +49,9 @@ public class Book implements Serializable {
     @Column
     private String synopsis;
 
+    /*@Column(nullable = false)
+    private boolean isPlagiat;*/
+
     @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
     @JoinTable(name = "book_keywords", joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "keyword_id", referencedColumnName = "id"))
     private Set<Keyword> keywords = new HashSet<Keyword>();
@@ -151,4 +154,12 @@ public class Book implements Serializable {
     public void setPdfName(String pdfName) {
         this.pdfName = pdfName;
     }
+
+    /*public boolean isPlagiat() {
+        return isPlagiat;
+    }
+
+    public void setPlagiat(boolean plagiat) {
+        isPlagiat = plagiat;
+    }*/
 }

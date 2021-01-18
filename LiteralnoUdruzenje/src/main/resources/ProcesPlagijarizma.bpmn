@@ -43,7 +43,7 @@
     <bpmn:userTask id="SelectEditors" name="SelectEditors" camunda:assignee="${mainEditor}">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="editors" label="Choose Editors " type="multiEnum_editors">
+          <camunda:formField id="editors" label="Choose Editors " type="multiEnum_editors_2_none">
             <camunda:validation>
               <camunda:constraint name="validator" config="tim22.upp.LiteralnoUdruzenje.validators.EditorSumValidator" />
             </camunda:validation>
@@ -87,7 +87,7 @@
     <bpmn:userTask id="Activity_0u210xv" name="FindReplacment" camunda:assignee="${mainEditor}">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="replacmentEditors" label="Choose Replacement Editor" type="multiEnum_editors">
+          <camunda:formField id="replacmentEditors" label="Choose Replacement Editor" type="multiEnum_editors_none_none" defaultValue="${editorsThatHaventReviewed}">
             <camunda:validation>
               <camunda:constraint name="validator" config="tim22.upp.LiteralnoUdruzenje.validators.ReplacementEditorsSum" />
             </camunda:validation>

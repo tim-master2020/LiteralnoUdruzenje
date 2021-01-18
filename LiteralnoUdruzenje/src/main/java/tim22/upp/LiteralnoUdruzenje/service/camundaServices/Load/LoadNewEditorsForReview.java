@@ -48,12 +48,7 @@ public class LoadNewEditorsForReview implements TaskListener {
                     formType = (EnumType) field.getType();
                 }
 
-                for (Map.Entry<String, String> entry : formType.getValues().entrySet()) {
-                    if(selectedEditors.contains(entry.getValue())){
-                        User user = userService.findByUsername(entry.getValue());
-                        formType.getValues().remove(user.getId());
-                    }
-                }
+                formType.getValues().clear();
 
                 for (Map.Entry<String, String> entry : replacementEditors.entrySet()) {
                     formType.getValues().put(entry.getValue(), entry.getKey());

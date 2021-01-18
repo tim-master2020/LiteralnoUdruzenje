@@ -29,13 +29,11 @@ const CamundaForm = ({ formFields,
 
     // function updateSelected(e,field){
     //     const values = e.map(element => element.label);
-
     //     if (!validate(field,values,setIsValid,isValid)) {
     //         setValidationMessage(`Input value for field ${field.id} should be`);
     //         if (Object.keys(isValid).length > 0) {
     //             setShouldSubmit(false);
     //         } else {
-    //             setSelected(e);
     //             setShouldSubmit(true);
     //         }
     //     }
@@ -43,6 +41,7 @@ const CamundaForm = ({ formFields,
     // }
 
     function renderFormFields(formFields) {
+        console.log('form fields',formFields);
         if (formFields !== undefined && formFields.length > 0) {
             return formFields.map((field) => {
                 if (field.type.name === "boolean") {

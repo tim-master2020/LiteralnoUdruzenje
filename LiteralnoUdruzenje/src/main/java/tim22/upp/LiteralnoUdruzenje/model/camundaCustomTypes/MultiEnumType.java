@@ -13,6 +13,10 @@ public class MultiEnumType extends EnumFormType {
 
     private String name;
 
+    private String minValue;
+
+    private String maxValue;
+
     public MultiEnumType(Map<String, String> values) {
         super(values);
     }
@@ -22,8 +26,19 @@ public class MultiEnumType extends EnumFormType {
         this.name = name;
     }
 
+    public MultiEnumType(String name,String minValue,String maxValue) {
+        super(new HashMap<>());
+        this.name = name;
+        this.minValue = minValue;
+        this.maxValue = maxValue;
+    }
+
     public String getName() {
-        return "multiEnum_".concat(name);
+        if(minValue != null && maxValue != null) {
+            return "multiEnum_".concat(name) + "_".concat(minValue) + "_".concat(maxValue);
+        }else{
+            return "multiEnum_".concat(name);
+        }
     }
 
     public TypedValue convertValue(TypedValue propertyValue) {

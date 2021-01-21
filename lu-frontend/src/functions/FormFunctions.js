@@ -58,17 +58,55 @@ export function validate(field,value,setIsValid,isValid){
                     setIsValid(isValid);
                 }
             }
-            if (constraint.name === 'validator' && constraint.configuration === 'tim22.upp.LiteralnoUdruzenje.validators.EditorSumValidator') {
-                if (value !== null || value !== undefined || value !== null || value !== '' && value.length <= 2) {
-                    setIsValid(isValid[field.id] = (`${field.id} you need to select at least 2 editors.`));
-            }else{
-                delete isValid[`${field.id}`];
-                setIsValid(isValid);
-            }
-        }
+            
         }
     }
     });
-    return setIsValid(isValid);
+
+    if(field.type.name.includes('multiEnum_editors')){
+
+        const nameArray = field.type.name.split('_');
+        const minValue = nameArray[2];
+        const maxValue = nameArray[3];
+        let isOkay = false;
+
+        if(minValue === 'none' && maxValue === 'none'){
+           const minAndMaxValue = field.type.defaultValue;           
+           if(value !== null || value !== undefined || value !== null || value !== '' && value.length > minAndMaxValue){
+                setIsValid(isValid[field.id] = (`${field.id} should have length of ${minAndMaxValue}`));
+           }else{
+               isOkay = true;
+           }
+        }
+           else if(minValue === 'none' && maxValue !== 'none'){
+               if(value.length > maxValue){
+                setIsValid(isValid[field.id] = (`${field.id} should not be bigger than ${maxValue}`));
+               }else{
+                   isOkay = true;
+               }
+           }else if(minValue !== 'none' && maxValue === 'none'){
+               if(value.length < minValue){
+                setIsValid(isValid[field.id] = (`${field.id} should not be lesser than ${minValue}`));
+               }else{
+                   isOkay = true;
+               }
+           
+            }
+           else{
+
+             if(value.length < minValue || value.length > maxValue){
+                setIsValid(isValid[field.id] = (`${field.id} should not be lesser than ${minValue} and not bigger than ${maxValue}`));
+            }else{
+                isOkay = true;
+            }
+           }
+
+                    
+        if(isOkay){
+            delete isValid[`${field.id}`];
+            setIsValid(isValid);
+        }
+        
+    }
 }
 

@@ -59,6 +59,9 @@ export function TaskNameRoutes(name) {
             break;
         case 'FindReplacment':
             route = '/find-replacement';
+            break;
+        case 'ReviewNotes':
+            route = '/reviewnotes';
             break; 
         default:
             route = '/';

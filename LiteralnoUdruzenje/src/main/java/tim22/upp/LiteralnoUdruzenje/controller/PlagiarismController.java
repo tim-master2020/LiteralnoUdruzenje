@@ -54,6 +54,9 @@ public class PlagiarismController {
         User mainEditor = userService.findMainEditor();
         runtimeService.setVariable(processInstanceId, "writerWithComplaint", username);
         runtimeService.setVariable(processInstanceId, "mainEditor", mainEditor.getUsername());
+        runtimeService.setVariable(processInstanceId, "plagiatorWriter", complaintDTO.get(0).getFieldValue());
+        runtimeService.setVariable(processInstanceId, "complaneeBook", complaintDTO.get(1).getFieldValue());
+
         try {
             formService.submitTaskForm(taskId, map);
         }catch(Exception e){
@@ -73,7 +76,7 @@ public class PlagiarismController {
             editors.add(username);
         }
         runtimeService.setVariable(task.getProcessInstanceId(), "selectedEditors", editors);
-        runtimeService.setVariable(task.getProcessInstanceId(),"editorsThatReviewed", new ArrayList<String>());
+        runtimeService.setVariable(task.getProcessInstanceId(),"editorsThatReviewed", new HashMap<String,String>());
 
         try {
             formService.submitTaskForm(taskId, map);
@@ -93,9 +96,9 @@ public class PlagiarismController {
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
         String processInstanceId = task.getProcessInstanceId();
 
-        List editorsThatReviewed = (List<String>) runtimeService.getVariable(task.getProcessInstanceId(),"editorsThatReviewed");
+        HashMap<String,String> editorsThatReviewed = (HashMap<String,String>) runtimeService.getVariable(task.getProcessInstanceId(),"editorsThatReviewed");
         String username = task.getAssignee();
-        editorsThatReviewed.add(username);
+        editorsThatReviewed.put(username,reviewDTO.get(1).getFieldValue().toString());
         runtimeService.setVariable(processInstanceId,"editorsThatReviewed",editorsThatReviewed);
 
         formService.submitTaskForm(taskId,map);

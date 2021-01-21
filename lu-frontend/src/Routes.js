@@ -90,6 +90,9 @@ const Routes = ({ loggedInUser, setLoggedIn }) => {
             <Route exact path='/find-replacement/:taskId' render={props =>
                 <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} findReplacement={true} />
             } />
+            <Route exact path='/reviewnotes/:taskId' render={props =>
+                <HomePage loggedInUser={loggedInUser} setLoggedIn={setLoggedIn} isReviewNotes={true} />
+            } />
         </Switch>
     );
 }

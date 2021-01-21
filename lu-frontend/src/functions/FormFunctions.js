@@ -12,7 +12,6 @@ export function validate(field,value,setIsValid,isValid){
 
 
         if (constraint.configuration !== null) {
-            debugger;
             
             if(value !== undefined && value !== null && value !== ''){
                 if (constraint.name === 'minlength' && field.type.name === 'string') {

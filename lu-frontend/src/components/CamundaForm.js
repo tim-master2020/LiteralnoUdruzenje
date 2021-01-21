@@ -41,7 +41,6 @@ const CamundaForm = ({ formFields,
     //     }
         
     // }
-
     function renderFormFields(formFields) {
         if (formFields !== undefined && formFields.length > 0) {
             return formFields.map((field) => {
@@ -112,6 +111,7 @@ const CamundaForm = ({ formFields,
                     );
                 }
                 if (field.type.name.includes('input_file')) {
+                    console.log(field);
                     return (
                         <Form.Group key={field.id} as={Col} className="singleInputField">
                             <Form.Label>{field.label}</Form.Label>
@@ -158,6 +158,7 @@ const CamundaForm = ({ formFields,
                         names.map(name => {
                             return(
                                 <div>
+                                    <Form.Label className="titlePdf">{field.label}</Form.Label>
                                     <Form.Label onClick={(e) => {downloadBook(e, name)}} className="bookNameDiv">{name}</Form.Label>
                                     <br/>
                                 </div>

@@ -61,16 +61,16 @@ const BookReview = ({history,updateUser,type}) => {
             (resp) => {
                 updateUser();
                 alert('Your decision is successfully submited!');
-                if(resp.data !== "" && resp.data.taskName === "PrintBook"){
-                    history.push({
-                        pathname:`${TaskNameRoutes(resp.data.taskName)}/${resp.data.taskId}`,
-                        state: {
-                          taskId: resp.data.taskId
-                        }
-                      });
-                }else{
-                    history.push('/');
-                }
+                // if(resp.data !== "" && resp.data.taskName === "PrintBook"){
+                //     history.push({
+                //         pathname:`${TaskNameRoutes(resp.data.taskName)}/${resp.data.taskId}`,
+                //         state: {
+                //           taskId: resp.data.taskId
+                //         }
+                //       });
+                // }else{
+                history.push('/');
+                //}
 
             },
             () => {

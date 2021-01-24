@@ -14,6 +14,7 @@ const FindReplacement = ({history,updateUser}) => {
     const [validationMessage, setValidationMessage] = React.useState({});
     const [selected,setSelected] =  React.useState([]);
     const [taskId,setTaskId] =  React.useState(history.location.state.taskId);
+    const [maxToChoose,setMaxToChoose] = React.useState(undefined);
 
     const options = {
         headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
@@ -23,11 +24,51 @@ const FindReplacement = ({history,updateUser}) => {
         axios.get(`${defaultUrl}/process/get-form-fields/${history.location.state.taskId}`, options).then(
             (resp) => {
                 setformFields(resp.data.formFields);
-                console.log(resp.data.formFields);
             },
             (resp) => { alert("error getting form fields,try again"); }
         );
+        
+        axios.get(`${defaultUrl}/plagiarism/get-max-replacement/${history.location.state.taskId}`, options).then(
+            (resp) => {
+                    setMaxToChoose(resp.data);
+            },
+            (resp) => { alert("error getting form fields,try again"); }
+        );
+
+
     }, []);
+
+    const submitReplacements = (e) => {
+
+        e.preventDefault();
+        const returnArray = [];
+
+        formFields.forEach(field => {
+            if (field.type.name.includes('multiEnum_')) {
+                selected.forEach(s => {
+                    returnArray.push({ fieldId: s.value, fieldValue: s.label });
+                })
+            }
+        });
+
+        if(maxToChoose !== undefined){
+            if(selected.length !== maxToChoose){
+                alert(`You can only choose ${maxToChoose} editors for replacement`);
+                return;
+            }
+        }
+        
+        axios.post(`${defaultUrl}/plagiarism/submit-replacements/${history.location.state.taskId}`, returnArray, options).then(
+            (resp) => {
+                updateUser();
+                alert('You submitted replacement editors successfully.');
+                history.push('/');
+            },
+            (resp) => {
+                alert("Error occured.");
+            }
+        );
+    }
 
     return(
         <div>
@@ -42,6 +83,7 @@ const FindReplacement = ({history,updateUser}) => {
                 setIsValid={setIsValid}
                 selected={selected}
                 setSelected={setSelected}
+                onSubmit={submitReplacements}
                 />
             </Card>
         </div>

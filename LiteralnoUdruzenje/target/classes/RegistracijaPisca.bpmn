@@ -47,7 +47,11 @@
               <camunda:constraint name="validator" config="tim22.upp.LiteralnoUdruzenje.validators.PasswordValidator" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="Genres" label="Genres" type="multiEnum_genres" />
+          <camunda:formField id="Genres" label="Genres" type="multiEnum_genres_1">
+            <camunda:validation>
+              <camunda:constraint name="validator" config="tim22.upp.LiteralnoUdruzenje.validators.MultiEnumCustomValidator" />
+            </camunda:validation>
+          </camunda:formField>
         </camunda:formData>
         <camunda:taskListener class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.LoadGenres" event="create" />
       </bpmn:extensionElements>

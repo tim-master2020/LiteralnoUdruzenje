@@ -1,12 +1,13 @@
 import MultiSelect from "react-multi-select-component";
+import validate from "../functions/FormFunctions";
 import Select from 'react-select';
 import { React, useImperativeHandle, forwardRef } from 'react';
 import { Form, Button, Col, Card } from "react-bootstrap";
-import { validate } from '../functions/FormFunctions.js';
 import './bookReview/BookReview.css';
 import { Link } from "@material-ui/core";
 import { downloadBook } from '../functions/downloadBook'
 import { keys } from "@material-ui/core/styles/createBreakpoints";
+
 
 const CamundaForm = ({ formFields,
     onSubmit,
@@ -21,25 +22,46 @@ const CamundaForm = ({ formFields,
     uploadedFiles,
     setUploadedFiles }) => {
 
+    const onCamundaFormSubmit = (e) =>{
+        debugger;
+        e.preventDefault();
+
+        formFields.forEach(field => {
+            if (!validate(field,field.value.value,setIsValid,isValid,selected)) {
+                setValidationMessage(`Input value for field ${field.id} should be`);
+            }       
+        });
+
+        if (Object.keys(isValid).length > 0) {
+            alert("Input values are not valid,please try again.");
+        } else {
+            onSubmit();
+        }
+        
+    }
+
     return (
-        <Form id="camundaForm" onSubmit={onSubmit}>
+        <Form id="camundaForm" onSubmit={onCamundaFormSubmit}>
             {renderFormFields(formFields)}
             <Button className="submitButton" type="submit" variant="outline-dark" disabled={(!(shouldSubmit === undefined || shouldSubmit === null) ? false : shouldSubmit)}>Submit</Button>
         </Form>
     );
 
-    // function updateSelected(e,field){
-    //     const values = e.map(element => element.label);
-    //     if (!validate(field,values,setIsValid,isValid)) {
-    //         setValidationMessage(`Input value for field ${field.id} should be`);
-    //         if (Object.keys(isValid).length > 0) {
-    //             setShouldSubmit(false);
-    //         } else {
-    //             setShouldSubmit(true);
-    //         }
-    //     }
+    function updateSelected(e,field){
+        setSelected(e);
+        //field.value.value = e;
+        const values = e.map(element => element.label);
+        if (!validate(field,values,setIsValid,isValid,e)) {
+            setValidationMessage(`Input value for field ${field.id} should be`);
+            if (Object.keys(isValid).length > 0) {
+                setShouldSubmit(false);
+            } else {
+                setShouldSubmit(true);
+            }
+        }
+        console.log('isValid',isValid);
 
-    // }
+    }
 
     function renderFormFields(formFields) {
         console.log('form fields', formFields);
@@ -53,17 +75,20 @@ const CamundaForm = ({ formFields,
                     </div>
                     );
                 }
-                if (field.type.name.includes('multiEnum')) {
+                if (field.type.name.includes('multiEnum') || field.type.name.includes('multipleEnum')) {
                     return (
                         <div className="selectDiv">
                             Choose
                             <MultiSelect
                                 options={initializeOptions(field.type.values)}
                                 value={selected}
-                                onChange={setSelected}
+                                onChange={(e)=>{updateSelected(e,field)}}
                                 labelledBy={"Select"}
                                 className="multiSelect"
                             />
+                            {isValid.hasOwnProperty(`${field.id}`) &&
+                                showValidationErrors(field)
+                            }
                         </div>
                     );
                 }
@@ -257,6 +282,7 @@ const CamundaForm = ({ formFields,
 
     function handleChange(e) {
         var temp = formFields;
+        debugger;
         temp.forEach(field => {
             if (e.target.name === field.id) {
                 if (field.type.name === "boolean") {

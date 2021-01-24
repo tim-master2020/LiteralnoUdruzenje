@@ -101,6 +101,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/books/**").permitAll()
                 .antMatchers("/api/reviews/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
+                .antMatchers("/process/get-form-fields/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .cors().and()
@@ -120,6 +121,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers(HttpMethod.POST,"api/users/submit-beta-user/**");
         web.ignoring().antMatchers(HttpMethod.GET,"api/users/user");
         web.ignoring().antMatchers(HttpMethod.POST,"/api/books/**");
+        web.ignoring().antMatchers(HttpMethod.GET,"/process/get-form-fields/**");
     }
 
 }

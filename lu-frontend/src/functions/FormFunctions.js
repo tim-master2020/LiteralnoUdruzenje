@@ -1,9 +1,10 @@
-export function validate(field,value,setIsValid,isValid){
+export default function validate(field,value,setIsValid,isValid,selected){
     field.validationConstraints.forEach(constraint => {
     
         if (constraint.name === 'required') {
             if (value === null || value === undefined || value === null || value === '') {
-                setIsValid(isValid[field.id] = (`${field.id} is required`));
+                Object.assign(isValid,{[field.id]:`${field.label} is required`});
+
             }else{
                 delete isValid[`${field.id}`];;
                 setIsValid(isValid);
@@ -14,36 +15,38 @@ export function validate(field,value,setIsValid,isValid){
         if (constraint.configuration !== null) {
             
             if(value !== undefined && value !== null && value !== ''){
-                if (constraint.name === 'minlength' && field.type.name === 'string') {
+                if (constraint.name === 'minlength') {
+                    debugger;
                     if (value.length < constraint.configuration) {
-                        setIsValid(isValid[field.id] = (`${field.id} should have at least ${constraint.configuration} characters`));
+                        Object.assign(isValid,{[field.id]:`${field.label} should have minimum ${constraint.configuration} characters`});
                     }else{
                        delete isValid[`${field.id}`];
                        setIsValid(isValid);
                     }
                 }
 
-                if (constraint.name === 'maxlength' && field.type.name === 'string') {
+                if (constraint.name === 'maxlength') {
                     if (value.length > constraint.configuration) {
-                        setIsValid(isValid[field.id] = (`${field.id} should have maximum ${constraint.configuration} characters`));
+                        Object.assign(isValid,{[field.id]:`${field.label} should have maximum ${constraint.configuration} characters`});
                     }else{
                         delete isValid[`${field.id}`];
                         setIsValid(isValid);
                     }
                 }
 
-                if (constraint.name === 'min' && field.type.name === 'long') {
+                if (constraint.name === 'min') {
                     if (value.length < constraint.configuration) {
-                        setIsValid(isValid[field.id] = (`${field.id} should have at least ${constraint.configuration} digits`));
+                        Object.assign(isValid,{[field.id]:`${field.label} should have at least ${constraint.configuration} digits`});
+
                     }else{
                         delete isValid[`${field.id}`];;
                         setIsValid(isValid);
                     }
                 }
 
-                if (constraint.name === 'max' && field.type.name === 'long') {
+                if (constraint.name === 'max') {
                     if (value.length > constraint.configuration) {
-                        setIsValid(isValid[field.id] = (`${field.id} should have maximum ${constraint.configuration} digits`));
+                        Object.assign(isValid,{[field.id]:`${field.label} should have maximum ${constraint.configuration} digits`});
                     }else{
                         delete isValid[`${field.id}`];
                         setIsValid(isValid);
@@ -52,7 +55,8 @@ export function validate(field,value,setIsValid,isValid){
 
                 if (constraint.name === 'readonly') {
                     if (value !== null || value !== undefined || value !== null || value !== '') {
-                        setIsValid(isValid[field.id] = (`${field.id} is readonly`));
+                        Object.assign(isValid,{[field.id]:`${field.label} is readonly`});
+
                 }else{
                     delete isValid[`${field.id}`];
                     setIsValid(isValid);
@@ -63,50 +67,21 @@ export function validate(field,value,setIsValid,isValid){
     }
     });
 
-    if(field.type.name.includes('multiEnum_editors')){
+    if(field.type.name.includes('multiEnum_')){
+        debugger;
+        const splitArray = field.type.name.split('_');
+        let minValue = (splitArray.length === 3 )? splitArray[2] : 'none';
+        minValue = parseInt(minValue);
 
-        const nameArray = field.type.name.split('_');
-        const minValue = nameArray[2];
-        const maxValue = nameArray[3];
-        let isOkay = false;
+        if(minValue !== 'none'){
+            if (selected === null || selected === undefined || selected === '' || selected.length < minValue) {
+                Object.assign(isValid,{[field.id]:`${field.label} should have minimum size ${minValue}`});
 
-        if(minValue === 'none' && maxValue === 'none'){
-           const minAndMaxValue = field.type.defaultValue;           
-           if(value !== null || value !== undefined || value !== null || value !== '' && value.length > minAndMaxValue){
-                setIsValid(isValid[field.id] = (`${field.id} should have length of ${minAndMaxValue}`));
-           }else{
-               isOkay = true;
-           }
-        }
-           else if(minValue === 'none' && maxValue !== 'none'){
-               if(value.length > maxValue){
-                setIsValid(isValid[field.id] = (`${field.id} should not be bigger than ${maxValue}`));
-               }else{
-                   isOkay = true;
-               }
-           }else if(minValue !== 'none' && maxValue === 'none'){
-               if(value.length < minValue){
-                setIsValid(isValid[field.id] = (`${field.id} should not be lesser than ${minValue}`));
-               }else{
-                   isOkay = true;
-               }
-           
-            }
-           else{
-
-             if(value.length < minValue || value.length > maxValue){
-                setIsValid(isValid[field.id] = (`${field.id} should not be lesser than ${minValue} and not bigger than ${maxValue}`));
             }else{
-                isOkay = true;
+                delete isValid[`${field.id}`];
+                setIsValid(isValid);
             }
-           }
-
-                    
-        if(isOkay){
-            delete isValid[`${field.id}`];
-            setIsValid(isValid);
         }
-        
     }
 }
 

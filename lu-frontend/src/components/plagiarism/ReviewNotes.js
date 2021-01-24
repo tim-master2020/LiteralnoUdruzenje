@@ -36,11 +36,16 @@ const ReviewNotes = ({ history, updateUser }) => {
 
         e.preventDefault();
         const returnArray = [];
+        console.log('selected',selected);
         formFields.forEach(field => {
+            if (field.type.name.includes('enum')) {
+                field.value.value = selected.value;
+            }
             returnArray.push({ fieldId: field.id, fieldValue: field.value.value });
         });
 
-        axios.post(`${defaultUrl}/plagiarism/review-notes/${history.location.state.taskId}`, returnArray, options).then(
+        
+        axios.post(`${defaultUrl}/plagiarism/submit-votes/${history.location.state.taskId}`, returnArray, options).then(
             (resp) => {
                 updateUser();
                 alert.fire({

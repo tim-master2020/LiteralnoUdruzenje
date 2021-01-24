@@ -33,7 +33,7 @@ const ChooseEditors = ({ taskId, history,updateUser }) => {
         var usernames = [];
         formFields.forEach(field => {
 
-            if (field.type.name.includes('multiEnum_editors')) {
+            if (field.type.name.includes('multiEnum_')) {
                 selected.forEach(s => {
                     usernames.push({ fieldId: s.value, fieldValue: s.label });
                 })
@@ -51,7 +51,6 @@ const ChooseEditors = ({ taskId, history,updateUser }) => {
             },
             (resp) => {
                 alert('Error occured please try again.');
-                history.push('/');
 
             }
         );

@@ -1,5 +1,7 @@
 package tim22.upp.LiteralnoUdruzenje.helper;
 
+import org.camunda.bpm.engine.FormService;
+import org.camunda.bpm.engine.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import tim22.upp.LiteralnoUdruzenje.service.IBookService;
@@ -20,6 +22,12 @@ public class ServiceHelper {
     @Autowired
     private IBookService bookService;
 
+    @Autowired
+    private FormService formService;
+
+    @Autowired
+    private TaskService taskService;
+
     private static ServiceHelper instance;
 
     @PostConstruct
@@ -38,4 +46,8 @@ public class ServiceHelper {
     public static IWriterService getWriterService() {
         return instance.writerService;
     }
+
+    public static FormService getFormService(){return instance.formService;}
+
+    public static TaskService getTaskService(){return instance.taskService;}
 }

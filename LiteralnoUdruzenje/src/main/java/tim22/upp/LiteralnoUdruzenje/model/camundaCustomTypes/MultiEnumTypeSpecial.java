@@ -1,5 +1,6 @@
 package tim22.upp.LiteralnoUdruzenje.model.camundaCustomTypes;
 
+
 import org.camunda.bpm.engine.ProcessEngineException;
 import org.camunda.bpm.engine.impl.form.type.EnumFormType;
 import org.camunda.bpm.engine.variable.Variables;
@@ -9,21 +10,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MultiEnumType extends EnumFormType {
+public class MultiEnumTypeSpecial extends EnumFormType {
 
-    private String name;
+    private String typeName;
 
-    public MultiEnumType(String name) {
+    public MultiEnumTypeSpecial(String typeName) {
         super(new HashMap<>());
-        this.name = name;
+        this.typeName = typeName;
     }
 
-    public MultiEnumType(Map<String, String> values) {
+    public MultiEnumTypeSpecial(Map<String, String> values) {
         super(values);
     }
 
     public String getName() {
-            return "multiEnum_".concat(name);
+        return "multipleEnum_".concat(typeName);
     }
 
     public TypedValue convertValue(TypedValue propertyValue) {

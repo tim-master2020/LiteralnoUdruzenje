@@ -49,8 +49,8 @@ public class Book implements Serializable {
     @Column
     private String synopsis;
 
-    /*@Column(nullable = false)
-    private boolean isPlagiat;*/
+    @Column
+    private boolean isPlagiat = false;
 
     @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
     @JoinTable(name = "book_keywords", joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "keyword_id", referencedColumnName = "id"))
@@ -155,11 +155,11 @@ public class Book implements Serializable {
         this.pdfName = pdfName;
     }
 
-    /*public boolean isPlagiat() {
+    public boolean isPlagiat() {
         return isPlagiat;
     }
 
     public void setPlagiat(boolean plagiat) {
         isPlagiat = plagiat;
-    }*/
+    }
 }

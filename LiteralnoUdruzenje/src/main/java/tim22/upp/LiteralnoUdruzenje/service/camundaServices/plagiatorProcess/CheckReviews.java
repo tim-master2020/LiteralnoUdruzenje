@@ -28,7 +28,7 @@ public class CheckReviews  implements JavaDelegate {
 
     public  boolean isAllEqual(List<String> votes){
         for(int i=1; i<votes.size(); i++){
-            if(votes.get(0) != votes.get(i)){
+            if(!votes.get(0).equals(votes.get(i))){
                 return false;
             }
         }

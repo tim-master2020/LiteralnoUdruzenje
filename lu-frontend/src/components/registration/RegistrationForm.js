@@ -5,9 +5,10 @@ import { Form, Button, FormGroup, FormControl, ControlLabel, Col, Card } from "r
 import './RegistrationForm.css';
 import { withRouter } from 'react-router-dom';
 import CamundaForm from '../CamundaForm.js';
-import {validate} from '../../functions/FormFunctions';
+
 import BetaReader from './BetaReader';
 import { alert } from '../../functions/alertSwal' 
+import validate from '../../functions/FormFunctions.js';
 
 const RegistrationForm = ({history, type}) => {
 
@@ -29,18 +30,18 @@ const RegistrationForm = ({history, type}) => {
     }, [type]);
 
 
-    function SendRegisterRequest(e) {
+    function SendRegisterRequest() {
 
-        e.preventDefault();   
+        //e.preventDefault();   
         const returnValue = [];
         let dataIsValid = true;
         formFields.forEach(field => {
 
-            validate(field,field.value.value,setIsValid,isValid);
-            if(Object.keys(isValid).length > 0){
-                setValidationMessage(`Input value for field ${field.id} should be`)
-                dataIsValid = false; 
-            }
+            // validate(field,field.value.value,setIsValid,isValid);
+            // if(Object.keys(isValid).length > 0){
+            //     setValidationMessage(`Input value for field ${field.id} should be`)
+            //     dataIsValid = false; 
+            // }
 
             field.value.value = (field.id === "betaReader" && field.value.value === null) ? false : field.value.value;
             
@@ -51,7 +52,7 @@ const RegistrationForm = ({history, type}) => {
         });
         
         
-        if(dataIsValid){
+        //f(dataIsValid){
            
             var role = (type === "WriterRegistration") ? "writer" : "reader";
             axios.post(`${defaultUrl}/api/users/submit-general-data/${taskId}/${role}`, returnValue).then(
@@ -75,7 +76,7 @@ const RegistrationForm = ({history, type}) => {
                 alert("Validation failed,try again"); 
             }
         );
-    }
+    //}
     }
 
 

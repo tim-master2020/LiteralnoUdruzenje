@@ -14,7 +14,7 @@ public class Payment implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
-        int secondsToSleep = 5;
+        int secondsToSleep = 3;
 
         try {
             Thread.sleep(secondsToSleep * 1000);

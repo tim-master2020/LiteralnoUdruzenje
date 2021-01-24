@@ -43,7 +43,7 @@ public class SaveReader implements JavaDelegate{
     public void execute(DelegateExecution execution) throws Exception {
 
         HashMap<String, Object> registration = (HashMap<String, Object>) execution.getVariable("registration");
-        ArrayList<LinkedHashMap<String,String>> betaGenres = ( ArrayList<LinkedHashMap<String,String>>) execution.getVariable("betaGenres");
+        HashMap<String,ArrayList> betaGenres = (HashMap<String, ArrayList>) execution.getVariable("betaGenres");
 
         Reader reader = new Reader();
         reader.setUsername(registration.get("username").toString());
@@ -71,8 +71,9 @@ public class SaveReader implements JavaDelegate{
 
         Set<Genre> betas =  new HashSet<>();
         if(betaGenres != null){
-            for (LinkedHashMap<String,String> oneOption : betaGenres){
-                betas.add(genreService.findByName(oneOption.get("value")));
+            for (Object oneOption : betaGenres.get("Genres")){
+                LinkedHashMap<String,String> option = (LinkedHashMap<String,String>)oneOption;
+                betas.add(genreService.findByName(option.get("label")));
             }
             reader.setBetaGenres(betas);
         }

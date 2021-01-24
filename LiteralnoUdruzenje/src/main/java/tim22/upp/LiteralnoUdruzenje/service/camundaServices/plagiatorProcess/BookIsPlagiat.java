@@ -15,7 +15,7 @@ public class BookIsPlagiat implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
-        /*Book book = bookService.findBookByName(delegateExecution.getVariable("complaneeBook").toString());
-        book.setPlagiat(true);*/
+        Book book = bookService.findBookByName(delegateExecution.getVariable("complaneeBook").toString());
+        book.setPlagiat(true);
     }
 }

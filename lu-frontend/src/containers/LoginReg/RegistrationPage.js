@@ -1,6 +1,6 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom';
-import RegistrationForm from '../../components/registration/Registration'
+import RegistrationForm from '../../components/registration/RegistrationForm'
 
 const RegistrationPage = ({history, props}) => {
     

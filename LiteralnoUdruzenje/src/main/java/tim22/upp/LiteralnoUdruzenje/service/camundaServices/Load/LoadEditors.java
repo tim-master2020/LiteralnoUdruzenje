@@ -11,6 +11,7 @@ import tim22.upp.LiteralnoUdruzenje.model.Reader;
 import tim22.upp.LiteralnoUdruzenje.model.User;
 import tim22.upp.LiteralnoUdruzenje.model.camundaCustomTypes.EnumType;
 import tim22.upp.LiteralnoUdruzenje.model.camundaCustomTypes.MultiEnumType;
+import tim22.upp.LiteralnoUdruzenje.model.camundaCustomTypes.MultiEnumTypeSpecial;
 import tim22.upp.LiteralnoUdruzenje.service.IUserService;
 
 import java.util.HashMap;
@@ -26,27 +27,15 @@ public class LoadEditors implements TaskListener {
     @Override
     public void notify(DelegateTask delegateTask) {
         TaskFormData taskFormFields = delegateTask.getExecution().getProcessEngineServices().getFormService().getTaskFormData(delegateTask.getId());
-        List<String> editorsUsernames = (List<String>)delegateTask.getExecution().getVariable("editorsFromDatabase");
-        HashMap<String, String> dict = new HashMap<>();
 
-        for (String username : editorsUsernames) {
-
-            User user = userService.findByUsername(username);
-            dict.put(username, user.getId());
-        }
+        List<String> editorsUsernames = (List<String>)delegateTask.getExecution().getVariable("remaningEditors");
 
         for (FormField field : taskFormFields.getFormFields()) {
-            if (field.getId().equals("editors")) {
-                EnumFormType formType = null;
-                if(field.getType().getName().contains("multi")) {
-                    formType = (MultiEnumType) field.getType();
-                }else{
-                    formType = (EnumType) field.getType();
-                }
-
-                for (Map.Entry<String, String> entry : dict.entrySet()) {
-                    formType.getValues().put(entry.getValue(), entry.getKey());
-
+            if (field.getId().contains("editors")) {
+                EnumFormType formType = (EnumFormType) field.getType();
+                formType.getValues().clear();
+                for (String entry : editorsUsernames) {
+                    formType.getValues().put(entry, entry);
                 }
             }
         }

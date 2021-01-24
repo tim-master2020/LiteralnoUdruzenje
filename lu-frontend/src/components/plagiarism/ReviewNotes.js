@@ -34,7 +34,7 @@ const ReviewNotes = ({ history, updateUser }) => {
 
     const submitReview = (e) => {
 
-        e.preventDefault();
+        //e.preventDefault();
         const returnArray = [];
         console.log('selected',selected);
         formFields.forEach(field => {

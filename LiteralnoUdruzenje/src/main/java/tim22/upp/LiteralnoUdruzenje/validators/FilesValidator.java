@@ -9,6 +9,7 @@ import org.camunda.bpm.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import tim22.upp.LiteralnoUdruzenje.helper.ServiceHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FilesValidator implements FormFieldValidator {
@@ -23,7 +24,9 @@ public class FilesValidator implements FormFieldValidator {
     public boolean validate(Object o, FormFieldValidatorContext formFieldValidatorContext) {
         formService = ServiceHelper.getFormService();
         taskService = ServiceHelper.getTaskService();
-        List submittedValues = (List) o;
+        String submittedValues = (String) o;
+        String[] submittedValuesAsArray = submittedValues.split(",");
+
         int min=0;
         Task task = taskService.createTaskQuery().processInstanceId(formFieldValidatorContext.getExecution().getProcessInstanceId()).singleResult();
         List<FormField> fields = formService.getTaskFormData(task.getId()).getFormFields();
@@ -34,10 +37,11 @@ public class FilesValidator implements FormFieldValidator {
                 break;
             }
         }
-        if(submittedValues.size() < min){
+        if(submittedValuesAsArray.length < min){
             return false;
         }else{
             return true;
         }
+
     }
 }

@@ -35,7 +35,7 @@ const ReviewBookGeneral = ({history,updateUser}) => {
 
     const submitReview = (e) => {
 
-            e.preventDefault();
+            //e.preventDefault();
             const returnArray = [];
             formFields.forEach(field => {
     

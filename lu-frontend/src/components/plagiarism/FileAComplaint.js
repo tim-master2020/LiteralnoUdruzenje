@@ -34,7 +34,7 @@ const FileAComlpaint = ({ taskId, history,updateUser}) => {
 
     function submitComplaint(e) {
 
-        e.preventDefault();
+        //e.preventDefault();
         const returnArray = [];
         formFields.forEach(field => {
             returnArray.push({ fieldId: field.id, fieldValue: field.value.value });

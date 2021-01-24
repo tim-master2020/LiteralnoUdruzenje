@@ -36,7 +36,7 @@ const ComparePlagiats = ({history,updateUser}) => {
 
     function handleSubmit(e) {
 
-        e.preventDefault();
+        //e.preventDefault();
         const returnArray = [];
         formFields.forEach(field => {
 

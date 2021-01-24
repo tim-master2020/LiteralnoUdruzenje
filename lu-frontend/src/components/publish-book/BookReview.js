@@ -36,7 +36,7 @@ const BookReview = ({history,updateUser,type}) => {
             headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
         };
         
-        e.preventDefault();
+        //e.preventDefault();
         const returnArray = [];
         formFields.forEach(field => {
 

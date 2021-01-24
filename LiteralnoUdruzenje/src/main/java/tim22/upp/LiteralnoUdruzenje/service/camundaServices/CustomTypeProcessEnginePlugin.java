@@ -26,8 +26,9 @@ public class CustomTypeProcessEnginePlugin extends AbstractProcessEnginePlugin {
         formTypes.add(new CustomType("button_type"));
         formTypes.add(new CustomType("textArea"));
         formTypes.add(new CustomType("label"));
-        formTypes.add(new CustomType("input_file_2"));
+        formTypes.add(new CustomType("input_file"));
         formTypes.add(new CustomType("input_file_1"));
+        formTypes.add(new CustomType("input_file_2"));
         formTypes.add(new CustomType("input_single"));
         formTypes.add(new CustomType("pdfs"));
         formTypes.add(new MultipleDownloadFilesType("multiFilesDownload"));

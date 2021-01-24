@@ -40,7 +40,7 @@ const Payment = ({ history,updateUser }) => {
             headers: { 'Authorization': 'Bearer ' + token}
         };
 
-        e.preventDefault();
+        //e.preventDefault();
 
         axios.post(`${defaultUrl}/api/writers/activate-account/${history.location.state.taskId}`, options).then(
             (resp) => {

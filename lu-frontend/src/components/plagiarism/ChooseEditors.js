@@ -29,7 +29,7 @@ const ChooseEditors = ({ taskId, history,updateUser }) => {
 
     function choose(e) {
 
-        e.preventDefault();
+        //e.preventDefault();
         var usernames = [];
         formFields.forEach(field => {
 

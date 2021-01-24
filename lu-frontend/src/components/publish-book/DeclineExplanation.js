@@ -33,7 +33,7 @@ const DeclineExplanation = ({history,updateUser}) => {
 
     function submitExplanation(e) {
 
-        e.preventDefault();
+        //e.preventDefault();
         const returnArray = [];
         formFields.forEach(field => {
 

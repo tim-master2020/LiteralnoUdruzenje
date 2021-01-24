@@ -36,18 +36,19 @@ const InitialUpload = ({ history,updateUser }) => {
 
     function SavePdfs(e) {
 
-        e.preventDefault();
+        //e.preventDefault();
+        console.log('fomrFields',formFields);
         const returnValue = [];
 
         formFields.forEach(field => {
             returnValue.push({ fieldId: field.id, fieldValue: field.value.value })
         });
 
-        console.log(returnValue);
+        console.log('returnValue',returnValue);
 
         var numOfPdfs = 0;
 
-        if(taskName === 'UploadPDFForm'){
+        if(taskName === 'UploadFiles'){
             returnValue[0].fieldValue.forEach(item => {numOfPdfs++});
             if(numOfPdfs < 4) {
                 alert("You have to upload minimum of 2 PDF files!");

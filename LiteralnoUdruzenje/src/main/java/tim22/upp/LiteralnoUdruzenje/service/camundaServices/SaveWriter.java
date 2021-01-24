@@ -44,6 +44,7 @@ public class SaveWriter implements JavaDelegate {
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
         HashMap<String, Object> registration = (HashMap<String, Object>) delegateExecution.getVariable("registration");
+        delegateExecution.setVariable("isWriterSaved",false);
 
         Writer writer = new Writer();
         writer.setUsername(registration.get("username").toString());

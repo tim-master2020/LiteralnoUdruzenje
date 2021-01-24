@@ -1,7 +1,7 @@
 export function TaskNameRoutes(name) {
     var route = '';
     switch (name) {
-        case 'UploadPDFForm':
+        case 'UploadFiles':
         case 'uploadExtraMaterial':
             route = '/upload';
             break;

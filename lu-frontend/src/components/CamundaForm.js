@@ -23,7 +23,6 @@ const CamundaForm = ({ formFields,
     setUploadedFiles }) => {
 
     const onCamundaFormSubmit = (e) =>{
-        debugger;
         e.preventDefault();
 
         formFields.forEach(field => {
@@ -142,6 +141,9 @@ const CamundaForm = ({ formFields,
                             <Form.Label>{field.label}</Form.Label>
                             <br />
                             <input multiple type="file" id={field.id} name={field.id} onChange={fileSelectedHandler} />
+                            {isValid.hasOwnProperty(`${field.id}`) &&
+                                showValidationErrors(field)
+                            }
                         </Form.Group>);
 
                 } if (field.type.name.includes('textArea')) {
@@ -275,10 +277,13 @@ const CamundaForm = ({ formFields,
         temp.forEach(field => {
             if (e.target.name === field.id) {
                 field.value.value = all;
+                validate(field,all,setIsValid,isValid);
             }
         });
+        debugger;
         setformFields(temp);
-        setShouldSubmit(true);
+        
+        //setShouldSubmit(true);
     }
 
     function handleChange(e) {

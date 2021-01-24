@@ -43,7 +43,7 @@ const BookReview = ({ history,updateUser }) => {
     
     function submitReview(e) {
 
-        e.preventDefault();   
+        //e.preventDefault();   
         const returnValue = [];
         let dataIsValid = true;
         formFields.forEach(field => {

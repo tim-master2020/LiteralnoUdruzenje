@@ -74,12 +74,24 @@ public class BookController {
         runtimeService.setVariable(processInstanceId, "booksSaved", booksSaved);
 
         HashMap<String, Object> map = new HashMap<>();
-        for (String name : booksSaved){
-            map.put("name", name);
+        Object name = formDTO.get(0).getFieldValue();
+        ArrayList fileNames =(ArrayList<String>) name;
+        List subList = fileNames.subList(0,fileNames.size()/2);
+
+        String stringFileNames = "";
+        for(Object oneFileName : subList){
+            if(subList.get(subList.size()-1) == oneFileName){
+                stringFileNames = stringFileNames + oneFileName;
+            }else {
+                stringFileNames = stringFileNames + oneFileName.toString() + ",";
+            }
         }
 
+        HashMap<String,Object> files = new HashMap<>();
+        files.put(formDTO.get(0).getFieldId(),stringFileNames);
+
         try {
-            formService.submitTaskForm(taskId, map);
+            formService.submitTaskForm(taskId, files);
         }catch (Exception e){
             ResponseEntity responseEntity = new ResponseEntity<>("Uploading books failed.",HttpStatus.BAD_REQUEST);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

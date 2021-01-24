@@ -35,7 +35,7 @@ const PublishBookGeneralData = ({ taskId, history }) => {
 
     function submitGeneralBookData(e) {
 
-        e.preventDefault();
+        //e.preventDefault();
         const returnArray = [];
         formFields.forEach(field => {
 

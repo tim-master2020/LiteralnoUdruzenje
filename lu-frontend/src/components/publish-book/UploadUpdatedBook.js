@@ -37,7 +37,7 @@ const UploadUpdatedBook = ({history,updateUser}) =>{
             headers: { 'Authorization': 'Bearer ' + token}
         };
 
-        e.preventDefault();
+        //e.preventDefault();
         const returnValue = [];
 
         formFields.forEach(field => {

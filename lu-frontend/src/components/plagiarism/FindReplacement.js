@@ -40,7 +40,7 @@ const FindReplacement = ({history,updateUser}) => {
 
     const submitReplacements = (e) => {
 
-        e.preventDefault();
+        //e.preventDefault();
         const returnArray = [];
 
         formFields.forEach(field => {

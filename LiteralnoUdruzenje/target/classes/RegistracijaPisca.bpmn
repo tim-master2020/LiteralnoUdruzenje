@@ -85,12 +85,6 @@
         <bpmn:incoming>Flow_0t61gjk</bpmn:incoming>
         <bpmn:escalationEventDefinition id="EscalationEventDefinition_07zghzn" escalationRef="Escalation_1bei0vi" />
       </bpmn:endEvent>
-      <bpmn:boundaryEvent id="Event_09biqvi" cancelActivity="false" attachedToRef="UploadExtraMaterial">
-        <bpmn:outgoing>Flow_0wia36z</bpmn:outgoing>
-        <bpmn:timerEventDefinition id="TimerEventDefinition_0moiwiz">
-          <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1M</bpmn:timeDuration>
-        </bpmn:timerEventDefinition>
-      </bpmn:boundaryEvent>
       <bpmn:endEvent id="FailedReview" name="Fail">
         <bpmn:incoming>Flow_08fu4ek</bpmn:incoming>
         <bpmn:escalationEventDefinition id="EscalationEventDefinition_1x5qzev" escalationRef="Escalation_1bei0vi" />
@@ -177,12 +171,6 @@
         <bpmn:multiInstanceLoopCharacteristics camunda:collection="${reviewers}" camunda:elementVariable="reviewer" />
       </bpmn:userTask>
       <bpmn:sequenceFlow id="Flow_15g0nk9" sourceRef="ReviewNewWriter" targetRef="Activity_0cx28uj" />
-      <bpmn:boundaryEvent id="Event_0oem82m" cancelActivity="false" attachedToRef="Payment">
-        <bpmn:outgoing>Flow_1qo6x0f</bpmn:outgoing>
-        <bpmn:timerEventDefinition id="TimerEventDefinition_1lv3m42">
-          <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1M</bpmn:timeDuration>
-        </bpmn:timerEventDefinition>
-      </bpmn:boundaryEvent>
       <bpmn:intermediateThrowEvent id="MailAboutPaymentExpiration" name="MailAboutPaymentExpiration">
         <bpmn:incoming>Flow_1qo6x0f</bpmn:incoming>
         <bpmn:outgoing>Flow_19r7z5i</bpmn:outgoing>
@@ -193,15 +181,6 @@
         <bpmn:incoming>Flow_19r7z5i</bpmn:incoming>
         <bpmn:escalationEventDefinition id="EscalationEventDefinition_1c2ans7" escalationRef="Escalation_1bei0vi" />
       </bpmn:endEvent>
-      <bpmn:userTask id="Payment" name="Payment" camunda:assignee="${writer}">
-        <bpmn:extensionElements>
-          <camunda:formData>
-            <camunda:formField id="payment" label="Payment" type="string_button_type" />
-          </camunda:formData>
-        </bpmn:extensionElements>
-        <bpmn:incoming>Flow_002kzf3</bpmn:incoming>
-        <bpmn:outgoing>Flow_0fd7nel</bpmn:outgoing>
-      </bpmn:userTask>
       <bpmn:sequenceFlow id="Flow_002kzf3" sourceRef="MailAboutApproval" targetRef="Payment" />
       <bpmn:sequenceFlow id="Flow_0fd7nel" sourceRef="Payment" targetRef="SuccessAllAproved" />
       <bpmn:sequenceFlow id="Flow_1qo6x0f" sourceRef="Event_0oem82m" targetRef="MailAboutPaymentExpiration" />
@@ -241,6 +220,22 @@
       <bpmn:sequenceFlow id="Flow_0wmevl7" sourceRef="EmailAboutDenial" targetRef="Event_10d3g28" />
       <bpmn:sequenceFlow id="Flow_1nlk92r" sourceRef="MailAboutMoreWork" targetRef="UploadExtraMaterial" />
       <bpmn:sequenceFlow id="Flow_1b57ji9" sourceRef="UploadExtraMaterial" targetRef="Gateway_15x2yfg" />
+      <bpmn:boundaryEvent id="Event_09biqvi" attachedToRef="UploadExtraMaterial">
+        <bpmn:outgoing>Flow_0wia36z</bpmn:outgoing>
+        <bpmn:timerEventDefinition id="TimerEventDefinition_1ugfl4g">
+          <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1M</bpmn:timeDuration>
+        </bpmn:timerEventDefinition>
+      </bpmn:boundaryEvent>
+      <bpmn:boundaryEvent id="Event_0oem82m" attachedToRef="Payment">
+        <bpmn:outgoing>Flow_1qo6x0f</bpmn:outgoing>
+        <bpmn:timerEventDefinition id="TimerEventDefinition_0tqg5js">
+          <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1M</bpmn:timeDuration>
+        </bpmn:timerEventDefinition>
+      </bpmn:boundaryEvent>
+      <bpmn:serviceTask id="Payment" name="Payment" camunda:class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.Payment">
+        <bpmn:incoming>Flow_002kzf3</bpmn:incoming>
+        <bpmn:outgoing>Flow_0fd7nel</bpmn:outgoing>
+      </bpmn:serviceTask>
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_02aw76r" sourceRef="UploadPDFForm" targetRef="Activity_123k06n" />
     <bpmn:intermediateCatchEvent id="Event_13looj1">
@@ -293,7 +288,11 @@
     <bpmn:userTask id="UploadPDFForm" name="UploadPDFForm" camunda:assignee="${writer}">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="uploadPDFs" label="Upload PDF" type="string_input_file" />
+          <camunda:formField id="uploadPDFs" label="Upload PDF" type="string_input_file">
+            <camunda:validation>
+              <camunda:constraint name="minlength" config="2" />
+            </camunda:validation>
+          </camunda:formField>
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0zyj4mc</bpmn:incoming>
@@ -594,9 +593,6 @@
           <dc:Bounds x="2561" y="1245" width="18" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1pcqdqg_di" bpmnElement="Payment">
-        <dc:Bounds x="2270" y="1045" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1ehb5g5_di" bpmnElement="Activity_1ehb5g5">
         <dc:Bounds x="2230" y="900" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -624,11 +620,14 @@
           <dc:Bounds x="2821" y="798" width="18" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0oem82m_di" bpmnElement="Event_0oem82m">
-        <dc:Bounds x="2352" y="1107" width="36" height="36" />
+      <bpmndi:BPMNShape id="Activity_1y3eojs_di" bpmnElement="Payment">
+        <dc:Bounds x="2270" y="1045" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_07l3m1n_di" bpmnElement="Event_09biqvi">
+      <bpmndi:BPMNShape id="Event_0imw6xi_di" bpmnElement="Event_09biqvi">
         <dc:Bounds x="1922" y="692" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1du5hnk_di" bpmnElement="Event_0oem82m">
+        <dc:Bounds x="2352" y="1107" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_15ioj7u_di" bpmnElement="Event_13looj1">
         <dc:Bounds x="2072" y="292" width="36" height="36" />

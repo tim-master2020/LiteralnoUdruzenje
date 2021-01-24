@@ -298,7 +298,6 @@ public class BookController {
 
         runtimeService.setVariable(processInstanceId, "lectorChangesNeeded", decision);
         runtimeService.setVariable(processInstanceId, "lectorsComment", comment);
-        runtimeService.setVariable(processInstanceId, "lectorViewed", true);
         formService.submitTaskForm(taskId,map);
 
         return new ResponseEntity<>(HttpStatus.OK);

@@ -25,7 +25,7 @@ public class LoadNotes implements TaskListener {
         for (FormField field : taskFormFields.getFormFields()) {
             if (field.getId().equals("notes")) {
                 MultipleDownloadFilesType filesType = (MultipleDownloadFilesType) field.getType();
-
+                filesType.getValues().clear();
                 for (Map.Entry<String, String> note : notesMap.entrySet()) {
                     filesType.getValues().put(note.getValue(), note.getKey());
                 }

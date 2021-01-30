@@ -49,8 +49,23 @@ const CamundaForm = ({ formFields,
     function updateSelected(e,field){
         setSelected(e);
         //field.value.value = e;
+        debugger;
         const values = e.map(element => element.label);
         if (!validate(field,values,setIsValid,isValid,e)) {
+            setValidationMessage(`Input value for field ${field.id} should be`);
+            if (Object.keys(isValid).length > 0) {
+                setShouldSubmit(false);
+            } else {
+                setShouldSubmit(true);
+            }
+        }
+        console.log('isValid',isValid);
+    }
+
+    function updateSingleSelected(e,field){
+        setSelected(e);
+        debugger;
+        if (!validate(field,e.label,setIsValid,isValid,e)) {
             setValidationMessage(`Input value for field ${field.id} should be`);
             if (Object.keys(isValid).length > 0) {
                 setShouldSubmit(false);
@@ -96,9 +111,13 @@ const CamundaForm = ({ formFields,
                             <Form.Label id={field.id} name={field.id}>{field.label}: {field.value.value}</Form.Label>
                             <Select
                                 value={selected}
-                                onChange={setSelected}
+                                onChange={(e)=>{updateSingleSelected(e,field)}}
                                 options={initializeOptions(field.type.values)}
                             />
+                            {
+                                isValid.hasOwnProperty(`${field.id}`) &&
+                                showValidationErrors(field)
+                            }
                         </div>
 
                     )
@@ -150,8 +169,9 @@ const CamundaForm = ({ formFields,
                     return (
                         <Form.Group key={field.id} as={Col} className="singleInputField">
                             <Form.Label>{field.label}</Form.Label>
-                            <textarea class="form-control" id={field.id} rows="3" name={field.id} onChange={handleChange}></textarea>
-                            {isValid.hasOwnProperty(`${field.id}`) &&
+                            <textarea class="form-control" id={field.id}  name={field.id} onChange={handleChange}></textarea>
+                            {
+                                isValid.hasOwnProperty(`${field.id}`) &&
                                 showValidationErrors(field)
                             }
                         </Form.Group>
@@ -163,9 +183,13 @@ const CamundaForm = ({ formFields,
                             <Form.Label>{field.label}</Form.Label>
                             <Select
                                 value={selected}
-                                onChange={setSelected}
+                                onChange={(e)=>{updateSingleSelected(e,field)}}
                                 options={initializeOptions(field.type.values)}
                             />
+                            {
+                                isValid.hasOwnProperty(`${field.id}`) &&
+                                showValidationErrors(field)
+                            }
                         </Form.Group>
                     );
                 }
@@ -199,6 +223,10 @@ const CamundaForm = ({ formFields,
                             <Form.Label>{field.label}</Form.Label>
                             <br />
                             <input type="file" id={field.id} name={field.id} onChange={fileSelectedHandler} />
+                            {
+                                isValid.hasOwnProperty(`${field.id}`) &&
+                                showValidationErrors(field)
+                            }
                         </Form.Group>
                     );
                 }

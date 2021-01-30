@@ -59,7 +59,11 @@
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="booksForReview" label="Books" type="multiFilesDownload" />
-          <camunda:formField id="notes" label="Notes" type="string_textArea" />
+          <camunda:formField id="notes" label="Notes" type="string_textArea">
+            <camunda:validation>
+              <camunda:constraint name="validator" config="tim22.upp.LiteralnoUdruzenje.validators.TextAreaValidator" />
+            </camunda:validation>
+          </camunda:formField>
         </camunda:formData>
         <camunda:taskListener class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.Load.LoadPlagiatedBooks" event="create" />
       </bpmn:extensionElements>
@@ -72,6 +76,9 @@
         <camunda:formData>
           <camunda:formField id="notes" label="Note" type="multiNotesLabel" />
           <camunda:formField id="vote" label="Leave a vote" type="enum">
+            <camunda:validation>
+              <camunda:constraint name="validator" config="tim22.upp.LiteralnoUdruzenje.validators.CamundaEnumValidator" />
+            </camunda:validation>
             <camunda:value id="plagiat" name="plagiat" />
             <camunda:value id="notplagiat" name="notplagiat" />
           </camunda:formField>
@@ -220,6 +227,33 @@
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="ComplainPlagiarisam">
+      <bpmndi:BPMNEdge id="Flow_1cmlr4r_di" bpmnElement="Flow_1cmlr4r">
+        <di:waypoint x="390" y="840" />
+        <di:waypoint x="390" y="920" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0dser60_di" bpmnElement="Flow_0dser60">
+        <di:waypoint x="390" y="698" />
+        <di:waypoint x="390" y="760" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13tbnr6_di" bpmnElement="Flow_13tbnr6">
+        <di:waypoint x="340" y="1235" />
+        <di:waypoint x="340" y="1350" />
+        <di:waypoint x="520" y="1350" />
+        <di:waypoint x="520" y="775" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0vmz69u_di" bpmnElement="Flow_0vmz69u">
+        <di:waypoint x="315" y="1210" />
+        <di:waypoint x="260" y="1210" />
+        <di:waypoint x="260" y="1058" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1nf5ri2_di" bpmnElement="Flow_1nf5ri2">
+        <di:waypoint x="565" y="267" />
+        <di:waypoint x="612" y="267" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_118s3kw_di" bpmnElement="Flow_118s3kw">
+        <di:waypoint x="260" y="1022" />
+        <di:waypoint x="260" y="910" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0gk26uy_di" bpmnElement="Flow_0gk26uy">
         <di:waypoint x="810" y="750" />
         <di:waypoint x="840" y="750" />
@@ -325,33 +359,6 @@
         <di:waypoint x="305" y="267" />
         <di:waypoint x="370" y="267" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_118s3kw_di" bpmnElement="Flow_118s3kw">
-        <di:waypoint x="260" y="1022" />
-        <di:waypoint x="260" y="910" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1nf5ri2_di" bpmnElement="Flow_1nf5ri2">
-        <di:waypoint x="565" y="267" />
-        <di:waypoint x="612" y="267" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0vmz69u_di" bpmnElement="Flow_0vmz69u">
-        <di:waypoint x="315" y="1210" />
-        <di:waypoint x="260" y="1210" />
-        <di:waypoint x="260" y="1058" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_13tbnr6_di" bpmnElement="Flow_13tbnr6">
-        <di:waypoint x="340" y="1235" />
-        <di:waypoint x="340" y="1350" />
-        <di:waypoint x="520" y="1350" />
-        <di:waypoint x="520" y="775" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0dser60_di" bpmnElement="Flow_0dser60">
-        <di:waypoint x="390" y="698" />
-        <di:waypoint x="390" y="760" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1cmlr4r_di" bpmnElement="Flow_1cmlr4r">
-        <di:waypoint x="390" y="840" />
-        <di:waypoint x="390" y="920" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="269" y="249" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -364,11 +371,23 @@
           <dc:Bounds x="590" y="292" width="82" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_03d406f_di" bpmnElement="GetEditors">
+        <dc:Bounds x="740" y="227" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ez8jg8_di" bpmnElement="SelectEditors">
+        <dc:Bounds x="910" y="390" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_03757gr_di" bpmnElement="DownloadBooksForReview">
+        <dc:Bounds x="330" y="920" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1f3en9f_di" bpmnElement="LeaveReview">
         <dc:Bounds x="840" y="710" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0u210xv_di" bpmnElement="FindReplacment">
         <dc:Bounds x="210" y="830" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ckyjla_di" bpmnElement="CheckWhoDidntReview">
+        <dc:Bounds x="360" y="1080" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_10loctm_di" bpmnElement="Gateway_10loctm" isMarkerVisible="true">
         <dc:Bounds x="365" y="585" width="50" height="50" />
@@ -394,6 +413,15 @@
       <bpmndi:BPMNShape id="Activity_14tammq_di" bpmnElement="SetBookIsPlagiat">
         <dc:Bounds x="1310" y="710" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_129uctm_di" bpmnElement="Event_129uctm">
+        <dc:Bounds x="1242" y="972" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0531lh2_di" bpmnElement="NotifyInvalidPlagiarism">
+        <dc:Bounds x="1102" y="972" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1127" y="940" width="85" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1srxepq_di" bpmnElement="NotifyComplanee">
         <dc:Bounds x="1492" y="732" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -415,21 +443,6 @@
           <dc:Bounds x="179" y="1050" width="62" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0531lh2_di" bpmnElement="NotifyInvalidPlagiarism">
-        <dc:Bounds x="1102" y="972" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1127" y="940" width="85" height="40" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_129uctm_di" bpmnElement="Event_129uctm">
-        <dc:Bounds x="1242" y="972" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_03d406f_di" bpmnElement="GetEditors">
-        <dc:Bounds x="740" y="227" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0ez8jg8_di" bpmnElement="SelectEditors">
-        <dc:Bounds x="910" y="390" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0ldkjv3_di" bpmnElement="Gateway_0ldkjv3" isMarkerVisible="true">
         <dc:Bounds x="515" y="242" width="50" height="50" />
       </bpmndi:BPMNShape>
@@ -441,12 +454,6 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0rqqy54_di" bpmnElement="Gateway_0rqqy54" isMarkerVisible="true">
         <dc:Bounds x="315" y="1185" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1ckyjla_di" bpmnElement="CheckWhoDidntReview">
-        <dc:Bounds x="360" y="1080" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_03757gr_di" bpmnElement="DownloadBooksForReview">
-        <dc:Bounds x="330" y="920" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1skb0ag_di" bpmnElement="Activity_13111wu">
         <dc:Bounds x="340" y="760" width="100" height="80" />

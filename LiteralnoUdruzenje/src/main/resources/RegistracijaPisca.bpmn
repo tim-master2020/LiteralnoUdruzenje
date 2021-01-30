@@ -162,8 +162,15 @@
         <bpmn:extensionElements>
           <camunda:formData>
             <camunda:formField id="pdfs" type="string_pdfs" defaultValue="${booksSaved}" />
-            <camunda:formField id="reviewComment" label="Comment" type="string" />
+            <camunda:formField id="reviewComment" label="Comment" type="string_textArea">
+              <camunda:validation>
+                <camunda:constraint name="validator" config="tim22.upp.LiteralnoUdruzenje.validators.TextAreaValidator" />
+              </camunda:validation>
+            </camunda:formField>
             <camunda:formField id="reviewRate" label="Rate this writer" type="enum">
+              <camunda:validation>
+                <camunda:constraint name="validator" config="tim22.upp.LiteralnoUdruzenje.validators.CamundaEnumValidator" />
+              </camunda:validation>
               <camunda:value id="APPROVE" name="Approve" />
               <camunda:value id="DECLINE" name="Decline" />
               <camunda:value id="MOREMATERIAL" name="More material" />

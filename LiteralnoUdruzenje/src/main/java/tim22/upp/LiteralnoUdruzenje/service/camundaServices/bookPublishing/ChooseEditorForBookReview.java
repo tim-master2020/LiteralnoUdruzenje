@@ -30,6 +30,6 @@ public class ChooseEditorForBookReview  implements JavaDelegate {
         User editor = editors.get(result);
 
         delegateExecution.setVariable("editorsUsername",editor.getUsername());
-        System.out.println(editor.getUsername());
+        System.out.println("Choosen editor for book review is "+editor.getUsername());
     }
 }

@@ -117,7 +117,9 @@ public class BookController {
         String processInstanceId = task.getProcessInstanceId();
         LinkedHashMap decision = (LinkedHashMap) map.get("decision");
         runtimeService.setVariable(processInstanceId, "result", decision.get("value"));
-        formService.submitTaskForm(taskId,decision);
+
+        map.put("decision",decision.get("value"));
+        formService.submitTaskForm(taskId,map);
 
         Task nextTask = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
         if(nextTask != null && task.getName().equals("GiveExplanation")) {
@@ -158,8 +160,23 @@ public class BookController {
             map.put("name", name);
         }
 
+        Object name = bookDTO.get(0).getFieldValue();
+        ArrayList fileNames =(ArrayList<String>) name;
+        List subList = fileNames.subList(0,fileNames.size()/2);
+        String stringFileNames = "";
+        for(Object oneFileName : subList){
+            if(subList.get(subList.size()-1) == oneFileName){
+                stringFileNames = stringFileNames + oneFileName;
+            }else {
+                stringFileNames = stringFileNames + oneFileName.toString() + ",";
+            }
+        }
+
+        HashMap<String,Object> files = new HashMap<>();
+        files.put(bookDTO.get(0).getFieldId(),stringFileNames);
+
         try {
-            formService.submitTaskForm(taskId, map);
+            formService.submitTaskForm(taskId, files);
         }catch (Exception e){
             return new ResponseEntity<>(new ExplanationDTO("Uploading book failed."),HttpStatus.BAD_REQUEST);
         }
@@ -184,6 +201,9 @@ public class BookController {
         String processInstanceId = task.getProcessInstanceId();
         String plagiat = (String) map.get("isPlagiat");
         runtimeService.setVariable(processInstanceId, "isPlagiat", plagiat);
+
+        //LinkedHashMap isPlagiat = (LinkedHashMap) map.get("isPlagiat");
+        //map.put("isPlagiat",isPlagiat.get("isPlagiat"));
         formService.submitTaskForm(taskId,map);
 
         Task nextTask = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
@@ -268,8 +288,24 @@ public class BookController {
             map.put("name", name);
         }
 
+        Object name = bookDTO.get(0).getFieldValue();
+        ArrayList fileNames =(ArrayList<String>) name;
+        List subList = fileNames.subList(0,fileNames.size()/2);
+
+        String stringFileNames = "";
+        for(Object oneFileName : subList){
+            if(subList.get(subList.size()-1) == oneFileName){
+                stringFileNames = stringFileNames + oneFileName;
+            }else {
+                stringFileNames = stringFileNames + oneFileName.toString() + ",";
+            }
+        }
+
+        HashMap<String,Object> files = new HashMap<>();
+        files.put(bookDTO.get(0).getFieldId(),stringFileNames);
+
         try {
-            formService.submitTaskForm(taskId, map);
+            formService.submitTaskForm(taskId, files);
         }catch (Exception e){
             return new ResponseEntity<>(new ExplanationDTO("Uploading book failed."),HttpStatus.BAD_REQUEST);
         }
@@ -284,7 +320,7 @@ public class BookController {
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
         String processInstanceId = task.getProcessInstanceId();
         String decision = (String) map.get("changesNeeded");
-        String comment = (String) map.get("comment");
+        String comment = (String) map.get("commentFromEditor");
         String writer = (String) taskService.getVariables(taskId).get("loggedInWriter");
         String bookName = (String) taskService.getVariables(taskId).get("bookName");
         reviewService.saveComment(comment, writer, task.getAssignee(), bookName);
@@ -302,8 +338,8 @@ public class BookController {
         HashMap<String, Object> map = this.mapListToDto(decisionDTO);
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
         String processInstanceId = task.getProcessInstanceId();
-        String decision = (String) map.get("changesNeeded");
-        String comment = (String) map.get("comment");
+        String decision = (String) map.get("changesNeededLector");
+        String comment = (String) map.get("commentFromLector");
         String writer = (String) taskService.getVariables(taskId).get("loggedInWriter");
         String bookName = (String) taskService.getVariables(taskId).get("bookName");
         reviewService.saveComment(comment, writer, task.getAssignee(), bookName);
@@ -321,8 +357,8 @@ public class BookController {
         HashMap<String, Object> map = this.mapListToDto(decisionDTO);
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
         String processInstanceId = task.getProcessInstanceId();
-        String decision = (String) map.get("changesNeeded");
-        String comment = (String) map.get("comment");
+        String decision = (String) map.get("changesNeededMainEditor");
+        String comment = (String) map.get("commentMainEditor");
         String writer = (String) taskService.getVariables(taskId).get("loggedInWriter");
         String bookName = (String) taskService.getVariables(taskId).get("bookName");
         reviewService.saveComment(comment, writer, task.getAssignee(), bookName);

@@ -13,6 +13,7 @@ const ChooseBetaReader = ({ taskId, history,updateUser }) => {
     const [isValid, setIsValid] = React.useState({});
     const [selected, setSelected] = React.useState([]);
     const [shouldSubmit, setShouldSubmit] = React.useState(true);
+    const [validationMessage, setValidationMessage] = React.useState({});
 
     const options = {
         headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
@@ -32,14 +33,13 @@ const ChooseBetaReader = ({ taskId, history,updateUser }) => {
         //e.preventDefault();
         var usernames = [];
         formFields.forEach(field => {
-
             if (field.type.name.includes('multiEnum_betas')) {
                 selected.forEach(s => {
                     usernames.push({ fieldId: s.value, fieldValue: s.label });
                 })
             }
         });
-
+    
         console.log(usernames);
 
         axios.post(`${defaultUrl}/api/betareaders/choose-beta-reader/${history.location.state.taskId}`, usernames, options).then(
@@ -70,6 +70,7 @@ const ChooseBetaReader = ({ taskId, history,updateUser }) => {
                 setSelected={setSelected}
                 shouldSubmit={shouldSubmit}
                 setShouldSubmit={setShouldSubmit}
+                setValidationMessage={setValidationMessage}
             />
         </Card>
     )

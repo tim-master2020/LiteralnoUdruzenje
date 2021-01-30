@@ -22,6 +22,11 @@ const DownloadBooksAndLeaveNotes = ({history,updateUser})=> {
     React.useEffect(() => {
         axios.get(`${defaultUrl}/process/get-form-fields/${history.location.state.taskId}`, options).then(
             (resp) => {
+                resp.data.formFields.forEach(f => {
+                    if(f.id === 'notes'){
+                        f.value.value = null;
+                    }
+                });
                 setformFields(resp.data.formFields);
             },
             (resp) => { alert("error getting form fields,try again"); }

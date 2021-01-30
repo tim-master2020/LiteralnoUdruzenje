@@ -3,7 +3,8 @@ export default function validate(field,value,setIsValid,isValid,selected){
     
         if (constraint.name === 'required') {
             const message = `${field.label} is required`
-            if (value === null || value === undefined || value === null || value === '') {
+            if (value === null || value === undefined || value === null || value === ''){
+                debugger;
                 Object.assign(isValid,{[`${field.id}`]:message});
 
             }else{
@@ -108,6 +109,20 @@ export default function validate(field,value,setIsValid,isValid,selected){
         }
     }
 
+    if(field.type.name.includes('singleEnum_') || field.type.name.includes('enum') ){
+        debugger;
+        const message = `For ${field.label} you need to choose one option`;
+        if (selected === null || selected === undefined || selected === '' || selected.length === 0) {
+             Object.assign(isValid,{[field.id]:message});
+        }else{
+
+            if(isValid[`${field.id}`] === message){
+                 delete isValid[`${field.id}`];;
+                 setIsValid(isValid);
+            }
+         }
+    }
+
     if(field.type.name.includes('_input_file')){
         debugger;
         const splitArray = field.type.name.split('_');
@@ -126,6 +141,21 @@ export default function validate(field,value,setIsValid,isValid,selected){
                     }
             }
         }
+    }
+
+    if(field.type.name.includes('input_single')){
+
+        const message = `You need to upload one file.`
+        if (value === null || value === undefined || value === '' || value.length === 0) {
+                Object.assign(isValid,{[field.id]:message});
+
+            }else{
+                if(isValid[`${field.id}`] === message){
+                delete isValid[`${field.id}`];;
+                setIsValid(isValid);
+            }
+        }
+        
     }
 
     if(field.type.name.includes('_email')){
@@ -154,8 +184,21 @@ export default function validate(field,value,setIsValid,isValid,selected){
                     delete isValid[`${field.id}`];;
                     setIsValid(isValid);
                     }
-            }
-        
+            }      
+    }
+
+    if(field.type.name.includes('_textArea')){
+        const message = `${field.label} is required.Please enter a value.`;
+
+            if (value === null || value === undefined || value === '') {
+                Object.assign(isValid,{[field.id]:message});
+
+            }else{
+                if(isValid[`${field.id}`] === message){
+                    delete isValid[`${field.id}`];;
+                    setIsValid(isValid);
+                    }
+            }      
     }
 }
 

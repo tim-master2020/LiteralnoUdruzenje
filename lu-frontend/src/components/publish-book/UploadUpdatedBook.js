@@ -25,6 +25,7 @@ const UploadUpdatedBook = ({history,updateUser}) =>{
         axios.get(`${defaultUrl}/process/get-form-fields/${history.location.state.taskId}`, options).then(
             (resp) => {
                 setformFields(resp.data.formFields);
+                console.log('form fields in upload',resp.data.formFields);
             },
             (resp) => { alert("error getting form fields,try again"); }
         );

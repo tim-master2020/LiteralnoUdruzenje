@@ -45,13 +45,12 @@ public class BetaReaderController {
 
         List betaReaders = new ArrayList();
         Map betasThatCommented = new HashMap<String,String>();
-
         for(Object username : map.values()){ ;
             betaReaders.add(username);
         }
         runtimeService.setVariable(task.getProcessInstanceId(), "selectedBetaReaders", betaReaders);
         runtimeService.setVariable(task.getProcessInstanceId(), "betasThatCommented", betasThatCommented);
-
+        map.put("betas",betaReaders);
         try {
             formService.submitTaskForm(taskId, map);
         }catch (Exception e){

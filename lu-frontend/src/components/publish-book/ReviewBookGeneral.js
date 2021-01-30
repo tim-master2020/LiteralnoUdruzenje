@@ -40,9 +40,11 @@ const ReviewBookGeneral = ({history,updateUser}) => {
             formFields.forEach(field => {
     
                 if (field.type.name.includes('enum')) {
+                    debugger;
                     field.value.value = selected;
                 }
                 returnArray.push({ fieldId: field.id, fieldValue: field.value.value });
+                debugger;
             });
     
             axios.post(`${defaultUrl}/api/books/save-general-book-data-review/${history.location.state.taskId}`, returnArray, options).then(

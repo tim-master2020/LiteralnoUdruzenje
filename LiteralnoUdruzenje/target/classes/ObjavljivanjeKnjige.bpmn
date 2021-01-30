@@ -8,9 +8,21 @@
     <bpmn:userTask id="Activity_01gath5" name="BookGeneralData">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="bookTitle" label="Book title" type="string" />
-          <camunda:formField id="synopsis" label="Book synopsis" type="string_textArea" />
-          <camunda:formField id="Genres" label="Choose book genre" type="singleEnum_genre" />
+          <camunda:formField id="bookTitle" label="Book title" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="synopsis" label="Book synopsis" type="string_textArea">
+            <camunda:validation>
+              <camunda:constraint name="validator" config="tim22.upp.LiteralnoUdruzenje.validators.TextAreaValidator" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="Genres" label="Choose book genre" type="singleEnum_genre_1">
+            <camunda:validation>
+              <camunda:constraint name="validator" config="tim22.upp.LiteralnoUdruzenje.validators.SingleEnumValidator" />
+            </camunda:validation>
+          </camunda:formField>
         </camunda:formData>
         <camunda:taskListener class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.LoadGenres" event="create" />
       </bpmn:extensionElements>
@@ -61,6 +73,9 @@
           <camunda:formField id="bookTitle" label="Book title" type="string_label" />
           <camunda:formField id="synopsis" label="Synopsis" type="string_label" />
           <camunda:formField id="decision" label="Decision" type="enum">
+            <camunda:validation>
+              <camunda:constraint name="validator" config="tim22.upp.LiteralnoUdruzenje.validators.CamundaEnumValidator" />
+            </camunda:validation>
             <camunda:value id="SEEMORE" name="See More" />
             <camunda:value id="NOTINTERESTED" name="Not Interested" />
           </camunda:formField>
@@ -94,7 +109,11 @@
     <bpmn:userTask id="Activity_1kti31j" name="GiveExplanation" camunda:assignee="${editorsUsername}">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="explanation" label="Give explanation" type="string_textArea" />
+          <camunda:formField id="explanationDeclined" label="Give explanation" type="string_textArea">
+            <camunda:validation>
+              <camunda:constraint name="validator" config="tim22.upp.LiteralnoUdruzenje.validators.TextAreaValidator" />
+            </camunda:validation>
+          </camunda:formField>
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1nsb1pn</bpmn:incoming>
@@ -115,7 +134,11 @@
     <bpmn:userTask id="Activity_0e4jpns" name="UploadRestOfWork" camunda:assignee="${loggedInWriter}">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="bookFile" label="Click here to upload your book pdf" type="string_input_single" />
+          <camunda:formField id="bookFile" label="Click here to upload your book pdf" type="string_input_single">
+            <camunda:validation>
+              <camunda:constraint name="validator" config="tim22.upp.LiteralnoUdruzenje.validators.FilesValidator" />
+            </camunda:validation>
+          </camunda:formField>
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0m86917</bpmn:incoming>
@@ -139,6 +162,9 @@
         <camunda:formData>
           <camunda:formField id="files" label="System returned these files" type="multiFilesDownload" />
           <camunda:formField id="isPlagiat" label="Is this work a plagiat?" type="enum">
+            <camunda:validation>
+              <camunda:constraint name="validator" config="tim22.upp.LiteralnoUdruzenje.validators.CamundaEnumValidator" />
+            </camunda:validation>
             <camunda:value id="YES" name="Yes" />
             <camunda:value id="NO" name="No" />
           </camunda:formField>
@@ -168,7 +194,11 @@
     <bpmn:userTask id="Activity_0zm7a74" name="GiveDeclineExplanation" camunda:assignee="${editorsUsername}">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="explanation" label="Give explanation" type="string_textArea" />
+          <camunda:formField id="explanationNotApproved" label="Give explanation" type="string_textArea">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0y3ivwy</bpmn:incoming>
@@ -180,6 +210,9 @@
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="sendToBetaReaders" label="Should this be sent to beta readers?" type="enum">
+            <camunda:validation>
+              <camunda:constraint name="validator" config="tim22.upp.LiteralnoUdruzenje.validators.CamundaEnumValidator" />
+            </camunda:validation>
             <camunda:value id="YES" name="Yes" />
             <camunda:value id="NO" name="No" />
           </camunda:formField>
@@ -221,7 +254,11 @@
       <bpmn:extensionElements>
         <camunda:taskListener class="tim22.upp.LiteralnoUdruzenje.service.camundaServices.Load.LoadBetaReaders" event="create" />
         <camunda:formData>
-          <camunda:formField id="betas" label="Betas" type="multiEnum_betas" />
+          <camunda:formField id="betas" label="Betas" type="multiEnum_betas_1">
+            <camunda:validation>
+              <camunda:constraint name="validator" config="tim22.upp.LiteralnoUdruzenje.validators.MultiEnumCustomValidator" />
+            </camunda:validation>
+          </camunda:formField>
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0ujgvtv</bpmn:incoming>
@@ -239,7 +276,11 @@
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="fileName" label="Book pdf" type="string_pdfs" defaultValue="${booksSaved}" />
-          <camunda:formField id="comment" label="Leave a comment" type="string_textArea" />
+          <camunda:formField id="commentFromBeta" label="Leave a comment" type="string_textArea">
+            <camunda:validation>
+              <camunda:constraint name="validator" config="tim22.upp.LiteralnoUdruzenje.validators.TextAreaValidator" />
+            </camunda:validation>
+          </camunda:formField>
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_056h1ey</bpmn:incoming>
@@ -301,7 +342,11 @@
     <bpmn:userTask id="Activity_0rx1oy0" name="UploadUpdatedBook" camunda:assignee="${loggedInWriter}">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="bookFile" type="string_input_single" />
+          <camunda:formField id="bookFile1" type="string_input_single">
+            <camunda:validation>
+              <camunda:constraint name="validator" config="tim22.upp.LiteralnoUdruzenje.validators.FilesValidator" />
+            </camunda:validation>
+          </camunda:formField>
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1gh4j5k</bpmn:incoming>
@@ -319,8 +364,15 @@
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="fileName" type="string_pdfs" defaultValue="${booksSaved}" />
-          <camunda:formField id="comment" label="You can leave a comment" type="string_textArea" />
+          <camunda:formField id="commentFromEditor" label="You can leave a comment" type="string_textArea">
+            <camunda:validation>
+              <camunda:constraint name="validator" config="tim22.upp.LiteralnoUdruzenje.validators.TextAreaValidator" />
+            </camunda:validation>
+          </camunda:formField>
           <camunda:formField id="changesNeeded" label="Does this book need more changes?" type="enum">
+            <camunda:validation>
+              <camunda:constraint name="validator" config="tim22.upp.LiteralnoUdruzenje.validators.CamundaEnumValidator" />
+            </camunda:validation>
             <camunda:value id="YES" name="Yes" />
             <camunda:value id="NO" name="No" />
           </camunda:formField>
@@ -378,8 +430,15 @@
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="fileName" type="string_pdfs" defaultValue="${booksSaved}" />
-          <camunda:formField id="comment" label="Comment" type="string_textArea" />
-          <camunda:formField id="changesNeeded" label="Does this book need more changes?" type="enum">
+          <camunda:formField id="commentFromLector" label="Comment" type="string_textArea">
+            <camunda:validation>
+              <camunda:constraint name="validator" config="tim22.upp.LiteralnoUdruzenje.validators.TextAreaValidator" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="changesNeededLector" label="Does this book need more changes?" type="enum">
+            <camunda:validation>
+              <camunda:constraint name="validator" config="tim22.upp.LiteralnoUdruzenje.validators.CamundaEnumValidator" />
+            </camunda:validation>
             <camunda:value id="YES" name="Yes" />
             <camunda:value id="NO" name="No" />
           </camunda:formField>
@@ -434,8 +493,15 @@
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="fileName" type="string_pdfs" defaultValue="${booksSaved}" />
-          <camunda:formField id="comment" label="Comment" type="string_textArea" />
-          <camunda:formField id="changesNeeded" label="Does this book need more changes?" type="enum">
+          <camunda:formField id="commentMainEditor" label="Comment" type="string_textArea">
+            <camunda:validation>
+              <camunda:constraint name="validator" config="tim22.upp.LiteralnoUdruzenje.validators.TextAreaValidator" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="changesNeededMainEditor" label="Does this book need more changes?" type="enum">
+            <camunda:validation>
+              <camunda:constraint name="validator" config="tim22.upp.LiteralnoUdruzenje.validators.CamundaEnumValidator" />
+            </camunda:validation>
             <camunda:value id="YES" name="Yes" />
             <camunda:value id="NO" name="No" />
           </camunda:formField>
@@ -456,7 +522,11 @@
     <bpmn:userTask id="Activity_15ymsoi" name="UploadUpdatedBook" camunda:assignee="${loggedInWriter}">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="bookFile" type="string_input_single" />
+          <camunda:formField id="bookFileMainEditor" type="string_input_single">
+            <camunda:validation>
+              <camunda:constraint name="validator" config="tim22.upp.LiteralnoUdruzenje.validators.FilesValidator" />
+            </camunda:validation>
+          </camunda:formField>
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0uo6xdh</bpmn:incoming>
@@ -519,7 +589,11 @@
     <bpmn:userTask id="Activity_0eutwwy" name="UploadUpdatedBook" camunda:assignee="${loggedInWriter}">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="bookFile" type="string_input_single" />
+          <camunda:formField id="bookFileLector" type="string_input_single">
+            <camunda:validation>
+              <camunda:constraint name="validator" config="tim22.upp.LiteralnoUdruzenje.validators.FilesValidator" />
+            </camunda:validation>
+          </camunda:formField>
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0jav0ha</bpmn:incoming>
@@ -555,6 +629,9 @@ custom type koji ce napraviti Jelena</bpmn:documentation>
         <camunda:formData>
           <camunda:formField id="fileName" label="Book" type="string_pdfs" defaultValue="${booksSaved}" />
           <camunda:formField id="approval" label="Do you approve this book?" type="enum">
+            <camunda:validation>
+              <camunda:constraint name="validator" config="tim22.upp.LiteralnoUdruzenje.validators.CamundaEnumValidator" />
+            </camunda:validation>
             <camunda:value id="YES" name="Yes" />
             <camunda:value id="NO" name="No" />
           </camunda:formField>
@@ -1073,6 +1150,9 @@ custom type koji ce napraviti Jelena</bpmn:documentation>
           <dc:Bounds x="922" y="2146" width="80" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0rx1oy0_di" bpmnElement="Activity_0rx1oy0">
+        <dc:Bounds x="980" y="2360" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1vkv1en_di" bpmnElement="EmailUpdatedBookForEditor">
         <dc:Bounds x="1012" y="2512" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -1090,6 +1170,9 @@ custom type koji ce napraviti Jelena</bpmn:documentation>
         <bpmndi:BPMNLabel>
           <dc:Bounds x="758.5" y="2436.5" width="73" height="27" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0yjv5kc_di" bpmnElement="Gateway_0yjv5kc" isMarkerVisible="true">
+        <dc:Bounds x="1005" y="2245" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_149sng8_di" bpmnElement="Activity_0hk4d7p">
         <dc:Bounds x="980" y="3000" width="100" height="80" />
@@ -1192,12 +1275,6 @@ custom type koji ce napraviti Jelena</bpmn:documentation>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1a7o4ok_di" bpmnElement="Activity_1a7o4ok">
         <dc:Bounds x="980" y="890" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0rx1oy0_di" bpmnElement="Activity_0rx1oy0">
-        <dc:Bounds x="980" y="2360" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0yjv5kc_di" bpmnElement="Gateway_0yjv5kc" isMarkerVisible="true">
-        <dc:Bounds x="1005" y="2245" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0uc36zl_di" bpmnElement="Event_0uc36zl">
         <dc:Bounds x="1362" y="4002" width="36" height="36" />

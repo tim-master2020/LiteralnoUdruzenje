@@ -32,6 +32,11 @@ const BookReview = ({ history,updateUser }) => {
         axios.get(`${defaultUrl}/process/get-form-fields/review/${history.location.state.taskId}`, options).then(
             (resp) => {
                 setWriter(resp.data.writer);
+                resp.data.formFields.forEach(f => {
+                    if(f.id === 'reviewComment' || f.id === 'reviewRate'){
+                        f.value.value = null;
+                    }
+                });
                 setformFields(resp.data.formFields);
             },
             (resp) => { alert.fire({
@@ -48,11 +53,11 @@ const BookReview = ({ history,updateUser }) => {
         let dataIsValid = true;
         formFields.forEach(field => {
 
-            validate(field,field.value.value,setIsValid,isValid);
-            if(Object.keys(isValid).length > 0){
-                setValidationMessage(`Input value for field ${field.id} should be`)
-                dataIsValid = false; 
-            }
+            // validate(field,field.value.value,setIsValid,isValid);
+            // if(Object.keys(isValid).length > 0){
+            //     setValidationMessage(`Input value for field ${field.id} should be`)
+            //     dataIsValid = false; 
+            // }
             
             if(field.type.name.includes('enum')){
                 field.value.value = selected.value;

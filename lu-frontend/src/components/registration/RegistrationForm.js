@@ -73,7 +73,7 @@ const RegistrationForm = ({history, type}) => {
                 }
             },
             (resp) => { 
-                alert("Validation failed,try again"); 
+                alert("Validation failed or this user already exists."); 
             }
         );
     //}

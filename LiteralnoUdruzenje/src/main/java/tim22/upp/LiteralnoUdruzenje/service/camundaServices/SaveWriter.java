@@ -78,7 +78,6 @@ public class SaveWriter implements JavaDelegate {
             camundaUser.setFirstName(writerSaved.getFirstName());
             camundaUser.setEmail(writerSaved.getEmail());
             camundaUser.setPassword(writerSaved.getPassword());
-            camundaUser.setId((writerSaved.getId()));
             identityService.saveUser(camundaUser);
             delegateExecution.setVariable("writer",writerSaved.getUsername());
         }

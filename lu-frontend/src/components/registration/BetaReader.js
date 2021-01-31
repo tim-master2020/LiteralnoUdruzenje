@@ -63,6 +63,7 @@ const BetaReader = ({ history }) => {
     
         axios.post(`${defaultUrl}/api/users/submit-beta-user/${history.location.state.taskId}`, returnArray).then(
             (resp) => {
+                alert('We have sent you email with conformation link.')
                 history.push('/');
             },
             (resp) => { alert("not good"); }

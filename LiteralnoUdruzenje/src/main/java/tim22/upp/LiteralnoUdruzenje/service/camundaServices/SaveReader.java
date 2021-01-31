@@ -44,7 +44,7 @@ public class SaveReader implements JavaDelegate{
 
         HashMap<String, Object> registration = (HashMap<String, Object>) execution.getVariable("registration");
         HashMap<String,ArrayList> betaGenres = (HashMap<String, ArrayList>) execution.getVariable("betaGenres");
-        execution.setVariable("isReaderSaved ",false);
+        execution.setVariable("isReaderSaved",false);
 
         Reader reader = new Reader();
         reader.setUsername(registration.get("username").toString());
@@ -80,14 +80,13 @@ public class SaveReader implements JavaDelegate{
         }
         Reader readerSaved = IReaderService.saveReader(reader);
         if(readerSaved != null) {
-            execution.setVariable("isReaderSaved ",true);
+            execution.setVariable("isReaderSaved",true);
             runtimeService.setVariable(execution.getProcessInstanceId(), "registeredUser", readerSaved);
             User camundaUser = identityService.newUser(reader.getUsername());
             camundaUser.setLastName(reader.getLastName());
             camundaUser.setFirstName(reader.getFirstName());
             camundaUser.setEmail(reader.getEmail());
             camundaUser.setPassword(reader.getPassword());
-            camundaUser.setId((reader.getId()));
             identityService.saveUser(camundaUser);
         }
     }

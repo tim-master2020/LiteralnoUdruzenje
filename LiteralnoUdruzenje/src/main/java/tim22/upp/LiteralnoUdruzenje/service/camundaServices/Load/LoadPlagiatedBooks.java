@@ -17,7 +17,7 @@ public class LoadPlagiatedBooks implements TaskListener {
         for (FormField field : taskFormFields.getFormFields()) {
             if (field.getId().equals("booksForReview")) {
                 MultipleDownloadFilesType filesType = (MultipleDownloadFilesType) field.getType();
-
+                filesType.getValues().clear();
                 for (String bookName : booksForComparison) {
                     filesType.getValues().put(bookName, bookName);
                 }

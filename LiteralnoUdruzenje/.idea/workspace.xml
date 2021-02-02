@@ -2,66 +2,66 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8b41c566-e1ec-4b1c-9879-7d332aa2318e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_sun_mail_jakarta_mail_1_6_5.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_modelmapper_modelmapper_2_3_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_mail_2_2_8_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_support_5_2_7_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/model/MultiEnumType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/model/PasswordType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/IEmailService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/CustomTypeProcessEnginePlugin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/EmailService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/LoadGenres.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/impl/EmailServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/data.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/validators/CamundaEnumValidator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/validators/SingleEnumValidator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/validators/TextAreaValidator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiteralnoUdruzenje.iml" beforeDir="false" afterPath="$PROJECT_DIR$/LiteralnoUdruzenje.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/camunda-h2-database.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/camunda-h2-database.mv.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/camunda-h2-database.trace.db" beforeDir="false" afterPath="$PROJECT_DIR$/camunda-h2-database.trace.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/BetaReaderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/BetaReaderController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/BookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/BookController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/dto/FormSubmissionDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/dto/FormSubmissionDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/dto/GenreDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/dto/GenreDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/model/BetaReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/model/BetaReader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/model/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/model/Book.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/model/Genre.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/model/Genre.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/model/Keyword.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/model/Keyword.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/model/Reader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/model/Reader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/model/Writer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/model/Writer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/repository/BetaReaderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/repository/BetaReaderRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/repository/BookRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/repository/BookRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/repository/KeywordRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/repository/KeywordRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/repository/ReaderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/repository/ReaderRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/repository/WriterRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/repository/WriterRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/IBookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/IBookService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/ReaderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/ReaderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/TestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/SaveReader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/impl/BookServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/impl/BookServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/impl/ReaderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/impl/ReaderServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/RegistracijaProces.bpmn" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/RegistracijaProces.bpmn" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/CustomTypeProcessEnginePlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/CustomTypeProcessEnginePlugin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/Load/LoadNotes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/Load/LoadNotes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/bookPublishing/ChooseEditorForBookReview.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/bookPublishing/ChooseEditorForBookReview.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/validators/FilesValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/validators/FilesValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/ObjavljivanjeKnjige.bpmn" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ObjavljivanjeKnjige.bpmn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/ProcesPlagijarizma.bpmn" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ProcesPlagijarizma.bpmn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/RegistracijaPisca.bpmn" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/RegistracijaPisca.bpmn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ObjavljivanjeKnjige.bpmn" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ObjavljivanjeKnjige.bpmn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ProcesPlagijarizma.bpmn" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ProcesPlagijarizma.bpmn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/RegistracijaPisca.bpmn" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/RegistracijaPisca.bpmn" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/RegistracijaProces.bpmn" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/RegistracijaProces.bpmn" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/dto/FormSubmissionDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/dto/FormSubmissionDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/model/Reader.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/model/Reader.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/TestService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/impl/ReaderServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/impl/ReaderServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pdfs/nesto(1).pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/controller/BetaReaderController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/controller/BetaReaderController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/controller/BookController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/controller/BookController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/camundaServices/CustomTypeProcessEnginePlugin.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/camundaServices/CustomTypeProcessEnginePlugin.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/camundaServices/Load/LoadNotes.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/camundaServices/Load/LoadNotes.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/camundaServices/Payment.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/camundaServices/Payment.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/camundaServices/SaveReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/camundaServices/SaveReader.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/camundaServices/SaveWriter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/camundaServices/SaveWriter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/camundaServices/bookPublishing/ChooseEditorForBookReview.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/service/camundaServices/bookPublishing/ChooseEditorForBookReview.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/validators/FilesValidator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tim22/upp/LiteralnoUdruzenje/validators/FilesValidator.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lu-frontend/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/.eslintcache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lu-frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lu-frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lu-frontend/src/components/registration/RegistrationForm.css" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/src/components/registration/RegistrationForm.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lu-frontend/src/components/registration/RegistrationForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/src/components/registration/RegistrationForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lu-frontend/src/components/CamundaForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/src/components/CamundaForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lu-frontend/src/components/bookReview/BookReview.js" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/src/components/bookReview/BookReview.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lu-frontend/src/components/plagiarism/DownloadBooksAndLeaveNotes.js" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/src/components/plagiarism/DownloadBooksAndLeaveNotes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lu-frontend/src/components/publish-book/ChooseBetaReader.js" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/src/components/publish-book/ChooseBetaReader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lu-frontend/src/components/publish-book/LeaveComment.js" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/src/components/publish-book/LeaveComment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lu-frontend/src/components/publish-book/ReviewBookGeneral.js" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/src/components/publish-book/ReviewBookGeneral.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lu-frontend/src/components/publish-book/UploadUpdatedBook.js" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/src/components/publish-book/UploadUpdatedBook.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lu-frontend/src/functions/FormFunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/../lu-frontend/src/functions/FormFunctions.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Enum" />
         <option value="Interface" />
         <option value="Class" />
       </list>
@@ -88,11 +88,19 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/pom.xml" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/pdfs" />
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\jelen\Documents\LiteralnoUdruzenje\LiteralnoUdruzenje\src\main\resources\pdfs" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\jelen\Documents\LiteralnoUdruzenje\LiteralnoUdruzenje\src\main\resources\pdfs" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
@@ -129,6 +137,8 @@
       <workItem from="1607375075906" duration="1555000" />
       <workItem from="1607377844676" duration="2059000" />
       <workItem from="1607786453055" duration="10415000" />
+      <workItem from="1608460888831" duration="1825000" />
+      <workItem from="1611689486273" duration="26038000" />
     </task>
     <servers />
   </component>
@@ -140,79 +150,95 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="361" y="73" key="#Project_Structure/0.0.1536.824@0.0.1536.824" timestamp="1607432782369" />
-    <state x="223" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1607432995024">
+    <state x="223" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1609855536772">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="223" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1607432995024" />
-    <state x="574" y="131" key="#com.intellij.ide.util.MemberChooser" timestamp="1608056468521">
+    <state x="223" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1609855536772" />
+    <state x="574" y="131" key="#com.intellij.ide.util.MemberChooser" timestamp="1611943582252">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="574" y="131" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1607793450418" />
-    <state x="574" y="131" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1608056468521" />
-    <state x="620" y="304" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1607786908030">
+    <state x="574" y="131" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1611943582252" />
+    <state x="498" y="202" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1609855534869">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="620" y="304" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1536.824@0.0.1536.824" timestamp="1607786908030" />
-    <state width="1493" height="256" key="GridCell.Tab.0.bottom" timestamp="1608060640373">
+    <state x="498" y="202" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1536.824@0.0.1536.824" timestamp="1609855534869" />
+    <state x="620" y="304" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1611054902583">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="256" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1608060640373" />
-    <state width="1493" height="256" key="GridCell.Tab.0.center" timestamp="1608060640373">
+    <state x="620" y="304" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1536.824@0.0.1536.824" timestamp="1611054902583" />
+    <state width="1493" height="63" key="GridCell.Tab.0.bottom" timestamp="1612027926575">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="256" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1608060640373" />
-    <state width="1493" height="256" key="GridCell.Tab.0.left" timestamp="1608060640373">
+    <state width="1493" height="63" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1612027926575" />
+    <state width="1493" height="63" key="GridCell.Tab.0.center" timestamp="1612027926574">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="256" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1608060640373" />
-    <state width="1493" height="256" key="GridCell.Tab.0.right" timestamp="1608060640373">
+    <state width="1493" height="63" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1612027926574" />
+    <state width="1493" height="63" key="GridCell.Tab.0.left" timestamp="1612027926574">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="256" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1608060640373" />
-    <state width="1493" height="256" key="GridCell.Tab.1.bottom" timestamp="1608059329434">
+    <state width="1493" height="63" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1612027926574" />
+    <state width="1493" height="63" key="GridCell.Tab.0.right" timestamp="1612027926574">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="256" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1608059329434" />
-    <state width="1493" height="256" key="GridCell.Tab.1.center" timestamp="1608059329434">
+    <state width="1493" height="63" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1612027926574" />
+    <state width="1493" height="208" key="GridCell.Tab.1.bottom" timestamp="1612027971799">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="256" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1608059329434" />
-    <state width="1493" height="256" key="GridCell.Tab.1.left" timestamp="1608059329434">
+    <state width="1493" height="208" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1612027971799" />
+    <state width="1493" height="208" key="GridCell.Tab.1.center" timestamp="1612027971799">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="256" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1608059329434" />
-    <state width="1493" height="256" key="GridCell.Tab.1.right" timestamp="1608059329434">
+    <state width="1493" height="208" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1612027971799" />
+    <state width="1493" height="208" key="GridCell.Tab.1.left" timestamp="1612027971799">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="256" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1608059329434" />
-    <state width="1493" height="5" key="GridCell.Tab.2.bottom" timestamp="1608059227103">
+    <state width="1493" height="208" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1612027971799" />
+    <state width="1493" height="208" key="GridCell.Tab.1.right" timestamp="1612027971799">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="5" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1608059227103" />
-    <state width="1493" height="5" key="GridCell.Tab.2.center" timestamp="1608059227103">
+    <state width="1493" height="208" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1612027971799" />
+    <state width="1493" height="63" key="GridCell.Tab.2.bottom" timestamp="1612027926478">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="5" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1608059227103" />
-    <state width="1493" height="5" key="GridCell.Tab.2.left" timestamp="1608059227103">
+    <state width="1493" height="63" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1612027926478" />
+    <state width="1493" height="63" key="GridCell.Tab.2.center" timestamp="1612027926478">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="5" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1608059227103" />
-    <state width="1493" height="5" key="GridCell.Tab.2.right" timestamp="1608059227103">
+    <state width="1493" height="63" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1612027926478" />
+    <state width="1493" height="63" key="GridCell.Tab.2.left" timestamp="1612027926478">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="5" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1608059227103" />
-    <state x="279" y="0" key="SettingsEditor" timestamp="1607433557717">
+    <state width="1493" height="63" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1612027926478" />
+    <state width="1493" height="63" key="GridCell.Tab.2.right" timestamp="1612027926478">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="279" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1607433557717" />
+    <state width="1493" height="63" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1612027926478" />
+    <state x="279" y="0" key="SettingsEditor" timestamp="1608669807698">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="279" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1608669807698" />
     <state x="361" y="148" key="Vcs.Push.Dialog.v2" timestamp="1607793526072">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="361" y="148" key="Vcs.Push.Dialog.v2/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1607793526072" />
-    <state x="477" y="239" key="com.intellij.ide.util.TipDialog" timestamp="1607375213236">
+    <state width="775" height="419" key="XDebugger.FullValuePopup" timestamp="1608673687880">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="477" y="239" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1607375213236" />
+    <state width="775" height="419" key="XDebugger.FullValuePopup/0.0.1536.824@0.0.1536.824" timestamp="1608673687880" />
+    <state x="477" y="239" key="com.intellij.ide.util.TipDialog" timestamp="1611689484019">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="477" y="239" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1611689484019" />
+    <state x="473" y="53" width="655" height="717" key="find.popup" timestamp="1611068396925">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="473" y="53" width="655" height="717" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1611068396925" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1611506412674">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1611506412674" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -234,34 +260,226 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/SaveReader.java</url>
-          <line>61</line>
+          <line>79</line>
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/SaveReader.java</url>
-          <line>63</line>
+          <line>81</line>
           <option name="timeStamp" value="30" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/EmailService.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/EmailServices/EmailService.java</url>
           <line>29</line>
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/EmailService.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/EmailServices/EmailService.java</url>
           <line>39</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/UserController.java</url>
-          <line>103</line>
-          <option name="timeStamp" value="33" />
+          <line>118</line>
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/UserController.java</url>
+          <line>115</line>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/UserController.java</url>
+          <line>121</line>
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/UserController.java</url>
+          <line>117</line>
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/BookController.java</url>
+          <line>100</line>
+          <option name="timeStamp" value="80" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/plagiatorProcess/GetComittee.java</url>
+          <line>20</line>
+          <option name="timeStamp" value="154" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/PlagiarismController.java</url>
+          <line>129</line>
+          <option name="timeStamp" value="155" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/plagiatorProcess/CheckReviews.java</url>
+          <line>34</line>
+          <option name="timeStamp" value="158" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/plagiatorProcess/BookIsPlagiat.java</url>
+          <line>17</line>
+          <option name="timeStamp" value="159" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/PlagiarismController.java</url>
+          <line>115</line>
+          <option name="timeStamp" value="174" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/Load/LoadNewEditorsForReview.java</url>
+          <line>32</line>
+          <option name="timeStamp" value="197" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/validators/ReplacementEditorsSum.java</url>
+          <line>14</line>
+          <option name="timeStamp" value="198" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/validators/EditorSumValidator.java</url>
+          <line>12</line>
+          <option name="timeStamp" value="199" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/plagiatorProcess/CheckWhoDidntReview.java</url>
+          <line>33</line>
+          <option name="timeStamp" value="200" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/UserController.java</url>
+          <line>104</line>
+          <option name="timeStamp" value="214" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/UserController.java</url>
+          <line>107</line>
+          <option name="timeStamp" value="215" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/UserController.java</url>
+          <line>109</line>
+          <option name="timeStamp" value="216" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/SaveReader.java</url>
+          <line>45</line>
+          <option name="timeStamp" value="221" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/SaveReader.java</url>
+          <line>67</line>
+          <option name="timeStamp" value="223" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/SaveReader.java</url>
+          <line>74</line>
+          <option name="timeStamp" value="224" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/BookController.java</url>
+          <line>93</line>
+          <option name="timeStamp" value="231" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/validators/FilesValidator.java</url>
+          <line>42</line>
+          <option name="timeStamp" value="234" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/BookController.java</url>
+          <line>68</line>
+          <option name="timeStamp" value="239" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/validators/MultiEnumCustomValidator.java</url>
+          <line>34</line>
+          <option name="timeStamp" value="242" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/validators/FilesValidator.java</url>
+          <line>29</line>
+          <option name="timeStamp" value="253" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/validators/CamundaEnumValidator.java</url>
+          <line>14</line>
+          <option name="timeStamp" value="255" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/BookController.java</url>
+          <line>135</line>
+          <option name="timeStamp" value="256" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/validators/TextAreaValidator.java</url>
+          <line>19</line>
+          <option name="timeStamp" value="257" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/BookController.java</url>
+          <line>205</line>
+          <option name="timeStamp" value="260" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/UserController.java</url>
+          <line>88</line>
+          <option name="timeStamp" value="263" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/validators/MultiEnumCustomValidator.java</url>
+          <line>26</line>
+          <option name="timeStamp" value="269" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/EmailServices/EmailNotification.java</url>
+          <line>52</line>
+          <option name="timeStamp" value="270" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/controller/BookController.java</url>
+          <line>278</line>
+          <option name="timeStamp" value="274" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/tim22/upp/LiteralnoUdruzenje/service/camundaServices/Load/LoadNotes.java</url>
+          <line>29</line>
+          <option name="timeStamp" value="276" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="SpringBootApplicationConfigurationType">
         <watch expression="genres" />
+        <watch expression="authenticationManager&#10;                .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),&#10;                        authenticationRequest.getPassword()))" language="JAVA" />
+        <watch expression="writer" />
+        <watch expression="currentBook" />
+        <watch expression="formType.getValues()" />
+        <watch expression="((FormFieldImpl)((java.util.ArrayList)((TaskFormDataImpl)taskFormFields).formFields).get(0)).value" custom="org.camunda.bpm.engine.impl.form.FormFieldImpl,java.util.ArrayList,org.camunda.bpm.engine.impl.form.TaskFormDataImpl" />
+        <watch expression="editorsThatHaventReviewed.values().size()" />
+        <watch expression="getFormService().getTaskFormData(delegateTask.getId()" />
+        <watch expression="delegateTask.getExecution().getProcessEngineServices().getFormService().getTaskFormData(delegateTask.getId()" />
+        <watch expression="delegateTask.getExecution().getProcessEngineServices().getFormService().getTaskFormData(delegateTask.getId())" />
+        <watch expression="delegateTask.getExecution().getVariable(&quot;remaningEditors&quot;)" />
+        <watch expression="delegateTask.getExecution().getVariable(&quot;maxReplacment&quot;)" language="JAVA" />
+        <watch expression="taskFormFields.getFormFields()" />
+        <watch expression="delegateTask.getExecution().getProcessEngineServices().getFormService()" language="JAVA" />
+        <watch expression="((TaskFormDataImpl)taskFormFields).formFields" custom="org.camunda.bpm.engine.impl.form.TaskFormDataImpl" />
+        <watch expression="((TaskFormDataImpl)taskFormFields).formFields" language="JAVA" custom="org.camunda.bpm.engine.impl.form.TaskFormDataImpl" />
+        <watch expression=" delegateExecution.setVariable(&quot;maxReplacment&quot;, new MyObject(String.valueOf(maxToReplace),String.valueOf(maxToReplace)));" />
+        <watch expression="delegateExecution.setVariable(&quot;maxReplacment&quot;, new MyObject(String.valueOf(maxToReplace),String.valueOf(maxToReplace)));" />
+        <watch expression="new MyObject(String.valueOf(maxToReplace),String.valueOf(maxToReplace)" />
+        <watch expression="((TaskFormDataImpl)taskFormFields).formFields" custom="org.camunda.bpm.engine.impl.form.TaskFormDataImpl" />
+        <watch expression="taskService.createTaskQuery().processInstanceId(formFieldValidatorContext.getExecution().getProcessInstanceId()).singleResult()" />
+        <watch expression="formFieldValidatorContext.getExecution().getProcessInstanceId()" />
+        <watch expression="processInstanceId(formFieldValidatorContext.getExecution().getProcessInstanceId()).singleResult()" />
+        <watch expression="taskService" />
+        <watch expression="field.getTypeName()" />
+        <watch expression="map" />
+        <watch expression="submittedValues" />
+        <watch expression="submittedValues.size()" />
       </configuration>
     </watches-manager>
   </component>

@@ -1,5 +1,8 @@
 package tim22.upp.LiteralnoUdruzenje.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ReaderDTO {
 
     private String firstname;
@@ -17,6 +20,10 @@ public class ReaderDTO {
     private String password;
 
     private boolean betaReader;
+
+    private String role = "READER";
+
+    private List<TaskDTO> tasks = new ArrayList<>();
 
     public ReaderDTO(String firstname, String lastname, String city, String country, String email, String username, String password, boolean betaReader) {
         this.firstname = firstname;
@@ -93,5 +100,21 @@ public class ReaderDTO {
 
     public void setBetaReader(boolean betaReader) {
         this.betaReader = betaReader;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public List<TaskDTO> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<TaskDTO> tasks) {
+        this.tasks = tasks;
     }
 }

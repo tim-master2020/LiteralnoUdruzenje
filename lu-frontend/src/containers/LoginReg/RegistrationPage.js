@@ -1,11 +1,15 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom';
 import RegistrationForm from '../../components/registration/RegistrationForm'
 
-const RegistrationPage = () => {
-    return(
-    <div>
-        <RegistrationForm/>
-    </div>
-    )
+const RegistrationPage = ({history, props}) => {
+    
+    React.useEffect(() => {
+        if(localStorage.length > 0){
+            history.push('/');
+        }
+    }, []);
+
+    return(!localStorage.getItem('token') && <RegistrationForm type={props} />)
 }
-export default RegistrationPage;
+export default withRouter(RegistrationPage);

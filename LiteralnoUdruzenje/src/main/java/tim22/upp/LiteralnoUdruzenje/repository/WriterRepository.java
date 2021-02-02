@@ -7,8 +7,8 @@ import tim22.upp.LiteralnoUdruzenje.model.Writer;
 import java.util.List;
 
 public interface WriterRepository extends JpaRepository<Writer, Long> {
-    Writer findWriterByName(String name);
+    Writer findByUsername(String username);
     Writer findWriterByEmail(String email);
-    //List<Writer> findWritersByGenre(Genre genre);
     List<Writer> findAll();
+    Writer findByFirstnameAndLastname(String firstname,String lastname);
 }

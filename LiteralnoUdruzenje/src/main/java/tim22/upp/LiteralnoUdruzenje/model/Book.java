@@ -15,13 +15,17 @@ public class Book implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @Column
     private String name;
 
-    @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
-    private Set<Writer> authors = new HashSet<Writer>();
+    @Column
+    private String pdfName;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "book_writers", joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "writer_id", referencedColumnName = "id"))
+    private Set<Writer> writers = new HashSet<Writer>();
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
@@ -45,6 +49,9 @@ public class Book implements Serializable {
     @Column
     private String synopsis;
 
+    @Column
+    private boolean isPlagiat = false;
+
     @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
     @JoinTable(name = "book_keywords", joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "keyword_id", referencedColumnName = "id"))
     private Set<Keyword> keywords = new HashSet<Keyword>();
@@ -52,11 +59,11 @@ public class Book implements Serializable {
     public Book() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -68,12 +75,12 @@ public class Book implements Serializable {
         this.name = name;
     }
 
-    public Set<Writer> getAuthors() {
-        return authors;
+    public Set<Writer> getWriters() {
+        return writers;
     }
 
-    public void setAuthors(Set<Writer> authors) {
-        this.authors = authors;
+    public void setWriters(Set<Writer> writers) {
+        this.writers = writers;
     }
 
     public Genre getGenre() {
@@ -138,5 +145,21 @@ public class Book implements Serializable {
 
     public void setKeywords(Set<Keyword> keywords) {
         this.keywords = keywords;
+    }
+
+    public String getPdfName() {
+        return pdfName;
+    }
+
+    public void setPdfName(String pdfName) {
+        this.pdfName = pdfName;
+    }
+
+    public boolean isPlagiat() {
+        return isPlagiat;
+    }
+
+    public void setPlagiat(boolean plagiat) {
+        isPlagiat = plagiat;
     }
 }
